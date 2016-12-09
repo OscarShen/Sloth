@@ -19,16 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3D0EAF8C-5B48-4788-8702-730030B83295}</ProjectGuid>
+    <ProjectGuid>{25AD5FFE-07F3-494C-8259-6A9B20B52430}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Sloth</RootNamespace>
+    <RootNamespace>Slothcore</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -89,7 +89,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -149,19 +149,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="base\engine\Game.cpp" />
-    <ClCompile Include="base\engine\Input.cpp" />
-    <ClCompile Include="base\engine\MainComponent.cpp" />
-    <ClCompile Include="base\engine\Time.cpp" />
-    <ClCompile Include="base\engine\Window.cpp" />
-    <ClCompile Include="base\main.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\graphics\shader.cpp" />
+    <ClCompile Include="src\graphics\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="base\engine\Game.h" />
-    <ClInclude Include="base\engine\Input.h" />
-    <ClInclude Include="base\engine\MainComponent.h" />
-    <ClInclude Include="base\engine\Time.h" />
-    <ClInclude Include="base\engine\Window.h" />
+    <ClInclude Include="src\graphics\shader.h" />
+    <ClInclude Include="src\graphics\shader1.h" />
+    <ClInclude Include="src\graphics\window.h" />
+    <ClInclude Include="src\utils\fileutils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shader\basic.frag" />
+    <None Include="src\shader\basic.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

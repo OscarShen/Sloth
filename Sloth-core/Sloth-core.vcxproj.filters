@@ -15,40 +15,32 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="base\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="base\engine\Window.cpp">
+    <ClCompile Include="src\graphics\window.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="base\engine\MainComponent.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="base\engine\Time.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="base\engine\Game.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="base\engine\Input.cpp">
+    <ClCompile Include="src\graphics\shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="base\engine\Window.h">
+    <ClInclude Include="src\graphics\window.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="base\engine\MainComponent.h">
+    <ClInclude Include="src\utils\fileutils.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="base\engine\Time.h">
+    <ClInclude Include="src\graphics\shader1.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="base\engine\Game.h">
+    <ClInclude Include="src\graphics\shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="base\engine\Input.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shader\basic.vert" />
+    <None Include="src\shader\basic.frag" />
   </ItemGroup>
 </Project>
