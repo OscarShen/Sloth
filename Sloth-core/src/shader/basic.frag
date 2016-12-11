@@ -1,8 +1,17 @@
-#version 330 core
+#version 450 core
+
+uniform vec2 light_pos;
 
 out vec4 color;
 
+in DATA {
+	vec3 pos;
+	vec4 color;
+} fs_in;
+
 void main()
 {
-	color = vec4(1.0f, 0.0f, 1.0f, 1.0f);
+	float intensity = 20.0f / length(gl_FragCoord.xy - light_pos);
+	color = fs_in.color * intensity;
+	//color = fs_in.color;
 }
