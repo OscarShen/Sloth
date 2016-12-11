@@ -3,7 +3,6 @@
 #define SLOTH_VERTEX_ARRAY_H_
 
 #include "buffer.h"
-
 #include <GL/glew.h>
 #include <vector>
 namespace sloth { namespace graphics {

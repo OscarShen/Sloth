@@ -17,6 +17,7 @@ namespace sloth { namespace graphics {
 		inline GLuint getComponentCount() const { return m_ComponentCount; }
 		void bind() const;
 		void unbind() const;
+		GLuint getBufferID() const { return m_BufferID; }
 	};
 
 } }
