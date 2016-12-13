@@ -30,13 +30,14 @@ namespace sloth {
 			void update();
 
 			inline int getWidth() const { return m_Width; }
-			inline int getWindth() const { return m_Height; }
+			inline int getHeight() const { return m_Height; }
 			bool isKeyPressed(unsigned int keycode) const;
 			bool isMouseButtonPressed(unsigned int keycode) const;
 			void getCursorPos(double &x, double &y) const;
 
 		private:
 			bool init();
+			friend void window_resize_callback(GLFWwindow *window, int width, int height);
 			friend static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 			friend static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 			friend static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);

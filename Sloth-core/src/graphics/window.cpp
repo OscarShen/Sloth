@@ -98,7 +98,11 @@ namespace sloth { namespace graphics {
 
 	void window_resize_callback(GLFWwindow *window, int width, int height)
 	{
+		Window *win = (Window*) glfwGetWindowUserPointer(window);
+		win->m_Width = width;
+		win->m_Height = height;
 		glViewport(0, 0, width, height);
+		
 	}
 
 	void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
