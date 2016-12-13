@@ -13,6 +13,7 @@ namespace sloth { namespace graphics {
 
 		public:
 			IndexBuffer(GLushort *data, GLsizei count);
+			~IndexBuffer();
 			inline GLsizei getCount() const { return m_Count; }
 			void bind() const;
 			void unbind() const;

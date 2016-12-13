@@ -151,15 +151,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\graphics\batch_renderer_2d.cpp" />
     <ClCompile Include="src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="src\graphics\buffers\index_buffer.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\graphics\buffers\vertex_array.cpp" />
     <ClCompile Include="src\graphics\simple_2d_renderer.cpp" />
+    <ClCompile Include="src\graphics\sprite.cpp" />
+    <ClCompile Include="src\graphics\static_sprite.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
     <ClCompile Include="src\utils\error_check.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\batch_renderer_2d.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
     <ClInclude Include="src\graphics\buffers\index_buffer.h" />
     <ClInclude Include="src\graphics\renderable_2d.h" />
@@ -168,6 +172,8 @@
     <ClInclude Include="src\graphics\shader1.h" />
     <ClInclude Include="src\graphics\buffers\vertex_array.h" />
     <ClInclude Include="src\graphics\simple_2d_renderer.h" />
+    <ClInclude Include="src\graphics\sprite.h" />
+    <ClInclude Include="src\graphics\static_sprite.h" />
     <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\utils\error_check.h" />
     <ClInclude Include="src\utils\fileutils.h" />

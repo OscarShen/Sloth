@@ -7,8 +7,10 @@
 #include <iostream>
 namespace sloth {
 	namespace util {
-		GLenum checkError(const char *file, int line);
-#define glCheckError() checkError(__FILE__, __LINE__)
+
+		GLenum slothCheckError(const char *file, int line);
+
+#define glCheckError() sloth::util::slothCheckError(__FILE__, __LINE__)
 	}
 }
 #endif // !SLOTH_ERROR_CHECK_H_

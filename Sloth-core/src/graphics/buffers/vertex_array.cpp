@@ -13,6 +13,7 @@ namespace sloth { namespace graphics {
 		{
 			delete m_Buffers[i];
 		}
+		glDeleteVertexArrays(1, &m_VertexArrayID);
 	}
 
 	void VertexArray::addBuffer(Buffer * buffer, GLuint index)

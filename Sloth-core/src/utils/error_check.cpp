@@ -2,7 +2,7 @@
 namespace sloth {
 	namespace util {
 
-		GLenum checkError(const char *file, int line) {
+		GLenum slothCheckError(const char *file, int line) {
 			GLenum errorCode;
 			while ((errorCode = glGetError()) != GL_NO_ERROR) {
 				std::string error;

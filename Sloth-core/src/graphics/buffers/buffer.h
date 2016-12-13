@@ -14,6 +14,7 @@ namespace sloth { namespace graphics {
 
 	public:
 		Buffer(GLfloat *data, GLsizei count, GLuint componentCount);
+		~Buffer();
 		inline GLuint getComponentCount() const { return m_ComponentCount; }
 		void bind() const;
 		void unbind() const;

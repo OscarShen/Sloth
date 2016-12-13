@@ -8,6 +8,11 @@ namespace sloth { namespace graphics {
 			m_ComponentCount = componentCount;
 		}
 
+		Buffer::~Buffer()
+		{
+			glDeleteBuffers(1, &m_BufferID);
+		}
+
 		void Buffer::bind() const
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);

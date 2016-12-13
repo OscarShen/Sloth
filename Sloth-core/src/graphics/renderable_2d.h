@@ -12,6 +12,12 @@
 
 namespace sloth { namespace graphics {
 
+	struct VertexData
+	{
+		glm::vec3 vertex;
+		glm::vec4 color;
+	};
+
 	class Renderable2D
 	{
 	protected:
@@ -19,47 +25,15 @@ namespace sloth { namespace graphics {
 		glm::vec2 m_Size;
 		glm::vec4 m_Color;
 
-		Shader *m_Shader;
-		VertexArray *m_VertexArray;
-		IndexBuffer *m_IndexBuffer;
-
 	public:
-		Renderable2D(const glm::vec3 &position, const glm::vec2 &size, const glm::vec4 &color, Shader *shader)
-			:m_Position(position), m_Size(size), m_Color(color), m_Shader(shader)
+		Renderable2D(const glm::vec3 &position, const glm::vec2 &size, const glm::vec4 &color)
+			:m_Position(position), m_Size(size), m_Color(color) 
 		{
-			m_VertexArray = new VertexArray();
-			GLfloat vertices[] =
-			{
-				0, 0, 0,
-				0,size.y,0,
-				size.x,size.y,0,
-				size.x,0,0
-			};
-			GLfloat colors[] =
-			{
-				color.r,color.g,color.b,color.a,
-				color.r,color.g,color.b,color.a,
-				color.r,color.g,color.b,color.a,
-				color.r,color.g,color.b,color.a
-			};
-
-			m_VertexArray->addBuffer(new Buffer(vertices, 4 * 3, 3), 0);
-			m_VertexArray->addBuffer(new Buffer(colors, 4 * 4, 4), 1);
-
-
-			GLushort indices[] = { 0, 1, 2, 2, 3, 0 };
-			m_IndexBuffer = new IndexBuffer(indices, 6);
 		}
 
 		virtual ~Renderable2D()
 		{
-			delete m_VertexArray;
-			delete m_IndexBuffer;
 		}
-
-		inline const VertexArray* getVAO() const { return m_VertexArray; }
-		inline const IndexBuffer* getIBO() const { return m_IndexBuffer; }
-		inline Shader* getShader() const { return m_Shader; }
 
 		inline const glm::vec3& getPosition()const { return m_Position; }
 		inline const glm::vec2& getSize()const { return m_Size; }

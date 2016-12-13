@@ -11,7 +11,7 @@ in DATA {
 
 void main()
 {
-	float intensity = 20.0f / length(gl_FragCoord.xy - light_pos);
+	float intensity = 40.0f / length(gl_FragCoord.xy - light_pos);
 	color = fs_in.color * intensity;
 	//color = fs_in.color;
 }
