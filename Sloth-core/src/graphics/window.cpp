@@ -83,14 +83,13 @@ namespace sloth { namespace graphics {
 			std::cout << "Failed to create GLFW window!" << std::endl;
 			return false;
 		}
-		//glfwWindowHint(GL_MAJOR_VERSION, 3);
-		//glfwWindowHint(GL_MINOR_VERSION, 3);
 		glfwMakeContextCurrent(m_Window);
 		glfwSetWindowUserPointer(m_Window, this);
 		glfwSetWindowSizeCallback(m_Window, window_resize_callback);
 		glfwSetKeyCallback(m_Window, key_callback);
 		glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
 		glfwSetCursorPosCallback(m_Window, cursor_position_callback);
+		glfwSwapInterval(0);
 		glewExperimental = GL_TRUE;
 		glewInit();
 		return true;

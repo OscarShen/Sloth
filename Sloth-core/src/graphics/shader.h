@@ -151,9 +151,13 @@ namespace sloth {
 			void    SetMatrix4(const GLchar *name, const glm::mat4 &matrix, GLboolean useShader = false);
 
 
-			void use() const {
-				glUseProgram(this->program);
-			}
+			inline void use() const { glUseProgram(this->program); }
+
+			inline void enable() const { glUseProgram(this->program); }
+
+			inline void disable() const { glUseProgram(0); }
+
+			~Shader();
 
 		private:
 			void checkCompileErrors(const GLuint shader, const std::string type) {

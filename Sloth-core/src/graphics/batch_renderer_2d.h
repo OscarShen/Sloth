@@ -9,7 +9,7 @@
 
 namespace sloth { namespace graphics {
 
-#define RENDERER_MAX_SPRITES	10000
+#define RENDERER_MAX_SPRITES	60000
 #define RENDERER_VERTEX_SIZE	sizeof(VertexData)
 #define RENDERER_SPRITE_SIZE	RENDERER_VERTEX_SIZE * 4
 #define RENDERER_BUFFER_SIZE	RENDERER_SPRITE_SIZE * RENDERER_MAX_SPRITES
@@ -30,9 +30,9 @@ namespace sloth { namespace graphics {
 	public:
 		BatchRenderer2D();
 		~BatchRenderer2D();
-		void begin();
+		void begin() override;
 		void sumbit(const Renderable2D *renderable) override;
-		void end();
+		void end() override;
 		void flush() override;
 
 	private:

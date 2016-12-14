@@ -27,15 +27,15 @@ namespace sloth { namespace graphics {
 		m_Buffer++;
 
 		m_Buffer->vertex = glm::vec3(position.x, position.y + size.y, position.z);
-		m_Buffer->color = renderable->getColor();
+		m_Buffer->color = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = glm::vec3(position.x + size.x, position.y + size.y, position.z);
-		m_Buffer->color = renderable->getColor();
+		m_Buffer->color = color;
 		m_Buffer++;
 
 		m_Buffer->vertex = glm::vec3(position.x + size.x, position.y, position.z);
-		m_Buffer->color = renderable->getColor();
+		m_Buffer->color = color;
 		m_Buffer++;
 
 		m_IndexCount += 6;
@@ -50,7 +50,7 @@ namespace sloth { namespace graphics {
 	{
 		glBindVertexArray(m_VAO);
 		m_IBO->bind();
-		glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_SHORT, nullptr);
+		glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, nullptr);
 		m_IBO->unbind();
 		glBindVertexArray(0);
 	}
@@ -67,7 +67,7 @@ namespace sloth { namespace graphics {
 		glVertexArrayVertexBuffer(m_VAO, SHADER_COLOR_INDEX, m_VBO, 3 * sizeof(GLfloat), RENDERER_VERTEX_SIZE);
 		glVertexAttribFormat(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT));
 
-		GLushort indices[RENDERER_INDICES_SIZE];
+		GLuint *indices = new GLuint[RENDERER_INDICES_SIZE];
 		int offset = 0;
 		for (int i = 0; i < RENDERER_INDICES_SIZE; i += 6)
 		{
@@ -82,6 +82,7 @@ namespace sloth { namespace graphics {
 			offset += 4; // six vertex storage in four elements
 		}
 		m_IBO = new IndexBuffer(indices, RENDERER_INDICES_SIZE);
+		delete[] indices;
 	}
 
 } }

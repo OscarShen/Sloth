@@ -79,6 +79,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\codes\MyIncludeLib2013\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>D:\codes\MyIncludeLib2013\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -129,6 +131,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimp-vc120-mt.lib;SOIL.lib;glew32d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,6 +157,8 @@
     <ClCompile Include="src\graphics\batch_renderer_2d.cpp" />
     <ClCompile Include="src\graphics\buffers\buffer.cpp" />
     <ClCompile Include="src\graphics\buffers\index_buffer.cpp" />
+    <ClCompile Include="src\graphics\layers\layer.cpp" />
+    <ClCompile Include="src\graphics\layers\tile_layer.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\graphics\buffers\vertex_array.cpp" />
     <ClCompile Include="src\graphics\simple_2d_renderer.cpp" />
@@ -166,6 +171,8 @@
     <ClInclude Include="src\graphics\batch_renderer_2d.h" />
     <ClInclude Include="src\graphics\buffers\buffer.h" />
     <ClInclude Include="src\graphics\buffers\index_buffer.h" />
+    <ClInclude Include="src\graphics\layers\layer.h" />
+    <ClInclude Include="src\graphics\layers\tile_layer.h" />
     <ClInclude Include="src\graphics\renderable_2d.h" />
     <ClInclude Include="src\graphics\renderer_2d.h" />
     <ClInclude Include="src\graphics\shader.h" />
@@ -177,6 +184,7 @@
     <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\utils\error_check.h" />
     <ClInclude Include="src\utils\fileutils.h" />
+    <ClInclude Include="src\utils\timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shader\basic.frag" />

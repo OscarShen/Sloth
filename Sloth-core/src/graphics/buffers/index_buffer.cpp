@@ -8,6 +8,13 @@ namespace sloth { namespace graphics {
 			m_Count = count;
 		}
 
+		IndexBuffer::IndexBuffer(GLuint * data, GLsizei count)
+		{
+			glCreateBuffers(1, &m_BufferID);
+			glNamedBufferStorage(m_BufferID, count * sizeof(GLuint), data, GL_DYNAMIC_STORAGE_BIT);
+			m_Count = count;
+		}
+
 		IndexBuffer::~IndexBuffer()
 		{
 			glDeleteBuffers(1, &m_BufferID);
