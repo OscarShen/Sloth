@@ -1,4 +1,5 @@
 #include "batch_renderer_2d.h"
+#include "../utils/error_check.h"
 namespace sloth { namespace graphics {
 	BatchRenderer2D::BatchRenderer2D()
 	{
@@ -22,20 +23,31 @@ namespace sloth { namespace graphics {
 		const glm::vec2 &size = renderable->getSize();
 		const glm::vec4 &color = renderable->getColor();
 
+		unsigned int r = static_cast<unsigned int>(color.r * 255.0f);
+		unsigned int g = static_cast<unsigned int>(color.g * 255.0f);
+		unsigned int b = static_cast<unsigned int>(color.b * 255.0f);
+		unsigned int a = static_cast<unsigned int>(color.a * 255.0f);
+
+		unsigned int c = a << 24 | b << 16 | g << 8 | r;
+
 		m_Buffer->vertex = position;
-		m_Buffer->color = color;
+		//m_Buffer->color = color;
+		m_Buffer->color = c;
 		m_Buffer++;
 
 		m_Buffer->vertex = glm::vec3(position.x, position.y + size.y, position.z);
-		m_Buffer->color = color;
+		//m_Buffer->color = color;
+		m_Buffer->color = c;
 		m_Buffer++;
 
 		m_Buffer->vertex = glm::vec3(position.x + size.x, position.y + size.y, position.z);
-		m_Buffer->color = color;
+		//m_Buffer->color = color;
+		m_Buffer->color = c;
 		m_Buffer++;
 
 		m_Buffer->vertex = glm::vec3(position.x + size.x, position.y, position.z);
-		m_Buffer->color = color;
+		//m_Buffer->color = color;
+		m_Buffer->color = c;
 		m_Buffer++;
 
 		m_IndexCount += 6;
@@ -63,9 +75,9 @@ namespace sloth { namespace graphics {
 		glEnableVertexArrayAttrib(m_VAO, SHADER_VERTEX_INDEX);
 		glEnableVertexArrayAttrib(m_VAO, SHADER_COLOR_INDEX);
 		glVertexArrayVertexBuffer(m_VAO, SHADER_VERTEX_INDEX, m_VBO, 0, RENDERER_VERTEX_SIZE);
-		glVertexAttribFormat(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, 0);
+		glVertexArrayAttribFormat(m_VAO, SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, 0);
 		glVertexArrayVertexBuffer(m_VAO, SHADER_COLOR_INDEX, m_VBO, 3 * sizeof(GLfloat), RENDERER_VERTEX_SIZE);
-		glVertexAttribFormat(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT));
+		glVertexArrayAttribFormat(m_VAO, SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0);
 
 		GLuint *indices = new GLuint[RENDERER_INDICES_SIZE];
 		int offset = 0;
