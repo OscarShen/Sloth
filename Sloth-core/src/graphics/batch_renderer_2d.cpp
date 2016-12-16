@@ -30,23 +30,19 @@ namespace sloth { namespace graphics {
 
 		unsigned int c = a << 24 | b << 16 | g << 8 | r;
 
-		m_Buffer->vertex = position;
-		//m_Buffer->color = color;
+		m_Buffer->vertex = *m_TransformationBack * glm::vec4(position, 1.0f);
 		m_Buffer->color = c;
 		m_Buffer++;
 
-		m_Buffer->vertex = glm::vec3(position.x, position.y + size.y, position.z);
-		//m_Buffer->color = color;
+		m_Buffer->vertex = *m_TransformationBack * glm::vec4(position.x, position.y + size.y, position.z, 1.0f);
 		m_Buffer->color = c;
 		m_Buffer++;
 
-		m_Buffer->vertex = glm::vec3(position.x + size.x, position.y + size.y, position.z);
-		//m_Buffer->color = color;
+		m_Buffer->vertex = *m_TransformationBack * glm::vec4(position.x + size.x, position.y + size.y, position.z,1.0f);
 		m_Buffer->color = c;
 		m_Buffer++;
 
-		m_Buffer->vertex = glm::vec3(position.x + size.x, position.y, position.z);
-		//m_Buffer->color = color;
+		m_Buffer->vertex = *m_TransformationBack * glm::vec4(position.x + size.x, position.y, position.z, 1.0f);
 		m_Buffer->color = c;
 		m_Buffer++;
 
