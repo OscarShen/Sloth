@@ -15,7 +15,8 @@ namespace sloth { namespace graphics {
 	struct VertexData
 	{
 		glm::vec3 vertex;
-		glm::vec4 color;
+		//glm::vec4 color;
+		unsigned int color;
 	};
 
 	class Renderable2D
