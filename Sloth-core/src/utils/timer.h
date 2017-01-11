@@ -3,38 +3,30 @@
 #define SLOTH_TIMER_H_
 
 #include <Windows.h>
+#include <GLFW/glfw3.h>
 
 namespace sloth { namespace util {
 
 	class Timer
 	{
 	private:
-		LARGE_INTEGER m_Start;
-		double m_Frequency;
+		double m_Start;
+		double m_LastFrameTime;
+		double m_CurrentFrameTime;
+		double m_DeltaFrameTime;
+		int m_FPS;
+		unsigned int m_FrameCounter;
 
 	public:
-		Timer()
-		{
-			LARGE_INTEGER frequency;
-			QueryPerformanceFrequency(&frequency);
-			m_Frequency = 1.0f / frequency.QuadPart;
-			QueryPerformanceCounter(&m_Start);
-		}
+		Timer();
+		void reset();
+		double elapsed();
+		void calculateFPS();
 
-		void reset()
-		{
-			QueryPerformanceCounter(&m_Start);
-		}
-
-		float elapsed()
-		{
-			LARGE_INTEGER current;
-			QueryPerformanceCounter(&current);
-			unsigned __int64 cycles = current.QuadPart - m_Start.QuadPart;
-			return static_cast<float>(cycles * m_Frequency);
-		}
+		inline double getDeltaFrameTime()const { return m_DeltaFrameTime; }
+		inline int getFPS() const { return m_FPS; }
+		inline unsigned int getFramerCounter() const{ return m_FrameCounter; }
 	};
-
 
 } }
 
