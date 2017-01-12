@@ -26,7 +26,7 @@ namespace sloth { namespace util {
 		m_CurrentFrameTime = glfwGetTime();
 		m_DeltaFrameTime = m_CurrentFrameTime - m_LastFrameTime;
 		m_LastFrameTime = m_CurrentFrameTime;
-		m_FPS = 1.0 / m_DeltaFrameTime;
+		m_FPS = static_cast<int>(1.0 / m_DeltaFrameTime);
 	}
 
 } }
