@@ -5,6 +5,7 @@ namespace sloth { namespace graphics {
 		:Renderable(shader), m_VertexCount(0), m_IndexCount(0)
 	{
 		loadModel(modelPath);
+		loadToVAO();
 	}
 
 	Model::~Model()
@@ -69,7 +70,7 @@ namespace sloth { namespace graphics {
 			for (unsigned int j = 0; j < face->mNumIndices; ++j)
 			{
 				// Because all vertices in a vector, index of each vertex will overlap
-				m_Indices.push_back(face->mIndices[j] + m_VertexCount);
+				m_Indices.push_back(face->mIndices[j]);
 			}
 		}
 		// All faces are triangles
@@ -82,17 +83,16 @@ namespace sloth { namespace graphics {
 	void Model::loadToVAO()
 	{
 		m_VAO = new VertexArray();
-		Buffer *position = new Buffer(&m_Positions[0].x, m_VertexCount, 3);
+		Buffer *position = new Buffer(&m_Positions[0].x, m_VertexCount * 3, 3);
 		m_VAO->addBuffer(position, 0);
-		Buffer *normal = new Buffer(&m_Normals[0].x, m_VertexCount, 3);
+		Buffer *normal = new Buffer(&m_Normals[0].x, m_VertexCount * 3, 3);
 		m_VAO->addBuffer(normal, 3);
 		if (m_TexCoords.size() > 0)
 		{
-			Buffer *texCoord = new Buffer(&m_TexCoords[0].x, m_VertexCount, 2);
+			Buffer *texCoord = new Buffer(&m_TexCoords[0].x, m_VertexCount * 2, 2);
 			m_VAO->addBuffer(texCoord, 2);
 		}
 		IndexBuffer *indices = new IndexBuffer(&m_Indices[0], m_IndexCount);
+		m_IBO = indices;
 	}
-
-
 } }
