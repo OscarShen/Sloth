@@ -1,2 +1,9 @@
 Debug/
 Release/
+*.sln
+*.db
+*.vcxproj
+*.filters
+*.user
+.vs/
+*.opendb
