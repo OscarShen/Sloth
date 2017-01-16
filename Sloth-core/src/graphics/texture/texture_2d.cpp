@@ -3,11 +3,6 @@
 
 namespace sloth { namespace graphics {
 
-	Texture2D::Texture2D()
-		:m_Width(0), m_Height(0), m_InternalFormat(GL_RGB8), m_ImageFormat(GL_RGB), m_Mipmap(0),
-		m_Wrap_S(GL_REPEAT), m_Wrap_T(GL_REPEAT), m_Filter_Min(GL_LINEAR), m_Filter_Max(GL_LINEAR)
-	{}
-
 	void Texture2D::generate(GLuint width, GLuint height, unsigned char * data, GLuint mipmap)
 	{
 		m_Width = width;

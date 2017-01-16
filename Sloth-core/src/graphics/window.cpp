@@ -3,16 +3,21 @@
 namespace sloth { namespace graphics {
 
 	SlothWindow::SlothWindow(const char * title, int width, int height)
+		:m_Title(title), m_Width(width), m_Height(height), m_Window(nullptr), 
+		m_IsRunning(false)
 	{
-		m_Title = title;
-		m_Width = width;
-		m_Height = height;
-		if (!init())
-			glfwTerminate();
+		if (!init()) {
+			// TODO : Add to log!
+			std::cout << "Initial failed!" << std::endl;
+		}
+		else
+			m_IsRunning = true;
 	}
 
 	SlothWindow::~SlothWindow()
 	{
+		if (m_Window)
+			glfwDestroyWindow(m_Window);
 	}
 
 	void SlothWindow::clear() const
@@ -20,14 +25,9 @@ namespace sloth { namespace graphics {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	bool SlothWindow::closed() const
-	{
-		return glfwWindowShouldClose(m_Window) != 0;
-	}
-
 	void SlothWindow::close()
 	{
-		glfwDestroyWindow(m_Window);
+		m_IsRunning = false;
 	}
 
 	void SlothWindow::update()

@@ -15,12 +15,14 @@ out DATA {
 } vs_out;
 
 out vec3 worldPosition;
+out vec3 toCameraVector;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(position, 1.0f);
 	worldPosition = vec3(model * vec4(position, 1.0f));
+	gl_Position = projection * view * vec4(worldPosition, 1.0f);
 	vs_out.pos = position;
 	vs_out.texCoord = texCoord;
 	vs_out.normal = mat3(transpose(inverse(model))) * normal;
+	toCameraVector = (inverse(view) * vec4(0.0f,0.0f,0.0f,1.0f)).xyz - worldPosition;
 }

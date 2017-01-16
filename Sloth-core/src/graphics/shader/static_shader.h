@@ -25,6 +25,8 @@ namespace sloth { namespace graphics {
 		int m_LocProjection;
 		int *m_LocLightPos;
 		int *m_LocLightColor;
+		float m_LocShininess;
+		float m_LocReflectivity;
 
 	public:
 		static StaticShader *inst();
@@ -33,6 +35,7 @@ namespace sloth { namespace graphics {
 		void loadViewMatrix(const Camera &camera);
 		void laodProjectionMatrix(const glm::mat4 &projection);
 		void loadLights(const std::vector<Light> &lights);
+		void loadShineVariable(const float shininess, const float reflectivity);
 
 	private:
 		StaticShader();

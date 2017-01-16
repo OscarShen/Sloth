@@ -17,12 +17,13 @@ namespace sloth { namespace graphics {
 		int m_Width, m_Height;
 		const char *m_Title;
 		GLFWwindow *m_Window;
+		bool m_IsRunning;
 
 	public:
 		SlothWindow(const char *name, int width, int height);
 		~SlothWindow();
 		void clear() const;
-		bool closed() const;
+		inline bool isRunning() const { return m_IsRunning; }
 		void close();
 		void update();
 

@@ -54,11 +54,19 @@ namespace sloth { namespace graphics {
 		}
 	}
 
+	void StaticShader::loadShineVariable(const float shininess, const float reflectivity)
+	{
+		glProgramUniform1f(m_ID, m_LocShininess, shininess);
+		glProgramUniform1f(m_ID, m_LocReflectivity, reflectivity);
+	}
+
 	void StaticShader::getAllUniformLocation()
 	{
 		m_LocModel = glGetUniformLocation(m_ID, "model");
 		m_LocView = glGetUniformLocation(m_ID, "view");
 		m_LocProjection = glGetUniformLocation(m_ID, "projection");
+		m_LocShininess = glGetUniformLocation(m_ID, "shininess");
+		m_LocReflectivity = glGetUniformLocation(m_ID, "reflectivity");
 		m_LocLightPos = new int[GLSL_MAX_LIGHTS];
 		m_LocLightColor = new int[GLSL_MAX_LIGHTS];
 

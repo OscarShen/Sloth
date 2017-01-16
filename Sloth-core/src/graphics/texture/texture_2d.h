@@ -19,9 +19,15 @@ namespace sloth { namespace graphics {
 		GLuint m_Filter_Min; // Filtering mode if texture pixels < screen pixels
 		GLuint m_Filter_Max; // Filtering mode if texture pixels > screen pixels
 		GLuint m_Mipmap; // Mipmap levels
+
+		float m_Shininess; // Shaniness
+		float m_Reflectivity; // Reflectivity
 	public:
 		// Constructor (sets default texture modes)
-		Texture2D();
+		constexpr Texture2D()
+			:m_ID(0), m_Width(0), m_Height(0), m_InternalFormat(GL_RGB8), m_ImageFormat(GL_RGB), m_Mipmap(0),
+			m_Wrap_S(GL_REPEAT), m_Wrap_T(GL_REPEAT), m_Filter_Min(GL_LINEAR), m_Filter_Max(GL_LINEAR),
+			m_Shininess(32.0f), m_Reflectivity(1.0f) {}
 
 		void generate(GLuint width, GLuint height, unsigned char* data, GLuint mipmap = 0);
 		// Binds the texture as the current active GL_TEXTURE_2D texture object
@@ -32,16 +38,23 @@ namespace sloth { namespace graphics {
 		inline GLuint getID() { return m_ID; }
 		inline GLuint getWidth() { return m_Width; }
 		inline GLuint getHeight() { return m_Height; }
-		inline const GLuint getInternalFormat() const { return m_InternalFormat; }
-		inline const GLuint getImageFormat() const { return m_ImageFormat; }
-		inline const GLint getWrapS() const { return m_Wrap_S; }
-		inline const GLint getWrapT() const { return m_Wrap_T; }
+		inline GLuint getInternalFormat() const { return m_InternalFormat; }
+		inline GLuint getImageFormat() const { return m_ImageFormat; }
+		inline GLint getWrapS() const { return m_Wrap_S; }
+		inline GLint getWrapT() const { return m_Wrap_T; }
+		inline float getShininess() const{ return m_Shininess; }
+		inline float getReflectivity() const { return m_Reflectivity; }
+		inline GLint getFilterMinParam() const { return m_Filter_Min; }
+		inline GLint getFilterMagParam() const { return m_Filter_Max; }
+
+
 		void setWrapS(GLint param);
 		void setWrapT(GLint param);
-		inline const GLint getFilterMinParam() const { return m_Filter_Min; }
-		inline const GLint getFilterMagParam() const { return m_Filter_Max; }
 		void setFilterMin(GLint param);
 		void setFilterMag(GLint param);
+		void setShininess(float shininess) { m_Shininess = shininess; }
+		void setReflectivity(float reflectivity) { m_Reflectivity = reflectivity; }
+
 
 		friend TextureManager2D;
 	};

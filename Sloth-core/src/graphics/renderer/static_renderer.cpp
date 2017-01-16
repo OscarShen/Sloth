@@ -37,8 +37,10 @@ namespace sloth { namespace graphics {
 
 	void StaticRenderer::prepareInstance(Entity & entity)
 	{
+		auto texture = entity.getTexturedModel().getTexture();
 		m_Shader->loadModelMatrix(util::Maths::createModelMatrix(entity.getPosition(), entity.getRotX(),
 			entity.getRotY(), entity.getRotZ(), entity.getScale()));
+		m_Shader->loadShineVariable(texture->getShininess(), texture->getReflectivity());
 	}
 
 } }

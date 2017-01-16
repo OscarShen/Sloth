@@ -4,14 +4,14 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtc\quaternion.hpp>
 
-#define CAMERA_INIT_POS		glm::vec3(0.0f,0.0f,10.0f)
+#define CAMERA_INIT_POS		glm::vec3(0.0f,5.0f,10.0f)
 #define CAMERA_INIT_UP		glm::vec3(0.0f,1.0f,0.0f)
 #define CAMERA_INIT_FRONT	glm::vec3(0.0f,0.0f,-1.0f)
 #define CAMERA_INIT_RIGHT	glm::normalize(glm::cross(CAMERA_INIT_UP, CAMERA_INIT_POS + CAMERA_INIT_FRONT))
 #define CAMERA_INIT_PITCH	0.0f
 #define CAMERA_INIT_YAW		-90.0f
 #define MOUSE_SENSITIVITY	2.0f
-#define MOVE_SPEED			0.5f
+#define MOVE_SPEED			5.0f
 
 namespace sloth { namespace graphics {
 
