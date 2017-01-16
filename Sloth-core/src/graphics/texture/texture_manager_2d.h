@@ -4,7 +4,7 @@
 
 #include <map>
 #include <GL/glew.h>
-#include <SOIL.h>
+#include <SOIL/SOIL.h>
 #include "texture_2d.h"
 
 namespace sloth { namespace graphics {
@@ -19,7 +19,7 @@ namespace sloth { namespace graphics {
 		virtual ~TextureManager2D();
 
 		// load texture
-		void loadTexture(const unsigned int texID, const GLchar *file, GLboolean alpha, GLuint mipmap = 0);
+		void loadTexture(const unsigned int texID, const char *file, bool alpha = false, unsigned int mipmap = 0);
 
 		// set the current texture
 		bool bindTexture(const unsigned int texID);

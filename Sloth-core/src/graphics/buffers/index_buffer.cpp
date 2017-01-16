@@ -1,17 +1,17 @@
 #include "index_buffer.h"
 namespace sloth { namespace graphics {
 
-		IndexBuffer::IndexBuffer(GLushort * data, GLsizei count)
+		IndexBuffer::IndexBuffer(unsigned short * data, int count)
 		{
 			glCreateBuffers(1, &m_BufferID);
-			glNamedBufferStorage(m_BufferID, count * sizeof(GLushort), data, GL_DYNAMIC_STORAGE_BIT);
+			glNamedBufferStorage(m_BufferID, count * sizeof(unsigned short), data, GL_DYNAMIC_STORAGE_BIT);
 			m_Count = count;
 		}
 
-		IndexBuffer::IndexBuffer(GLuint * data, GLsizei count)
+		IndexBuffer::IndexBuffer(unsigned int * data, int count)
 		{
 			glCreateBuffers(1, &m_BufferID);
-			glNamedBufferStorage(m_BufferID, count * sizeof(GLuint), data, GL_DYNAMIC_STORAGE_BIT);
+			glNamedBufferStorage(m_BufferID, count * sizeof(unsigned int), data, GL_DYNAMIC_STORAGE_BIT);
 			m_Count = count;
 		}
 

@@ -3,22 +3,28 @@
 #define SLOTH_VERTEX_ARRAY_H_
 
 #include "buffer.h"
+#include "index_buffer.h"
 #include <GL/glew.h>
-#include <vector>
+#include <map>
 namespace sloth { namespace graphics {
 
 	class VertexArray
 	{
 	private:
-		GLuint m_VertexArrayID;
-		std::vector<Buffer*> m_Buffers;
+		unsigned int m_VertexArrayID;
+		std::map<unsigned int, Buffer*> m_Buffers;
+		IndexBuffer* m_ElementBuffer;
 
 	public:
 		VertexArray();
 		~VertexArray();
-		void addBuffer(Buffer *buffer, GLuint index);
+		void addBuffer(Buffer *buffer, unsigned int index);
+		void addElementBuffer(IndexBuffer *buffer);
+		void deleteBuffer(unsigned int index);
 		void bind() const;
 		void unbind() const;
+
+		inline unsigned int getVaoID() const { return m_VertexArrayID; }
 	};
 
 

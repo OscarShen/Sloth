@@ -1,10 +1,13 @@
 #include "buffer.h"
+#include "../../utils/error_check.h"
 namespace sloth { namespace graphics {
 
 		Buffer::Buffer(GLfloat * data, GLsizei count, GLuint componentCount)
 		{
 			glCreateBuffers(1, &m_BufferID);
-			glNamedBufferStorage(m_BufferID, count * sizeof(GL_FLOAT), data, GL_DYNAMIC_STORAGE_BIT);
+glCheckError();
+			glNamedBufferStorage(m_BufferID, count * sizeof(GLfloat), data, GL_DYNAMIC_STORAGE_BIT);
+glCheckError();
 			m_ComponentCount = componentCount;
 		}
 

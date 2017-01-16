@@ -10,44 +10,45 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <GL\glew.h>
-#include "shader_manager.h"
+#include <GL/glew.h>
 
-namespace sloth {
-	namespace graphics {
-		class ShaderManager;
-		class Shader
-		{
-		private:
-			GLuint m_ID;
-		public:
-			Shader() {}
-			// Compiles the shader from given source code
-			void compile(const GLchar *vertexSource, const GLchar *fragmentSource, const GLchar *geometrySource = nullptr); // Note: geometry source code is optional 
+#include "../../utils/string_util.h"
 
-			void setFloat(const GLchar *name, GLfloat value, GLboolean useShader = false);
-			void setInteger(const GLchar *name, GLint value, GLboolean useShader = false);
-			void setVector2f(const GLchar *name, GLfloat x, GLfloat y, GLboolean useShader = false);
-			void setVector2f(const GLchar *name, const glm::vec2 &value, GLboolean useShader = false);
-			void setVector3f(const GLchar *name, GLfloat x, GLfloat y, GLfloat z, GLboolean useShader = false);
-			void setVector3f(const GLchar *name, const glm::vec3 &value, GLboolean useShader = false);
-			void setVector4f(const GLchar *name, GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLboolean useShader = false);
-			void setVector4f(const GLchar *name, const glm::vec4 &value, GLboolean useShader = false);
-			void setMatrix4(const GLchar *name, const glm::mat4 &matrix, GLboolean useShader = false);
+namespace sloth { namespace graphics {
 
-			inline GLint getID() const { return this->m_ID; }
+	class ShaderManager;
+	class Shader
+	{
+	protected:
+		unsigned int m_ID;
+	public:
+		Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath = nullptr);
 
-			void use() const { glUseProgram(this->m_ID); }
+		void loadFloat(const char *name, float value);
+		void loadInteger(const char *name, int value);
+		void loadVector2f(const char *name, float x, float y);
+		void loadVector2f(const char *name, const glm::vec2 &value);
+		void loadVector3f(const char *name, float x, float y, float z);
+		void loadVector3f(const char *name, const glm::vec3 &value);
+		void loadVector4f(const char *name, float x, float y, float z, float w);
+		void loadVector4f(const char *name, const glm::vec4 &value);
+		void loadMatrix4(const char *name, const glm::mat4 &matrix);
 
-			void enable() const { glUseProgram(this->m_ID); }
+		void setVertexAttrib4f(unsigned int index, float x0, float x1, float x2, float x3);
 
-			void disable() const { glUseProgram(0); }
+		inline unsigned int getID() const { return this->m_ID; }
 
-		private:
-			void checkCompileErrors(const GLuint shader, const std::string type);
+		void use() const { glUseProgram(this->m_ID); }
 
-			friend ShaderManager;
-		};
-	}
-}
+		void enable() const { glUseProgram(this->m_ID); }
+
+		void disable() const { glUseProgram(0); }
+
+	private:
+		void checkCompileErrors(const GLuint shader, const std::string type);
+
+		// Compiles the shader from given source code
+		void compile(const char *vertexSource, const char *fragmentSource, const char *geometrySource); // Note: geometry source code is optional 
+	};
+} }
 #endif // !SLOTH_SHADER_H_

@@ -8,14 +8,15 @@ namespace sloth { namespace graphics {
 
 		class IndexBuffer {
 		private:
-			GLuint m_BufferID;
-			GLsizei m_Count;
+			unsigned int m_BufferID;
+			int m_Count;
 
 		public:
-			IndexBuffer(GLushort *data, GLsizei count);
-			IndexBuffer(GLuint *data, GLsizei count);
+			IndexBuffer(unsigned short *data, int count);
+			IndexBuffer(unsigned int *data, int count);
 			~IndexBuffer();
-			inline GLsizei getCount() const { return m_Count; }
+			inline int getCount() const { return m_Count; }
+			inline unsigned int getID() const { return m_BufferID; }
 			void bind() const;
 			void unbind() const;
 		};

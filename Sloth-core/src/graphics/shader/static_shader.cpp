@@ -6,7 +6,7 @@ namespace sloth { namespace graphics {
 
 
 	StaticShader::StaticShader()
-		:Shader(VERTEX_FILE, FRAGMENT_FILE)
+		:Shader(STATIC_VERTEX_FILE, STATIC_FRAGMENT_FILE)
 	{
 		getAllUniformLocation();
 	}
@@ -27,29 +27,29 @@ namespace sloth { namespace graphics {
 
 	void StaticShader::loadModelMatrix(const glm::mat4 & model)
 	{
-		glUniformMatrix4fv(m_LocModel, 1, GL_FALSE, glm::value_ptr(model));
+		glProgramUniformMatrix4fv(m_ID, m_LocModel, 1, GL_FALSE, glm::value_ptr(model));
 	}
 
 	void StaticShader::loadViewMatrix(const Camera &camera)
 	{
-		glUniformMatrix4fv(m_LocView, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
+		glProgramUniformMatrix4fv(m_ID, m_LocView, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
 	}
 
 	void StaticShader::laodProjectionMatrix(const glm::mat4 & projection)
 	{
-		glUniformMatrix4fv(m_LocProjection, 1, GL_FALSE, glm::value_ptr(projection));
+		glProgramUniformMatrix4fv(m_ID, m_LocProjection, 1, GL_FALSE, glm::value_ptr(projection));
 	}
 
 	void StaticShader::loadLights(const std::vector<Light>& lights)
 	{
 		for (size_t i = 0; i < GLSL_MAX_LIGHTS; ++i) {
 			if (i < lights.size()) {
-				glUniform3f(m_LocLightPos[i], lights[i].position[0], lights[i].position[1], lights[i].position[2]);
-				glUniform3f(m_LocLightColor[i], lights[i].color[0], lights[i].color[1], lights[i].color[2]);
+				glProgramUniform3f(m_ID, m_LocLightPos[i], lights[i].position[0], lights[i].position[1], lights[i].position[2]);
+				glProgramUniform3f(m_ID, m_LocLightColor[i], lights[i].color[0], lights[i].color[1], lights[i].color[2]);
 			}
 			else {
-				glUniform3f(m_LocLightPos[i], 0.0f, 0.0f, 0.0f);
-				glUniform3f(m_LocLightColor[i], 0.0f, 0.0f, 0.0f);
+				glProgramUniform3f(m_ID, m_LocLightPos[i], 0.0f, 0.0f, 0.0f);
+				glProgramUniform3f(m_ID, m_LocLightColor[i], 0.0f, 0.0f, 0.0f);
 			}
 		}
 	}

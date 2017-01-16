@@ -17,7 +17,7 @@ namespace sloth { namespace graphics {
 		m_inst = nullptr;
 	}
 
-	void TextureManager2D::loadTexture(const unsigned int texID, const GLchar * file, GLboolean alpha, GLuint mipmap)
+	void TextureManager2D::loadTexture(const unsigned int texID, const char *file, bool alpha, unsigned int mipmap)
 	{
 		if (m_texID.find(texID) != m_texID.end())
 			unloadTexture(texID);
@@ -82,7 +82,7 @@ namespace sloth { namespace graphics {
 
 	bool TextureManager2D::activateTexUnit(const unsigned int index)
 	{
-		glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0 + index);
 		return true;
 	}
 
