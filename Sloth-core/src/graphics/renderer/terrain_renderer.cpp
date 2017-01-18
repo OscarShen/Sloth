@@ -1,19 +1,14 @@
 #include "terrain_renderer.h"
 namespace sloth { namespace graphics {
 
-	TerrainRenderer::TerrainRenderer()
-	{
-		m_Shader = TerrainShader::inst();
-	}
-
 	TerrainRenderer::TerrainRenderer(glm::mat4 & projection)
 	{
-		m_Shader = TerrainShader::inst();
-		m_Shader->loadProjectionMatrix(projection);
+		TerrainShader::inst()->loadProjectionMatrix(projection);
 	}
 
 	void TerrainRenderer::render(std::vector<Terrain>& terrains)
 	{
+		TerrainShader::inst()->use();
 		for (auto it = terrains.begin(); it != terrains.end(); ++it) {
 			prepareTerrain(*it);
 			loadModelMatrix(*it);
@@ -35,7 +30,7 @@ namespace sloth { namespace graphics {
 	void TerrainRenderer::loadModelMatrix(Terrain & terrain)
 	{
 		glm::mat4 model = util::Maths::createModelMatrix(glm::vec3(terrain.getX(), 0, terrain.getZ()), 0.0f, 0.0f, 0.0f, 1.0f);
-		m_Shader->loadModelMatrix(model);
+		TerrainShader::inst()->loadModelMatrix(model);
 	}
 
 } }

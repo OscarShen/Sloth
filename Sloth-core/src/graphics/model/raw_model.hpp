@@ -12,6 +12,7 @@ namespace sloth { namespace graphics {
 		unsigned int m_VertexCount;
 
 	public:
+		constexpr RawModel() :m_VAO(0), m_VertexCount(0) {}
 		constexpr RawModel(unsigned int vaoID, unsigned int vertexCount) noexcept
 			:m_VAO(vaoID), m_VertexCount(vertexCount) {}
 		~RawModel() {}

@@ -13,6 +13,8 @@
 #include "src/graphics/model/textured_model.hpp"
 #include "src/graphics/entities/entity.h"
 #include "src/graphics/renderer/static_renderer.h"
+#include "src/graphics/renderer/terrain_renderer.h"
+#include "src/graphics/renderer/multiple_renderer.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -25,7 +27,8 @@ using namespace util;
 enum Texture
 {
 	WOOD = 1,
-	WHITE = 0
+	WHITE = 0,
+	GRASS = 2
 };
 
 enum Shader
@@ -36,47 +39,47 @@ enum Shader
 
 int main()
 {
-	SlothWindow window("Sloth!", 800, 600);
+	SlothWindow window("Sloth!", SCREEN_WIDTH, SCREEN_HEIGHT);
 	Camera camera;
-
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	TextureManager2D * tm = TextureManager2D::inst();
-	StaticShader *shader = StaticShader::inst();
-
 	Loader loader;
-	ModelData *modeldata = ModelLoader::loadModel("res/dragon.obj");
+	Timer timer;
+	TextureManager2D * tm = TextureManager2D::inst();
+	TerrainShader *terrainShader = TerrainShader::inst();
+	MultipleRenderer renderer;
+
+	tm->loadTexture(Texture::GRASS, "res/grass.png");
 	tm->loadTexture(Texture::WHITE, "res/white.jpg");
 
-	TexturedModel textured_model(loader.loadToVAO(modeldata), Texture::WHITE);
+	RawModel raw_dragon = ModelLoader::loadModel("res/dragon.obj", loader);
+	Entity dragon(TexturedModel(raw_dragon, Texture::WHITE), glm::vec3(0.0f),
+		0.0f, 0.0f, 0.0f, 1.0f);
 
-	Entity entity(textured_model, glm::vec3(0.0f), 0.0f, 0.0f, 0.0f, 1.0f);
-	StaticRenderer renderer(shader);
-	
-	ModelLoader::releaseModelData(modeldata);
-	shader->laodProjectionMatrix(glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f));
+	//std::vector<Terrain> terrains;
+	//terrains.push_back(Terrain(0, 0, Texture::GRASS, loader));
+	Terrain grassLand(0, 0, Texture::GRASS, loader);
 
-	std::vector<Light> lights;
-	lights.push_back(Light(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(1.0f)));
-	lights.push_back(Light(glm::vec3(-10.0f, -10.0f, -10.0f), glm::vec3(1.0f)));
-	shader->loadLights(lights);
+	//std::vector<Light> lights;
+	//lights.push_back(Light(glm::vec3(0.0f, 10000.0f, 0.0f), glm::vec3(1.0f)));
+	//terrainShader->loadLights(lights);
+
+	Light sun(glm::vec3(0.0f, 10000.0f, 0.0f), glm::vec3(1.0f));
 
 	glEnable(GL_DEPTH_TEST);
-	Timer timer;
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
 	while (window.isRunning())
 	{
 		window.clear();
 #pragma region USER
-		shader->use();
-		shader->loadViewMatrix(camera);
-		entity.increaseRotation(0.0f, 2.0f / timer.getFPS(), 0.0f);
-
-		renderer.render(entity);
-
+		renderer.submitEntity(dragon);
+		renderer.submitTerrain(grassLand);
+		renderer.render(sun, camera);
 #pragma endregion
 		timer.calculateFPS();
 		graphics::Input::process(&window, &camera, static_cast<float>(timer.getDeltaFrameTime()));
 		window.update();
-		if (timer.getFramerCounter() % 60 == 0)
+		if (timer.getFramerCounter() % 2000 == 0)
 			printf("%d fps\n", timer.getFPS());
 	}
 }

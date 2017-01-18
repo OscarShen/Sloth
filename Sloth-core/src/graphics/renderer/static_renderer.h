@@ -14,11 +14,9 @@ namespace sloth { namespace graphics {
 
 	class StaticRenderer
 	{
-	private:
-		StaticShader *m_Shader;
-
 	public:
-		StaticRenderer(StaticShader *shader);
+		StaticRenderer() {}
+		StaticRenderer(glm::mat4 &projection);
 
 		void render(Entity &entity);
 		void render(std::map<TexturedModel, std::vector<Entity>> &entities);

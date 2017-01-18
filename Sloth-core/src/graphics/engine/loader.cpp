@@ -4,17 +4,12 @@ namespace sloth { namespace graphics {
 
 	Loader::~Loader()
 	{
-		for (size_t i = 0; i < m_Vaos.size(); ++i) {
-			delete m_Vaos[i];
-		}
+		cleanUp();
 	}
 
-	RawModel Loader::loadToVAO(ModelData * modeldata)
-	{
-		return loadToVAO(modeldata->positions, modeldata->texCoords, modeldata->normals, modeldata->indices);
-	}
-
-	RawModel Loader::loadToVAO(std::vector<glm::vec3>& positions, std::vector<glm::vec2>& texCoords, std::vector<glm::vec3>& normals, std::vector<unsigned int>& indices)
+	RawModel Loader::loadToVAO(std::vector<glm::vec3>& positions,
+		std::vector<glm::vec2>& texCoords, std::vector<glm::vec3>& normals,
+		std::vector<unsigned int>& indices)
 	{
 		VertexArray *va = createVAO();
 		va->addBuffer(new Buffer(&positions[0].x, positions.size() * 3, 3), 0);
@@ -22,6 +17,14 @@ namespace sloth { namespace graphics {
 		va->addBuffer(new Buffer(&normals[0].x, normals.size() * 3, 3), 2);
 		va->addElementBuffer(new IndexBuffer(&indices[0], indices.size()));
 		return RawModel(va->getVaoID(), indices.size());
+	}
+
+	void Loader::cleanUp()
+	{
+		for (size_t i = 0; i < m_Vaos.size(); ++i) {
+			delete m_Vaos[i];
+		}
+		m_Vaos.clear();
 	}
 
 	VertexArray* Loader::createVAO()

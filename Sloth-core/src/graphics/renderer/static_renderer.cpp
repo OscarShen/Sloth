@@ -2,11 +2,14 @@
 
 namespace sloth { namespace graphics {
 
-	StaticRenderer::StaticRenderer(StaticShader * shader)
-		:m_Shader(shader) {}
+	StaticRenderer::StaticRenderer(glm::mat4 & projection)
+	{
+		StaticShader::inst()->loadProjectionMatrix(projection);
+	}
 
 	void StaticRenderer::render(Entity & entity)
 	{
+		StaticShader::inst()->use();
 		prepareTexturedModel(entity.getTexturedModel());
 		prepareInstance(entity);
 		glDrawElements(GL_TRIANGLES, entity.getTexturedModel().getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
@@ -15,6 +18,7 @@ namespace sloth { namespace graphics {
 
 	void StaticRenderer::render(std::map<TexturedModel, std::vector<Entity>> &entities)
 	{
+		StaticShader::inst()->use();
 		for (auto it = entities.begin(); it != entities.end(); ++it) {
 			prepareTexturedModel(it->first);
 			std::vector<Entity> &batch = entities[it->first];
@@ -38,9 +42,9 @@ namespace sloth { namespace graphics {
 	void StaticRenderer::prepareInstance(Entity & entity)
 	{
 		auto texture = entity.getTexturedModel().getTexture();
-		m_Shader->loadModelMatrix(util::Maths::createModelMatrix(entity.getPosition(), entity.getRotX(),
-			entity.getRotY(), entity.getRotZ(), entity.getScale()));
-		m_Shader->loadShineVariable(texture->getShininess(), texture->getReflectivity());
+		StaticShader::inst()->loadModelMatrix(util::Maths::createModelMatrix(entity.getPosition(),
+			entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale()));
+		StaticShader::inst()->loadShineVariable(texture->getShininess(), texture->getReflectivity());
 	}
 
 } }

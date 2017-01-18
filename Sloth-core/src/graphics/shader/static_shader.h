@@ -8,10 +8,7 @@
 #include <vector>
 #include "../entities/light.hpp"
 #include "../camera/camera.h"
-
-#define GLSL_MAX_LIGHTS 4
-#define STATIC_VERTEX_FILE "src/shader/basic.vs"
-#define STATIC_FRAGMENT_FILE "src/shader/basic.fs"
+#include "../setup/macro.h"
 
 namespace sloth { namespace graphics {
 
@@ -31,11 +28,12 @@ namespace sloth { namespace graphics {
 	public:
 		static StaticShader *inst();
 		~StaticShader();
-		void loadModelMatrix(const glm::mat4 &model);
-		void loadViewMatrix(const Camera &camera);
-		void laodProjectionMatrix(const glm::mat4 &projection);
-		void loadLights(const std::vector<Light> &lights);
-		void loadShineVariable(const float shininess, const float reflectivity);
+		virtual void loadModelMatrix(const glm::mat4 &model) override;
+		virtual void loadViewMatrix(const Camera &camera) override;
+		virtual void loadProjectionMatrix(const glm::mat4 &projection) override;
+		virtual void loadLight(const Light &light) override;
+		virtual void loadLights(const std::vector<Light> &lights) override;
+		virtual void loadShineVariable(const float shininess, const float reflectivity) override;
 
 	private:
 		StaticShader();

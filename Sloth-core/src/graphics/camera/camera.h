@@ -11,7 +11,7 @@
 #define CAMERA_INIT_PITCH	0.0f
 #define CAMERA_INIT_YAW		-90.0f
 #define MOUSE_SENSITIVITY	2.0f
-#define MOVE_SPEED			5.0f
+#define MOVE_SPEED			200.0f
 
 namespace sloth { namespace graphics {
 

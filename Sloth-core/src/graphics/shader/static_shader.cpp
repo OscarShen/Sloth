@@ -4,7 +4,6 @@ namespace sloth { namespace graphics {
 
 	StaticShader* StaticShader::m_inst(nullptr);
 
-
 	StaticShader::StaticShader()
 		:Shader(STATIC_VERTEX_FILE, STATIC_FRAGMENT_FILE)
 	{
@@ -35,9 +34,19 @@ namespace sloth { namespace graphics {
 		glProgramUniformMatrix4fv(m_ID, m_LocView, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
 	}
 
-	void StaticShader::laodProjectionMatrix(const glm::mat4 & projection)
+	void StaticShader::loadProjectionMatrix(const glm::mat4 & projection)
 	{
 		glProgramUniformMatrix4fv(m_ID, m_LocProjection, 1, GL_FALSE, glm::value_ptr(projection));
+	}
+
+	void StaticShader::loadLight(const Light & light)
+	{
+		glProgramUniform3f(m_ID, m_LocLightPos[0], light.position[0], light.position[1], light.position[2]);
+		glProgramUniform3f(m_ID, m_LocLightColor[0], light.color[0], light.color[1], light.color[2]);
+		for (int i = 1; i < GLSL_MAX_LIGHTS; ++i) {
+			glProgramUniform3f(m_ID, m_LocLightPos[i], 0.0f, 0.0f, 0.0f);
+			glProgramUniform3f(m_ID, m_LocLightColor[i], 0.0f, 0.0f, 0.0f);
+		}
 	}
 
 	void StaticShader::loadLights(const std::vector<Light>& lights)

@@ -2,7 +2,7 @@
 
 namespace sloth { namespace graphics {
 	Terrain::Terrain(int gridX, int gridZ, unsigned int texID, Loader & loader)
-		:m_X(gridX), m_Z(gridZ), m_TexID(texID)
+		:m_X(gridX * TERRAIN_SIZE), m_Z(gridZ * TERRAIN_SIZE), m_TexID(texID)
 	{
 		m_Model = generateTerrain(loader);
 	}
@@ -16,16 +16,18 @@ namespace sloth { namespace graphics {
 		std::vector<unsigned int> indices(
 			6 * (TERRAIN_VERTEX_COUNT - 1) * (TERRAIN_VERTEX_COUNT - 1), 0);
 		int vertexPointer = 0;
+		float raw_vertex_width = static_cast<float>(TERRAIN_SIZE) / (TERRAIN_VERTEX_COUNT - 1);
+		float raw_texCoord_width = 1.0f / (TERRAIN_VERTEX_COUNT - 1);
 		for (int i = 0; i < TERRAIN_VERTEX_COUNT; ++i) {
 			for (int j = 0; j < TERRAIN_VERTEX_COUNT; ++j) {
-				vertices[vertexPointer].x = static_cast<float>(j) / (TERRAIN_VERTEX_COUNT - 1) * TERRAIN_SIZE;
+				vertices[vertexPointer].x = j * raw_vertex_width;
 				//vertices[vertexPointer].y = 0.0f;
-				vertices[vertexPointer].z = static_cast<float>(i) / (TERRAIN_VERTEX_COUNT - 1) * TERRAIN_SIZE;
+				vertices[vertexPointer].z = i * raw_vertex_width;
 				//normals[vertexPointer].x = 0.0f;
 				normals[vertexPointer].y = 1.0f;
 				//normals[vertexPointer].z = 0.0f;
-				texCoords[vertexPointer].x = static_cast<float>(j) / (TERRAIN_VERTEX_COUNT - 1);
-				texCoords[vertexPointer].y = static_cast<float>(i) / (TERRAIN_VERTEX_COUNT - 1);
+				texCoords[vertexPointer].x = j * raw_texCoord_width;
+				texCoords[vertexPointer].y = i * raw_texCoord_width;
 				++vertexPointer;
 			}
 		}
@@ -34,7 +36,7 @@ namespace sloth { namespace graphics {
 			for (int gx = 0; gx < TERRAIN_VERTEX_COUNT - 1; ++gx) {
 				int topLeft = gz * TERRAIN_VERTEX_COUNT + gx;
 				int topRight = topLeft + 1;
-				int bottomLeft = (gz + 1) *TERRAIN_VERTEX_COUNT + gx;
+				int bottomLeft = (gz + 1) * TERRAIN_VERTEX_COUNT + gx;
 				int bottomRight = bottomLeft + 1;
 				indices[pointer++] = topLeft;
 				indices[pointer++] = bottomLeft;

@@ -17,8 +17,8 @@ namespace sloth { namespace graphics {
 		int m_LocProjection;
 		int *m_LocLightPos;
 		int *m_LocLightColor;
-		float m_LocShininess;
-		float m_LocReflectivity;
+		int m_LocShininess;
+		int m_LocReflectivity;
 
 	public:
 		~TerrainShader();
@@ -26,6 +26,7 @@ namespace sloth { namespace graphics {
 		virtual void loadModelMatrix(const glm::mat4 &model) override;
 		virtual void loadViewMatrix(const Camera &camera) override;
 		virtual void loadProjectionMatrix(const glm::mat4 &projection) override;
+		virtual void loadLight(const Light &light) override;
 		virtual void loadLights(const std::vector<Light> &lights) override;
 		virtual void loadShineVariable(const float shininess, const float reflectivity) override;
 

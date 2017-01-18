@@ -14,10 +14,8 @@ namespace sloth { namespace graphics {
 
 	class TerrainRenderer
 	{
-	private:
-		TerrainShader *m_Shader;
 	public:
-		TerrainRenderer();
+		TerrainRenderer() {}
 		TerrainRenderer(glm::mat4 &projection);
 		~TerrainRenderer() {}
 

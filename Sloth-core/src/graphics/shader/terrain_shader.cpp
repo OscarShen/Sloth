@@ -39,9 +39,19 @@ namespace sloth { namespace graphics {
 		glProgramUniformMatrix4fv(m_ID, m_LocProjection, 1, GL_FALSE, glm::value_ptr(projection));
 	}
 
+	void TerrainShader::loadLight(const Light & light)
+	{
+		glProgramUniform3f(m_ID, m_LocLightPos[0], light.position[0], light.position[1], light.position[2]);
+		glProgramUniform3f(m_ID, m_LocLightColor[0], light.color[0], light.color[1], light.color[2]);
+		for (int i = 1; i < GLSL_MAX_LIGHTS; ++i) {
+			glProgramUniform3f(m_ID, m_LocLightPos[i], 0.0f, 0.0f, 0.0f);
+			glProgramUniform3f(m_ID, m_LocLightColor[i], 0.0f, 0.0f, 0.0f);
+		}
+	}
+
 	void TerrainShader::loadLights(const std::vector<Light>& lights)
 	{
-		for (size_t i = 0; i < GLSL_MAX_LIGHTS; ++i) {
+		for (int i = 0; i < GLSL_MAX_LIGHTS; ++i) {
 			if (i < lights.size()) {
 				glProgramUniform3f(m_ID, m_LocLightPos[i], lights[i].position[0], lights[i].position[1], lights[i].position[2]);
 				glProgramUniform3f(m_ID, m_LocLightColor[i], lights[i].color[0], lights[i].color[1], lights[i].color[2]);

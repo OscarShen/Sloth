@@ -2,7 +2,7 @@
 
 
 namespace sloth { namespace graphics {
-	ModelData * ModelLoader::loadModel(const char * path)
+	RawModel ModelLoader::loadModel(const char * path, Loader &loader)
 	{
 		ModelData *modeldata = new ModelData();
 		// Read file via Assimp
@@ -13,15 +13,11 @@ namespace sloth { namespace graphics {
 		{
 			// TODO: Add to log!
 			std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
-			return nullptr;
+			return RawModel();
 		}
 		processNode(modeldata, scene->mRootNode, scene);
-		return modeldata;
-	}
-
-	void ModelLoader::releaseModelData(ModelData * modeldata)
-	{
-		delete modeldata;
+		return loader.loadToVAO(modeldata->positions, modeldata->texCoords,
+			modeldata->normals, modeldata->indices);
 	}
 
 	void ModelLoader::processNode(ModelData *modeldata, aiNode * node, const aiScene * scene)

@@ -9,14 +9,18 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <vector>
 
 #include <GL/glew.h>
 
 #include "../../utils/string_util.h"
+#include "../entities/light.hpp"
+#include "../camera/camera.h"
 
 namespace sloth { namespace graphics {
 
-	class ShaderManager;
+	class Camera;
+	struct Light;
 	class Shader
 	{
 	protected:
@@ -35,6 +39,14 @@ namespace sloth { namespace graphics {
 		void loadMatrix4(const char *name, const glm::mat4 &matrix);
 
 		void setVertexAttrib4f(unsigned int index, float x0, float x1, float x2, float x3);
+
+		virtual void loadModelMatrix(const glm::mat4 &model) {}
+		virtual void loadViewMatrix(const Camera &camera) {}
+		virtual void loadProjectionMatrix(const glm::mat4 &projection) {}
+		virtual void loadLight(const Light &light) {}
+		virtual void loadLights(const std::vector<Light> &lights) {}
+		virtual void loadShineVariable(const float shininess, const float reflectivity) {}
+
 
 		inline unsigned int getID() const { return this->m_ID; }
 

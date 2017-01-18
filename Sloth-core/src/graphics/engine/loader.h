@@ -10,6 +10,7 @@
 #include "../buffers/vertex_array.h"
 #include "../model/raw_model.hpp"
 #include "../model/model_data.hpp"
+#include "../texture/texture_manager_2d.h"
 
 namespace sloth { namespace graphics {
 
@@ -17,13 +18,10 @@ namespace sloth { namespace graphics {
 	{
 	private:
 		std::vector<VertexArray*> m_Vaos;
-		std::vector<unsigned int> m_Textures;
 
 	public:
 		Loader() {}
 		~Loader();
-
-		RawModel loadToVAO(ModelData *modeldata);
 
 		RawModel loadToVAO(
 			std::vector<glm::vec3> &positions,
@@ -31,6 +29,7 @@ namespace sloth { namespace graphics {
 			std::vector<glm::vec3> &normals,
 			std::vector<unsigned int> &indices
 		);
+		void cleanUp();
 
 	private:
 		VertexArray* createVAO();

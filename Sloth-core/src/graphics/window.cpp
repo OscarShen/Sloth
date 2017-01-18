@@ -10,8 +10,10 @@ namespace sloth { namespace graphics {
 			// TODO : Add to log!
 			std::cout << "Initial failed!" << std::endl;
 		}
-		else
+		else {
 			m_IsRunning = true;
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		}
 	}
 
 	SlothWindow::~SlothWindow()

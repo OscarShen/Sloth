@@ -3,11 +3,9 @@
 #define SLOTH_TERRAIN_H_
 #include "../model/raw_model.hpp"
 #include "../engine/loader.h"
+#include "../setup/macro.h"
 
 #include <vector>
-
-#define TERRAIN_SIZE 800.0f
-#define TERRAIN_VERTEX_COUNT 128
 
 namespace sloth { namespace graphics {
 
