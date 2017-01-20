@@ -19,4 +19,25 @@
 #define PERSPECTIVE_NEAR_PLANE 0.1f
 #define PERSPECTIVE_FAR_PLANE 1000.0f
 
+#define CAMERA_INIT_POS		glm::vec3(0.0f,5.0f,0.0f)
+#define CAMERA_INIT_UP		glm::vec3(0.0f,1.0f,0.0f)
+#define CAMERA_INIT_FRONT	glm::vec3(0.0f,0.0f,-1.0f)
+#define CAMERA_INIT_RIGHT	glm::normalize(glm::cross(CAMERA_INIT_UP, CAMERA_INIT_POS + CAMERA_INIT_FRONT))
+#define CAMERA_INIT_PITCH	0.0f
+#define CAMERA_INIT_YAW		-90.0f
+#define MOUSE_SENSITIVITY	2.0f
+#define MOVE_SPEED			20.0f
+
+#define FOG_COLOR_RED 0.5f
+#define FOG_COLOR_BLUE 0.5f
+#define FOG_COLOR_GREEN 0.5f
+
+// input devices of keyboard and mouse
+#define MAX_KEYS 1024
+#define MAX_MOUSE_BOTTON 32
+
+#define DEFUALT_CLEAR_COLOR_RED 0.5f
+#define DEFUALT_CLEAR_COLOR_GREEN 0.5f
+#define DEFUALT_CLEAR_COLOR_BLUE 0.5f
+
 #endif // !SLOTH_MACRO_H_

@@ -51,7 +51,7 @@ namespace sloth { namespace graphics {
 
 	void TerrainShader::loadLights(const std::vector<Light>& lights)
 	{
-		for (int i = 0; i < GLSL_MAX_LIGHTS; ++i) {
+		for (size_t i = 0; i < GLSL_MAX_LIGHTS; ++i) {
 			if (i < lights.size()) {
 				glProgramUniform3f(m_ID, m_LocLightPos[i], lights[i].position[0], lights[i].position[1], lights[i].position[2]);
 				glProgramUniform3f(m_ID, m_LocLightColor[i], lights[i].color[0], lights[i].color[1], lights[i].color[2]);
@@ -69,6 +69,11 @@ namespace sloth { namespace graphics {
 		glProgramUniform1f(m_ID, m_LocReflectivity, reflectivity);
 	}
 
+	void TerrainShader::loadSkyColor(const float r, const float g, const float b)
+	{
+		glProgramUniform3f(m_ID, m_LocSkyColor, r, g, b);
+	}
+
 	void TerrainShader::getAllUniformLocation()
 	{
 		m_LocModel = glGetUniformLocation(m_ID, "model");
@@ -84,6 +89,6 @@ namespace sloth { namespace graphics {
 			m_LocLightPos[i] = glGetUniformLocation(m_ID, (std::string("lightPosition[") + c + "]").c_str());
 			m_LocLightColor[i] = glGetUniformLocation(m_ID, (std::string("lightColor[") + c + "]").c_str());
 		}
-
+		m_LocSkyColor = glGetUniformLocation(m_ID, "skyColor");
 	}
 } }

@@ -32,9 +32,14 @@ namespace sloth { namespace graphics {
 
 	void StaticRenderer::prepareTexturedModel(const TexturedModel & model)
 	{
-		RawModel rawModel = model.getRawModel();
-		glBindVertexArray(rawModel.getVaoID());
 		TextureManager2D *tm = TextureManager2D::inst();
+		RawModel rawModel = model.getRawModel();
+		Texture2D *texture = tm->getTexture(model.getTexID());
+		glBindVertexArray(rawModel.getVaoID());
+		if (texture->hasTransparency()) {
+			disable_culling();
+		}
+		StaticShader::inst()->loadUseFakeLighting(texture->isUseFakeLighting());
 		tm->activateTexUnit(0);
 		tm->bindTexture(model.getTexID());
 	}
@@ -45,6 +50,12 @@ namespace sloth { namespace graphics {
 		StaticShader::inst()->loadModelMatrix(util::Maths::createModelMatrix(entity.getPosition(),
 			entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale()));
 		StaticShader::inst()->loadShineVariable(texture->getShininess(), texture->getReflectivity());
+	}
+
+	void StaticRenderer::unbindTexturedModel()
+	{
+		glBindVertexArray(0);
+		enable_culling();
 	}
 
 } }

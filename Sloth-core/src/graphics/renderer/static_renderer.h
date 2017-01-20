@@ -10,6 +10,7 @@
 #include "../entities/entity.h"
 #include "../texture/texture_manager_2d.h"
 #include "../../utils/maths.h"
+#include "../setup/global_function.h"
 namespace sloth { namespace graphics {
 
 	class StaticRenderer
@@ -25,6 +26,8 @@ namespace sloth { namespace graphics {
 		void prepareTexturedModel(const TexturedModel &model);
 
 		void prepareInstance(Entity &entity);
+
+		void unbindTexturedModel();
 	};
 
 } }

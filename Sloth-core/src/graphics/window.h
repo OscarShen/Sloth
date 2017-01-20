@@ -8,9 +8,6 @@
 #include "info/info.h"
 namespace sloth { namespace graphics {
 
-#define MAX_KEYS 1024
-#define MAX_MOUSE_BOTTON 32
-
 	class SlothWindow
 	{
 	private:

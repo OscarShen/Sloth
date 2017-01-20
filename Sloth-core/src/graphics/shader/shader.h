@@ -46,6 +46,7 @@ namespace sloth { namespace graphics {
 		virtual void loadLight(const Light &light) {}
 		virtual void loadLights(const std::vector<Light> &lights) {}
 		virtual void loadShineVariable(const float shininess, const float reflectivity) {}
+		virtual void loadUseFakeLighting(const bool useFake) {}
 
 
 		inline unsigned int getID() const { return this->m_ID; }

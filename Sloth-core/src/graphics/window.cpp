@@ -12,7 +12,7 @@ namespace sloth { namespace graphics {
 		}
 		else {
 			m_IsRunning = true;
-			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			glClearColor(DEFUALT_CLEAR_COLOR_RED, DEFUALT_CLEAR_COLOR_GREEN, DEFUALT_CLEAR_COLOR_BLUE, 1.0f);
 		}
 	}
 

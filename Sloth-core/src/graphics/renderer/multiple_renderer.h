@@ -5,6 +5,7 @@
 #include "../renderer/static_renderer.h"
 #include "../renderer/terrain_renderer.h"
 #include "../model/textured_model.hpp"
+#include "../setup/global_function.h"
 #include <map>
 #include <vector>
 

@@ -7,6 +7,7 @@ uniform vec3 lightPosition[MAX_LIGHT];
 uniform vec3 lightColor[MAX_LIGHT];
 uniform float shininess = 32.0f;
 uniform float reflectivity = 1.0f;
+uniform vec3 skyColor;
 
 out vec4 frag_out;
 
@@ -18,6 +19,7 @@ in DATA {
 
 in vec3 worldPosition;
 in vec3 toCameraVector;
+in float visibility;
 
 void main()
 {
@@ -42,4 +44,5 @@ void main()
 	//frag_out = vec4(totalDiffuse, 1.0f) * texture(tex0, fs_in.texCoord)  + vec4(totalSpecular, 1.0f);
 	//frag_out = vec4(n_Normal, 1.0f);
 	frag_out = vec4(totalDiffuse, 1.0f) * texture(tex0, fs_in.texCoord);
+	frag_out = mix(vec4(skyColor, 1.0f), frag_out, visibility);
 }

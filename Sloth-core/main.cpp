@@ -28,7 +28,10 @@ enum Texture
 {
 	WOOD = 1,
 	WHITE = 0,
-	GRASS = 2
+	GRASS = 2,
+	TREE = 3,
+	FERN = 4,
+	GRASS_TEXTURE = 5
 };
 
 enum Shader
@@ -48,21 +51,31 @@ int main()
 	MultipleRenderer renderer;
 
 	tm->loadTexture(Texture::GRASS, "res/grass.png");
-	tm->loadTexture(Texture::WHITE, "res/white.jpg");
+	tm->loadTexture(Texture::TREE, "res/tree.png");
+	tm->loadTexture(Texture::FERN, "res/fern.png", true);
+	tm->getTexture(Texture::FERN)->setTransparency(true);
+	tm->loadTexture(Texture::GRASS_TEXTURE, "res/grassTexture.png", true);
+	tm->getTexture(Texture::GRASS_TEXTURE)->setUseFakeLighting(true);
+	tm->getTexture(Texture::GRASS_TEXTURE)->setReflectivity(false);
 
-	RawModel raw_dragon = ModelLoader::loadModel("res/dragon.obj", loader);
-	Entity dragon(TexturedModel(raw_dragon, Texture::WHITE), glm::vec3(0.0f),
-		0.0f, 0.0f, 0.0f, 1.0f);
-
-	//std::vector<Terrain> terrains;
-	//terrains.push_back(Terrain(0, 0, Texture::GRASS, loader));
 	Terrain grassLand(0, 0, Texture::GRASS, loader);
+	TexturedModel tree(ModelLoader::loadModel("res/tree.obj", loader), Texture::TREE);
+	TexturedModel fern(ModelLoader::loadModel("res/fern.obj", loader), Texture::FERN);
+	TexturedModel grassModel(ModelLoader::loadModel("res/grassModel.obj", loader), Texture::GRASS_TEXTURE);
 
-	//std::vector<Light> lights;
-	//lights.push_back(Light(glm::vec3(0.0f, 10000.0f, 0.0f), glm::vec3(1.0f)));
-	//terrainShader->loadLights(lights);
+	std::vector<Entity> entities;
+	float p = 1.0f / 800.0f;
+	for (int i = 0; i < 500; ++i) {
+		int r1 = rand() % 800, r2 = rand() % 800;
+		entities.push_back(Entity(tree, glm::vec3(r1, 0, r2), 0, 0, 0, 3));
+	}
+	for (int i = 0; i < 200; ++i) {
+		int r1 = rand() % 800, r2 = rand() % 800, r3 = rand() % 800, r4 = rand() % 800;
+		entities.push_back(Entity(fern, glm::vec3(r1, 0, r2), 0, 0, 0, 1));
+		entities.push_back(Entity(grassModel, glm::vec3(r3, 0, r4), 0, 0, 0, 2));
+	}
 
-	Light sun(glm::vec3(0.0f, 10000.0f, 0.0f), glm::vec3(1.0f));
+	Light sun(glm::vec3(10000.0f, 10000.0f, 10000.0f), glm::vec3(1.2f));
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -72,14 +85,16 @@ int main()
 	{
 		window.clear();
 #pragma region USER
-		renderer.submitEntity(dragon);
 		renderer.submitTerrain(grassLand);
+		for (size_t i = 0; i < entities.size(); ++i) {
+			renderer.submitEntity(entities[i]);
+		}
 		renderer.render(sun, camera);
 #pragma endregion
 		timer.calculateFPS();
 		graphics::Input::process(&window, &camera, static_cast<float>(timer.getDeltaFrameTime()));
 		window.update();
-		if (timer.getFramerCounter() % 2000 == 0)
+		if (timer.getFramerCounter() % 1000 == 0)
 			printf("%d fps\n", timer.getFPS());
 	}
 }

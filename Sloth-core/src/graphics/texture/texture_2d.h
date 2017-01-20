@@ -22,12 +22,15 @@ namespace sloth { namespace graphics {
 
 		float m_Shininess; // Shaniness
 		float m_Reflectivity; // Reflectivity
+
+		bool m_HasTransparency = false;
+		bool m_UseFakeLighting = false;
 	public:
 		// Constructor (sets default texture modes)
 		constexpr Texture2D()
 			:m_ID(0), m_Width(0), m_Height(0), m_InternalFormat(GL_RGB8), m_ImageFormat(GL_RGB), m_Mipmap(0),
 			m_Wrap_S(GL_REPEAT), m_Wrap_T(GL_REPEAT), m_Filter_Min(GL_LINEAR), m_Filter_Max(GL_LINEAR),
-			m_Shininess(32.0f), m_Reflectivity(1.0f) {}
+			m_Shininess(128.0f), m_Reflectivity(1.0f) {}
 
 		void generate(GLuint width, GLuint height, unsigned char* data, GLuint mipmap = 0);
 		// Binds the texture as the current active GL_TEXTURE_2D texture object
@@ -46,7 +49,8 @@ namespace sloth { namespace graphics {
 		inline float getReflectivity() const { return m_Reflectivity; }
 		inline GLint getFilterMinParam() const { return m_Filter_Min; }
 		inline GLint getFilterMagParam() const { return m_Filter_Max; }
-
+		inline bool hasTransparency() const { return m_HasTransparency; }
+		inline bool isUseFakeLighting() const { return m_UseFakeLighting; }
 
 		void setWrapS(GLint param);
 		void setWrapT(GLint param);
@@ -54,7 +58,8 @@ namespace sloth { namespace graphics {
 		void setFilterMag(GLint param);
 		void setShininess(float shininess) { m_Shininess = shininess; }
 		void setReflectivity(float reflectivity) { m_Reflectivity = reflectivity; }
-
+		void setTransparency(bool hasTransparency) { m_HasTransparency = hasTransparency; }
+		void setUseFakeLighting(bool useFakeLighting) { m_UseFakeLighting = useFakeLighting; }
 
 		friend TextureManager2D;
 	};

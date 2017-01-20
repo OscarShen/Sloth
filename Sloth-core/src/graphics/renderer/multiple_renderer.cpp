@@ -4,6 +4,7 @@ namespace sloth { namespace graphics {
 
 	MultipleRenderer::MultipleRenderer()
 	{
+		enable_culling();
 		auto &&projection = glm::perspective(PERSPECTIVE_FOV, PERSPECTIVE_ASPECT,
 			PERSPECTIVE_NEAR_PLANE, PERSPECTIVE_FAR_PLANE);
 		m_StaticRenderer = new StaticRenderer(projection);
@@ -22,10 +23,13 @@ namespace sloth { namespace graphics {
 		staticShader->loadLight(sun);
 		staticShader->loadViewMatrix(camera);
 		m_StaticRenderer->render(m_Entities);
+		staticShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
 		auto terrainShader = TerrainShader::inst();
 		terrainShader->loadLight(sun);
 		terrainShader->loadViewMatrix(camera);
 		m_TerrainRenderer->render(m_Terrains);
+		terrainShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
+		// Clear up to avoid memory overflow, we will submit every entity per frame.
 		m_Entities.clear();
 		m_Terrains.clear();
 	}

@@ -26,6 +26,7 @@ namespace sloth { namespace graphics {
 		default:
 			break;
 		}
+		//m_Position.y = 5.0f;
 	}
 
 	void Camera::do_mouse(double xOffSet, double yOffSet)
