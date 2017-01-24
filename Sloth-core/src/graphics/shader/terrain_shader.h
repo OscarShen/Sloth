@@ -20,6 +20,12 @@ namespace sloth { namespace graphics {
 		int m_LocShininess;
 		int m_LocReflectivity;
 		int m_LocSkyColor;
+		int m_LocBackgroundTexture;
+		int m_LocRTexture;
+		int m_LocGTexture;
+		int m_LocBTexture;
+		int m_LocBlendMapTexture;
+
 
 	public:
 		~TerrainShader();
@@ -31,6 +37,7 @@ namespace sloth { namespace graphics {
 		virtual void loadLights(const std::vector<Light> &lights) override;
 		virtual void loadShineVariable(const float shininess, const float reflectivity) override;
 		virtual void loadSkyColor(const float r, const float g, const float b);
+		virtual void connectTextureUnits();
 
 	private:
 		TerrainShader();

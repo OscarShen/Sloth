@@ -1,7 +1,5 @@
 #version 450 core
 
-// One terrain texture to tile n times in a edge
-#define TERRAIN_TILE_NUMBLE 40.0f
 // In fog it has : visibility = exp(-(distance * density)^gradient)
 #define FOG_DENSITY 0.007f
 #define FOG_GRADIENT 1.5f
@@ -30,7 +28,7 @@ void main()
 	vec4 positionInViewSpace = view * vec4(worldPosition, 1.0f);
 	gl_Position = projection * positionInViewSpace;
 	vs_out.pos = position;
-	vs_out.texCoord = texCoord * TERRAIN_TILE_NUMBLE;
+	vs_out.texCoord = texCoord;
 	vs_out.normal = mat3(transpose(inverse(model))) * normal;
 	toCameraVector = (inverse(view) * vec4(0.0f,0.0f,0.0f,1.0f)).xyz - worldPosition;
 

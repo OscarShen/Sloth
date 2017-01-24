@@ -22,9 +22,11 @@ namespace sloth { namespace graphics {
 		void render(std::vector<Terrain> &terrain);
 
 	private:
-		void prepareTerrain(const Terrain &terrain);
+		void prepareTerrain(Terrain &terrain);
 
 		void loadModelMatrix(Terrain &terrain);
+
+		void bindMultiTerrain(Terrain &terrain);
 	};
 
 

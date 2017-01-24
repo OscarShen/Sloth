@@ -2,7 +2,13 @@
 
 namespace sloth { namespace graphics {
 	Terrain::Terrain(int gridX, int gridZ, unsigned int texID, Loader & loader)
-		:m_X(gridX * TERRAIN_SIZE), m_Z(gridZ * TERRAIN_SIZE), m_TexID(texID)
+		:m_X(gridX * TERRAIN_SIZE), m_Z(gridZ * TERRAIN_SIZE), m_Multi(MultiTerrain(texID, 0, 0, 0, 0))
+	{
+		m_Model = generateTerrain(loader);
+	}
+
+	Terrain::Terrain(int gridX, int gridZ, MultiTerrain m_Multi, Loader & loader)
+		: m_X(gridX * TERRAIN_SIZE), m_Z(gridZ * TERRAIN_SIZE), m_Multi(m_Multi)
 	{
 		m_Model = generateTerrain(loader);
 	}

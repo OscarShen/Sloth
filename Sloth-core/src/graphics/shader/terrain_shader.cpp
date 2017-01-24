@@ -74,6 +74,15 @@ namespace sloth { namespace graphics {
 		glProgramUniform3f(m_ID, m_LocSkyColor, r, g, b);
 	}
 
+	void TerrainShader::connectTextureUnits()
+	{
+		glProgramUniform1i(m_ID, m_LocBackgroundTexture, 0);
+		glProgramUniform1i(m_ID, m_LocRTexture, 1);
+		glProgramUniform1i(m_ID, m_LocGTexture, 2);
+		glProgramUniform1i(m_ID, m_LocBTexture, 3);
+		glProgramUniform1i(m_ID, m_LocBlendMapTexture, 4);
+	}
+
 	void TerrainShader::getAllUniformLocation()
 	{
 		m_LocModel = glGetUniformLocation(m_ID, "model");
@@ -90,5 +99,12 @@ namespace sloth { namespace graphics {
 			m_LocLightColor[i] = glGetUniformLocation(m_ID, (std::string("lightColor[") + c + "]").c_str());
 		}
 		m_LocSkyColor = glGetUniformLocation(m_ID, "skyColor");
+		m_LocBackgroundTexture = glGetUniformLocation(m_ID, "backgroundTexture");
+		m_LocRTexture = glGetUniformLocation(m_ID, "rTexture");
+		m_LocGTexture = glGetUniformLocation(m_ID, "gTexture");
+		m_LocBTexture = glGetUniformLocation(m_ID, "bTexture");
+		m_LocBlendMapTexture = glGetUniformLocation(m_ID, "blendMap");
 	}
+
+
 } }

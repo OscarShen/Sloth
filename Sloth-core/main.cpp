@@ -15,6 +15,7 @@
 #include "src/graphics/renderer/static_renderer.h"
 #include "src/graphics/renderer/terrain_renderer.h"
 #include "src/graphics/renderer/multiple_renderer.h"
+#include "src/graphics/terrain/multi_terrain.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -28,10 +29,16 @@ enum Texture
 {
 	WOOD = 1,
 	WHITE = 0,
-	GRASS = 2,
 	TREE = 3,
 	FERN = 4,
-	GRASS_TEXTURE = 5
+	GRASS_TEXTURE = 5,
+
+	BACKGROUND = 6,
+	RTEXTURE = 7,
+	GTEXTURE = 8,
+	BTEXTURE = 9,
+	BLENDMAP = 10,
+
 };
 
 enum Shader
@@ -50,7 +57,6 @@ int main()
 	TerrainShader *terrainShader = TerrainShader::inst();
 	MultipleRenderer renderer;
 
-	tm->loadTexture(Texture::GRASS, "res/grass.png");
 	tm->loadTexture(Texture::TREE, "res/tree.png");
 	tm->loadTexture(Texture::FERN, "res/fern.png", true);
 	tm->getTexture(Texture::FERN)->setTransparency(true);
@@ -58,10 +64,17 @@ int main()
 	tm->getTexture(Texture::GRASS_TEXTURE)->setUseFakeLighting(true);
 	tm->getTexture(Texture::GRASS_TEXTURE)->setReflectivity(false);
 
-	Terrain grassLand(0, 0, Texture::GRASS, loader);
+	tm->loadTexture(Texture::BACKGROUND, "res/grass.png");
+	tm->loadTexture(Texture::RTEXTURE, "res/rocks.png");
+	tm->loadTexture(Texture::GTEXTURE, "res/grassFlowers.png");
+	tm->loadTexture(Texture::BTEXTURE, "res/path.png");
+	tm->loadTexture(Texture::BLENDMAP, "res/blendMap.png");
+
+	Terrain terrain(0, 0, MultiTerrain(Texture::BACKGROUND, Texture::RTEXTURE, Texture::GTEXTURE, Texture::BTEXTURE, Texture::BLENDMAP), loader);
 	TexturedModel tree(ModelLoader::loadModel("res/tree.obj", loader), Texture::TREE);
 	TexturedModel fern(ModelLoader::loadModel("res/fern.obj", loader), Texture::FERN);
 	TexturedModel grassModel(ModelLoader::loadModel("res/grassModel.obj", loader), Texture::GRASS_TEXTURE);
+
 
 	std::vector<Entity> entities;
 	float p = 1.0f / 800.0f;
@@ -85,11 +98,15 @@ int main()
 	{
 		window.clear();
 #pragma region USER
-		renderer.submitTerrain(grassLand);
+glCheckError();
+		renderer.submitTerrain(terrain);
+glCheckError();
 		for (size_t i = 0; i < entities.size(); ++i) {
 			renderer.submitEntity(entities[i]);
+glCheckError();
 		}
 		renderer.render(sun, camera);
+glCheckError();
 #pragma endregion
 		timer.calculateFPS();
 		graphics::Input::process(&window, &camera, static_cast<float>(timer.getDeltaFrameTime()));
