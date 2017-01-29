@@ -1,5 +1,4 @@
 #include "texture_2d.h"
-#include "../../utils/error_check.h"
 
 namespace sloth { namespace graphics {
 

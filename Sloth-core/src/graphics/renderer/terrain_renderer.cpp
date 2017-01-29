@@ -1,5 +1,4 @@
 #include "terrain_renderer.h"
-#include "../../utils/error_check.h"
 namespace sloth { namespace graphics {
 
 	TerrainRenderer::TerrainRenderer(glm::mat4 & projection)
@@ -12,10 +11,8 @@ namespace sloth { namespace graphics {
 	void TerrainRenderer::render(std::vector<Terrain>& terrains)
 	{
 		TerrainShader::inst()->use();
-glCheckError();
 		for (auto it = terrains.begin(); it != terrains.end(); ++it) {
 			prepareTerrain(*it);
-glCheckError();
 			loadModelMatrix(*it);
 			glDrawElements(GL_TRIANGLES, it->getModel().getVertexCount(),
 				GL_UNSIGNED_INT, nullptr);
@@ -27,9 +24,7 @@ glCheckError();
 	{
 		RawModel rawModel = terrain.getModel();
 		glBindVertexArray(rawModel.getVaoID());
-glCheckError();
 		bindMultiTerrain(terrain);
-glCheckError();
 	}
 
 	void TerrainRenderer::loadModelMatrix(Terrain & terrain)

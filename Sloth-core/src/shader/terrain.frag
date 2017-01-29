@@ -1,7 +1,6 @@
 #version 450 core
 
 #define MAX_LIGHT 4
-uniform sampler2D tex0;
 // One terrain texture to tile n times in a edge
 #define TERRAIN_TILE_NUMBLE 40.0f
 
@@ -59,7 +58,7 @@ void main()
 		totalSpecular += spec * lightColor[i] * reflectivity * 0.3;
 	}
 	//frag_out = vec4(totalDiffuse, 1.0f) * texture(tex0, fs_in.texCoord)  + vec4(totalSpecular, 1.0f);
-	frag_out = vec4(totalDiffuse, 1.0f) * totalColor;// +¡¡vec4(totalSpecular, 1.0f)£»
-	//frag_out = mix(vec4(skyColor, 1.0f), frag_out, visibility);
+	frag_out = vec4(totalDiffuse, 1.0f) * totalColor + vec4(totalSpecular, 1.0f);
+	frag_out = mix(vec4(skyColor, 1.0f), frag_out, visibility);
 	//frag_out = texture(backgroundTexture, fs_in.texCoord);
 }

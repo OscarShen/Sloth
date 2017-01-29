@@ -40,4 +40,12 @@
 #define DEFUALT_CLEAR_COLOR_GREEN 0.5f
 #define DEFUALT_CLEAR_COLOR_BLUE 0.5f
 
+
+// Macros of /src/graphics/entities/player
+#define PLAYER_RUN_SPEED 20.0f
+#define PLAYER_TURN_SPEED 10.0f
+#define PLAYER_GRAVITY -50.0f
+#define PLAYER_JUMP_POWER 30.0f
+#define PLAYER_TERRAIN_HEIGHT 0.0f
+
 #endif // !SLOTH_MACRO_H_
