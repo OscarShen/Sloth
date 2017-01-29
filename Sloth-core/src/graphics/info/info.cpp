@@ -57,13 +57,13 @@ namespace sloth { namespace graphics {
 	void Input::process(SlothWindow * window, Camera *camera, float deltaTime)
 	{
 		float cameraSpeed = deltaTime * 10;
-		if (keys[GLFW_KEY_W])
+		if (keys[GLFW_KEY_UP])
 			camera->do_movement(CameraMovement::MOVEFORWARD, deltaTime);
-		if (keys[GLFW_KEY_S])
+		if (keys[GLFW_KEY_DOWN])
 			camera->do_movement(CameraMovement::MOVEBACKWARD, deltaTime);
-		if (keys[GLFW_KEY_A])
+		if (keys[GLFW_KEY_LEFT])
 			camera->do_movement(CameraMovement::MOVELEFT, deltaTime);
-		if (keys[GLFW_KEY_D])
+		if (keys[GLFW_KEY_RIGHT])
 			camera->do_movement(CameraMovement::MOVERIGHT, deltaTime);
 		if (keys[GLFW_KEY_ESCAPE])
 			window->close();
