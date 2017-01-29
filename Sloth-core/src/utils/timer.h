@@ -9,23 +9,17 @@ namespace sloth { namespace util {
 
 	class Timer
 	{
-	private:
-		double m_Start;
-		double m_LastFrameTime;
-		double m_CurrentFrameTime;
-		double m_DeltaFrameTime;
-		int m_FPS;
-		unsigned int m_FrameCounter;
-
 	public:
-		Timer();
-		void reset();
-		double elapsed();
-		void calculateFPS();
+		static double start;
+		static double lastFrameTime;
+		static double currentFrameTime;
+		static double deltaFrameTime;
+		static int FPS;
+		static unsigned int frameCounter;
 
-		inline double getDeltaFrameTime()const { return m_DeltaFrameTime; }
-		inline int getFPS() const { return m_FPS; }
-		inline unsigned int getFramerCounter() const{ return m_FrameCounter; }
+		static void reset();
+		static double elapsed();
+		static void calculateFPS();
 	};
 
 } }

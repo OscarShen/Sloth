@@ -1,32 +1,31 @@
 #include "timer.h"
 
 namespace sloth { namespace util {
-	Timer::Timer()
-		:m_FPS(60), m_FrameCounter(0)
-	{
-		m_Start = glfwGetTime();
-		m_LastFrameTime = m_Start;
-		m_CurrentFrameTime = m_Start;
-		m_DeltaFrameTime = 1.0f / 60;
-	}
+
+	double Timer::start = glfwGetTime();
+	double Timer::lastFrameTime = start;
+	double Timer::currentFrameTime = start;
+	double Timer::deltaFrameTime = 1.0f / 60.0f;
+	int Timer::FPS = 60;
+	unsigned int Timer::frameCounter = 0;
 
 	void Timer::reset()
 	{
-		m_Start = 0.0;
+		start = 0.0;
 	}
 
 	double Timer::elapsed()
 	{
-		return glfwGetTime() - m_Start;
+		return glfwGetTime() - start;
 	}
 
 	void Timer::calculateFPS()
 	{
-		++m_FrameCounter;
-		m_CurrentFrameTime = glfwGetTime();
-		m_DeltaFrameTime = m_CurrentFrameTime - m_LastFrameTime;
-		m_LastFrameTime = m_CurrentFrameTime;
-		m_FPS = static_cast<int>(1.0 / m_DeltaFrameTime);
+		++frameCounter;
+		currentFrameTime = glfwGetTime();
+		deltaFrameTime = currentFrameTime - lastFrameTime;
+		lastFrameTime = currentFrameTime;
+		FPS = static_cast<int>(1.0f / deltaFrameTime);
 	}
 
 } }
