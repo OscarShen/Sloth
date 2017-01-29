@@ -10,7 +10,7 @@ namespace sloth { namespace graphics {
 
 	class Entity
 	{
-	private:
+	protected:
 		TexturedModel m_Model;
 		glm::vec3 m_Position;
 		float m_RotX, m_RotY, m_RotZ;
