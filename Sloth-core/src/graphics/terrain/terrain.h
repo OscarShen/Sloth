@@ -5,6 +5,7 @@
 #include "../engine/loader.h"
 #include "../setup/macro.h"
 #include "multi_terrain.h"
+#include "../../utils/buffered_image.h"
 
 #include <vector>
 
@@ -19,15 +20,17 @@ namespace sloth { namespace graphics {
 		MultiTerrain m_Multi;
 
 	public:
-		Terrain(int gridX, int gridZ, unsigned int texID, Loader & loader);
-		Terrain(int gridX, int gridZ, MultiTerrain m_Multi, Loader & loader);
+		Terrain(int gridX, int gridZ, unsigned int texID, Loader & loader, std::string heightMapPath);
+		Terrain(int gridX, int gridZ, MultiTerrain m_Multi, Loader & loader, std::string heightMapPath);
 		inline RawModel getModel() const { return m_Model; }
 		inline const MultiTerrain& getMultiTerrain() const { return m_Multi; }
 		inline float getX() const { return m_X; }
 		inline float getZ() const { return m_Z; }
 
 	private:
-		RawModel generateTerrain(Loader &loader);
+		RawModel generateTerrain(Loader &loader, std::string heightMapPath);
+		float getHeight(int x, int z, util::BufferedImage *heightMap);
+		glm::vec3 calculateNormal(int x, int z, util::BufferedImage *heightMap);
 	};
 
 } }

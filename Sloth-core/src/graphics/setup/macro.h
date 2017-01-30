@@ -6,13 +6,17 @@
 #define SCREEN_HEIGHT 600
 
 #define GLSL_MAX_LIGHTS 4
+// 着色器路径
 #define STATIC_VERTEX_FILE "src/shader/basic.vert"
 #define STATIC_FRAGMENT_FILE "src/shader/basic.frag"
 #define TERRAIN_VERTEX_FILE "src/shader/terrain.vert"
 #define TERRAIN_FRAGMENT_FILE "src/shader/terrain.frag"
 
-#define TERRAIN_SIZE 800.0f
-#define TERRAIN_VERTEX_COUNT 128
+// 地形设置
+#define TERRAIN_SIZE 800.0f	// 地形大小为 TERRAIN_SIZE * TERRAIN_SIZE
+//#define TERRAIN_VERTEX_COUNT 128 // 地形三角形细分程度
+#define TERRAIN_MAX_HEIGHT 40.0f // 地形最高高度
+#define TERRAIN_MAX_PIXEL_COLOR 256*256*256 //
 
 #define PERSPECTIVE_FOV 45.0f
 #define PERSPECTIVE_ASPECT (static_cast<float>(SCREEN_WIDTH)/SCREEN_HEIGHT)
@@ -32,7 +36,7 @@
 #define FOG_COLOR_BLUE 0.5f
 #define FOG_COLOR_GREEN 0.5f
 
-// input devices of keyboard and mouse
+// 键盘和鼠标输入的按键个数
 #define MAX_KEYS 1024
 #define MAX_MOUSE_BOTTON 32
 
@@ -41,7 +45,7 @@
 #define DEFUALT_CLEAR_COLOR_BLUE 0.5f
 
 
-// Macros of /src/graphics/entities/player
+// 关于角色移动、跳跃的宏定义		/src/graphics/entities/player
 #define PLAYER_RUN_SPEED 20.0f
 #define PLAYER_TURN_SPEED 10.0f
 #define PLAYER_GRAVITY -50.0f
