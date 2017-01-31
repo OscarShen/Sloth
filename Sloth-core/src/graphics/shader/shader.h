@@ -19,7 +19,7 @@
 
 namespace sloth { namespace graphics {
 
-	class Camera;
+	class RawCamera;
 	struct Light;
 	class Shader
 	{
@@ -41,7 +41,7 @@ namespace sloth { namespace graphics {
 		void setVertexAttrib4f(unsigned int index, float x0, float x1, float x2, float x3);
 
 		virtual void loadModelMatrix(const glm::mat4 &model) {}
-		virtual void loadViewMatrix(const Camera &camera) {}
+		virtual void loadViewMatrix(const RawCamera &camera) {}
 		virtual void loadProjectionMatrix(const glm::mat4 &projection) {}
 		virtual void loadLight(const Light &light) {}
 		virtual void loadLights(const std::vector<Light> &lights) {}

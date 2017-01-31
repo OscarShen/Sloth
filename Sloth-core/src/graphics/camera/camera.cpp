@@ -2,13 +2,29 @@
 
 namespace sloth { namespace graphics {
 
-	Camera::Camera()
-		:m_Position(CAMERA_INIT_POS), m_Up(CAMERA_INIT_UP), m_Right(CAMERA_INIT_RIGHT), m_Front(CAMERA_INIT_FRONT), m_MoveSpeed(MOVE_SPEED),
-		m_Pitch(CAMERA_INIT_PITCH), m_Yaw(CAMERA_INIT_YAW), m_MouseSensitivity(MOUSE_SENSITIVITY), firstMouse(true) {}
-
-	void Camera::do_movement(CameraMovement direction, float deltatime)
+	void Camera::process(SlothWindow * window)
 	{
-		float v = deltatime * m_MoveSpeed;
+		process_keyboard(window);
+		process_mouse(window);
+	}
+
+	void Camera::process_keyboard(SlothWindow * window)
+	{
+		if (Input::keys[GLFW_KEY_UP])
+			do_movement(CameraMovement::MOVEFORWARD, util::Timer::deltaFrameTime);
+		if (Input::keys[GLFW_KEY_DOWN])
+			do_movement(CameraMovement::MOVEBACKWARD, util::Timer::deltaFrameTime);
+		if (Input::keys[GLFW_KEY_LEFT])
+			do_movement(CameraMovement::MOVELEFT, util::Timer::deltaFrameTime);
+		if (Input::keys[GLFW_KEY_RIGHT])
+			do_movement(CameraMovement::MOVERIGHT, util::Timer::deltaFrameTime);
+		if (Input::keys[GLFW_KEY_ESCAPE])
+			window->close();
+	}
+
+	void Camera::do_movement(CameraMovement direction, float deltaTime)
+	{
+		float v = deltaTime * m_MoveSpeed;
 		switch (direction)
 		{
 		case MOVEFORWARD:
@@ -26,7 +42,19 @@ namespace sloth { namespace graphics {
 		default:
 			break;
 		}
-		//m_Position.y = 5.0f;
+	}
+
+	void Camera::process_mouse(SlothWindow * window)
+	{
+		if (firstMouse)
+		{
+			Input::lastCursorPosX = Input::cursorPosX;
+			Input::lastCursorPosY = Input::cursorPosY;
+			firstMouse = false;
+		}
+		do_mouse(Input::cursorPosX - Input::lastCursorPosX, Input::lastCursorPosY - Input::cursorPosY);
+		Input::lastCursorPosX = Input::cursorPosX;
+		Input::lastCursorPosY = Input::cursorPosY;
 	}
 
 	void Camera::do_mouse(double xOffSet, double yOffSet)
@@ -43,21 +71,4 @@ namespace sloth { namespace graphics {
 			m_Pitch = -89.0f;
 		updateVectors();
 	}
-
-	glm::mat4 Camera::getViewMatrix() const
-	{
-		return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
-	}
-
-	void Camera::updateVectors()
-	{
-		glm::vec3 front;
-		float a = cos(glm::radians(m_Pitch));
-		front.x = a * cos(glm::radians(m_Yaw));
-		front.y = sin(glm::radians(m_Pitch));
-		front.z = a * sin(glm::radians(m_Yaw));
-		m_Front = glm::normalize(front);
-		m_Right = glm::normalize(glm::cross(m_Front, m_Up));
-	}
-
 } }

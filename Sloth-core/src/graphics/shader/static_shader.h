@@ -31,7 +31,7 @@ namespace sloth { namespace graphics {
 		static StaticShader *inst();
 		~StaticShader();
 		virtual void loadModelMatrix(const glm::mat4 &model) override;
-		virtual void loadViewMatrix(const Camera &camera) override;
+		virtual void loadViewMatrix(const RawCamera &camera) override;
 		virtual void loadProjectionMatrix(const glm::mat4 &projection) override;
 		virtual void loadLight(const Light &light) override;
 		virtual void loadLights(const std::vector<Light> &lights) override;

@@ -17,7 +17,7 @@ namespace sloth { namespace graphics {
 		delete m_TerrainRenderer;
 	}
 
-	void MultipleRenderer::render(const Light & sun, const Camera & camera)
+	void MultipleRenderer::render(const Light & sun, const RawCamera & camera)
 	{
 		auto staticShader = StaticShader::inst();
 		staticShader->loadLight(sun);

@@ -24,7 +24,7 @@ namespace sloth { namespace graphics {
 	public:
 		MultipleRenderer();
 		~MultipleRenderer();
-		void render(const Light &sun, const Camera &camera);
+		void render(const Light &sun, const RawCamera &camera);
 		void submitTerrain(const Terrain &terrain);
 		void submitEntity(const Entity &entity);
 	};
