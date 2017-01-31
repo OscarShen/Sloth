@@ -29,7 +29,7 @@ namespace sloth { namespace graphics {
 		glProgramUniformMatrix4fv(m_ID, m_LocModel, 1, GL_FALSE, glm::value_ptr(model));
 	}
 
-	void TerrainShader::loadViewMatrix(const Camera &camera)
+	void TerrainShader::loadViewMatrix(const RawCamera &camera)
 	{
 		glProgramUniformMatrix4fv(m_ID, m_LocView, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
 	}

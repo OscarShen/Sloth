@@ -1,9 +1,10 @@
 #pragma once
 
-#include <glm\glm.hpp>
-#include <glm\gtc\matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include "../setup/macro.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include "raw_camera.h"
+#include "../info/info.h"
+#include "../../utils/timer.h"
 
 namespace sloth { namespace graphics {
 
@@ -14,36 +15,24 @@ namespace sloth { namespace graphics {
 		MOVELEFT,
 		MOVERIGHT
 	};
+	class SlothWindow;
+	class Camera : public RawCamera
+	{
+	public:
+		Camera() : RawCamera() {}
 
-	class Camera {
+		virtual ~Camera() {}
+
+		virtual void process(SlothWindow * window) override;
+
 	private:
-		// vectors of camera
-		glm::vec3 m_Position;
-		glm::vec3 m_Up;
-		glm::vec3 m_Right;
-		glm::vec3 m_Front;
+		void process_keyboard(SlothWindow * window);
 
-		float m_Pitch;
-		float m_Yaw;
+		void do_movement(CameraMovement direction, float deltaTime);
 
-		float m_MouseSensitivity;
-		float m_MoveSpeed;
-
-	public:
-		bool firstMouse;
-
-	public:
-		Camera();
-
-		void do_movement(CameraMovement direction, float deltatime);
+		void process_mouse(SlothWindow * window);
 
 		void do_mouse(double xOffSet, double yOffSet);
-
-		glm::mat4 getViewMatrix() const;
-
-		void updateVectors();
-
-		inline glm::vec3 getPosition() const { return m_Position; }
 	};
 
 } }
