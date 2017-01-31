@@ -36,6 +36,7 @@ namespace sloth { namespace graphics {
 	{
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
+		checkKeyboard();
 	}
 
 	bool SlothWindow::init()
@@ -53,12 +54,18 @@ namespace sloth { namespace graphics {
 		glfwSetWindowUserPointer(m_Window, this);
 		glfwSetWindowSizeCallback(m_Window, window_resize_callback);
 		glfwSetKeyCallback(m_Window, key_callback);
-		glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
 		glfwSetCursorPosCallback(m_Window, cursor_position_callback);
+		glfwSetScrollCallback(m_Window, scroll_callback);
 		glfwSwapInterval(0);
 		glewExperimental = GL_TRUE;
 		glewInit();
 		return true;
+	}
+
+	void SlothWindow::checkKeyboard()
+	{
+		if (Input::keys[GLFW_KEY_ESCAPE])
+			close();
 	}
 
 } }
