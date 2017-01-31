@@ -4,8 +4,9 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "camera/camera.h"
 #include "info/info.h"
+#include "setup/macro.h"
+
 namespace sloth { namespace graphics {
 
 	class SlothWindow
@@ -26,11 +27,14 @@ namespace sloth { namespace graphics {
 
 		inline int getWidth() const { return m_Width; }
 		inline int getHeight() const { return m_Height; }
+		inline GLFWwindow* getGLFWwindow() const { return m_Window; }
 		void setWidth(int width) { m_Width = width; }
 		void setHeight(int height) { m_Height = height; }
 
 	private:
 		bool init();
+		
+		void checkKeyboard();
 	};
 } }
 #endif // !SLOTH_WINDOW_H_
