@@ -2,7 +2,7 @@
 
 namespace sloth { namespace util {
 
-	double Timer::start = glfwGetTime();
+	double Timer::start = static_cast<float>(glfwGetTime());
 	double Timer::lastFrameTime = start;
 	double Timer::currentFrameTime = start;
 	double Timer::deltaFrameTime = 1.0f / 60.0f;
@@ -25,7 +25,7 @@ namespace sloth { namespace util {
 		currentFrameTime = glfwGetTime();
 		deltaFrameTime = currentFrameTime - lastFrameTime;
 		lastFrameTime = currentFrameTime;
-		FPS = static_cast<int>(1.0f / deltaFrameTime);
+		FPS = static_cast<int>(1.0 / deltaFrameTime);
 	}
 
 } }
