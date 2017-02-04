@@ -11,10 +11,10 @@ namespace sloth { namespace graphics {
 	void Camera3rd::process(SlothWindow * window)
 	{
 		glfwGetCursorPos(window->getGLFWwindow(), &m_CursorCurrentPosX, &m_CursorCurrentPosY);
-		if (firstMouse) {
+		if (m_FirstMove) {
 			m_CursorLastPosX = m_CursorCurrentPosX;
 			m_CursorLastPosY = m_CursorCurrentPosY;
-			firstMouse = false;
+			m_FirstMove = false;
 		}
 		calculateZoom(m_ScrollRecord - Input::scrollY);
 		m_ScrollRecord = Input::scrollY;
@@ -26,10 +26,15 @@ namespace sloth { namespace graphics {
 		float horizontalDistance = calculateHorizontalDistance();
 		float verticalDistance = calculateVerticalDistance();
 		calculateCameraPosition(horizontalDistance, verticalDistance);
-		updateVectors();
 		
+		m_Yaw = 180.0f - (m_Player.getRotY() + m_AngleAroundPlayer);
 		m_CursorLastPosX = m_CursorCurrentPosX;
 		m_CursorLastPosY = m_CursorCurrentPosY;
+	}
+
+	glm::mat4 Camera3rd::getViewMatrix() const
+	{
+		return glm::lookAt(m_Position, m_Player.getPosition(), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 
 	void Camera3rd::calculateZoom(double yOffset)

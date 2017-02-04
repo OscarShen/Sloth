@@ -8,16 +8,22 @@ namespace sloth { namespace graphics {
 		process_mouse(window);
 	}
 
+	glm::mat4 Camera::getViewMatrix() const
+	{
+		return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
+	}
+
 	void Camera::process_keyboard(SlothWindow * window)
 	{
+		float deltaFrameTime = static_cast<float>(util::Timer::deltaFrameTime);
 		if (Input::keys[GLFW_KEY_UP])
-			do_movement(CameraMovement::MOVEFORWARD, util::Timer::deltaFrameTime);
+			do_movement(CameraMovement::MOVEFORWARD, deltaFrameTime);
 		if (Input::keys[GLFW_KEY_DOWN])
-			do_movement(CameraMovement::MOVEBACKWARD, util::Timer::deltaFrameTime);
+			do_movement(CameraMovement::MOVEBACKWARD, deltaFrameTime);
 		if (Input::keys[GLFW_KEY_LEFT])
-			do_movement(CameraMovement::MOVELEFT, util::Timer::deltaFrameTime);
+			do_movement(CameraMovement::MOVELEFT, deltaFrameTime);
 		if (Input::keys[GLFW_KEY_RIGHT])
-			do_movement(CameraMovement::MOVERIGHT, util::Timer::deltaFrameTime);
+			do_movement(CameraMovement::MOVERIGHT, deltaFrameTime);
 		if (Input::keys[GLFW_KEY_ESCAPE])
 			window->close();
 	}
@@ -71,4 +77,16 @@ namespace sloth { namespace graphics {
 			m_Pitch = -89.0f;
 		updateVectors();
 	}
+
+	void Camera::updateVectors()
+	{
+		glm::vec3 front;
+		float a = glm::cos(glm::radians(m_Pitch));
+		front.x = a * glm::cos(glm::radians(m_Yaw));
+		front.y = sin(glm::radians(m_Pitch));
+		front.z = a * glm::sin(glm::radians(m_Yaw));
+		m_Front = glm::normalize(front);
+		m_Right = glm::normalize(glm::cross(m_Front, m_Up));
+	}
+
 } }

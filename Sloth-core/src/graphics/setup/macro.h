@@ -25,7 +25,7 @@
 
 #define CAMERA_INIT_POS		glm::vec3(0.0f,5.0f,0.0f)
 #define CAMERA_INIT_UP		glm::vec3(0.0f,1.0f,0.0f)
-#define CAMERA_INIT_FRONT	glm::vec3(0.0f,0.0f,-1.0f)
+#define CAMERA_INIT_FRONT	glm::vec3(-1.0f,0.0f,-1.0f)
 #define CAMERA_INIT_RIGHT	glm::normalize(glm::cross(CAMERA_INIT_UP, CAMERA_INIT_POS + CAMERA_INIT_FRONT))
 #define CAMERA_INIT_PITCH	0.0f
 #define CAMERA_INIT_YAW		-90.0f
@@ -47,7 +47,7 @@
 
 // 关于角色移动、跳跃的宏定义		/src/graphics/entities/player
 #define PLAYER_RUN_SPEED 20.0f
-#define PLAYER_TURN_SPEED 10.0f
+#define PLAYER_TURN_SPEED 60.0f
 #define PLAYER_GRAVITY -50.0f
 #define PLAYER_JUMP_POWER 30.0f
 #define PLAYER_TERRAIN_HEIGHT 0.0f
