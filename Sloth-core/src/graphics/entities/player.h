@@ -5,6 +5,7 @@
 #include "../setup/macro.h"
 #include "../info/info.h"
 #include "../../utils/timer.h"
+#include "../terrain/terrain.h"
 
 namespace sloth { namespace graphics {
 
@@ -24,7 +25,7 @@ namespace sloth { namespace graphics {
 			float scale
 		) :Entity(model, position, rotX, rotY, rotZ, scale) {}
 
-		void move();
+		void move(Terrain &terrain);
 		void jump();
 
 	private:

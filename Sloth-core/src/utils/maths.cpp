@@ -10,5 +10,14 @@ namespace sloth { namespace util {
 		return model;
 	}
 
+	float Maths::barycentric(glm::vec3 & v1, glm::vec3 & v2, glm::vec3 & v3, glm::vec2 & pos)
+	{
+		float det = (v2.z - v3.z) * (v1.x - v3.x) + (v3.x - v2.x) * (v1.z - v3.z);
+		float l1 = ((v2.z - v3.z) * (pos.x - v3.x) + (v3.x - v2.x) * (pos.y - v3.z)) / det;
+		float l2 = ((v3.z - v1.z) * (pos.x - v3.x) + (v1.x - v3.x) * (pos.y - v3.z)) / det;
+		float l3 = 1.0f - l1 - l2;
+		return l1 * v1.y + l2 * v2.y + l3 * v3.y;
+	}
+
 } }
 

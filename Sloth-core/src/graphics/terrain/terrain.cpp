@@ -13,10 +13,53 @@ namespace sloth { namespace graphics {
 		m_Model = generateTerrain(loader, heightMapPath);
 	}
 
+	float Terrain::getHeightOfTerrain(float worldX, float worldZ)
+	{
+		float terrainX = worldX - m_X;
+		float terrainZ = worldZ - m_Z;
+		// 地形的方格个数为边上顶点的个数减一
+		float gridSquareSize = TERRAIN_SIZE / static_cast<float>(heights.size() - 1);
+		float oneDivideGridSquareSize = 1.0f / gridSquareSize;
+		// 给方格编号，左上角为0,0
+		int gridX = (int) glm::floor(terrainX * oneDivideGridSquareSize);
+		int gridZ = (int) glm::floor(terrainZ * oneDivideGridSquareSize);
+		if (gridX >= heights.size() - 1 || gridZ >= heights.size() - 1 || gridX < 0 || gridZ < 0) {
+			return 0;
+		}
+		// 取得坐标点再单个网格中的坐标，左上角为 (0,0) 右下角为（1,1）
+		float xCoord = std::fmodf(terrainX, gridSquareSize) * oneDivideGridSquareSize;
+		float zCoord = std::fmodf(terrainZ, gridSquareSize) * oneDivideGridSquareSize;
+		
+		// 一个网格由两个三角形组成，通过 xCoord 和 1-zCoord 来判断点落在哪个三角形内
+		// 本方法默认三角形的公共边为反对角线
+		// 然后在进行线性插值
+		float interpolation = 0.0f;
+		if (xCoord <= (1 - zCoord)) {
+			interpolation = util::Maths::barycentric(
+				glm::vec3(0.0f, heights[gridX][gridZ], 0.0f),
+				glm::vec3(1.0f, heights[gridX + 1][gridZ], 0.0f),
+				glm::vec3(0.0f, heights[gridX][gridZ + 1], 1.0f),
+				glm::vec2(xCoord, zCoord)
+			);
+		}
+		else {
+			interpolation = util::Maths::barycentric(
+				glm::vec3(1.0f, heights[gridX + 1][gridZ], 0.0f),
+				glm::vec3(1.0f, heights[gridX + 1][gridZ + 1], 1.0f),
+				glm::vec3(0.0f, heights[gridX][gridZ + 1], 1.0f),
+				glm::vec2(xCoord, zCoord)
+			);
+		}
+		return interpolation;
+	}
+
 	RawModel Terrain::generateTerrain(Loader & loader, std::string heightMapPath)
 	{
 		util::BufferedImage *image = new util::BufferedImage(heightMapPath);
 		int vertex_count = image->getHeight();
+		
+		// 记录各个顶点的高度 height
+		heights = std::vector<std::vector<float>>(vertex_count, std::vector<float>(vertex_count, 0));
 
 		int count = vertex_count * vertex_count;
 		std::vector<glm::vec3> vertices(count, glm::vec3(0.0f));
@@ -29,8 +72,12 @@ namespace sloth { namespace graphics {
 		float raw_texCoord_width = 1.0f / (vertex_count - 1);
 		for (int i = 0; i < vertex_count; ++i) {
 			for (int j = 0; j < vertex_count; ++j) {
+				float height = getHeight(j, i, image);
+				// 记录每一点的 height
+				heights[j][i] = height;
+
 				vertices[vertexPointer].x = j * raw_vertex_width;
-				vertices[vertexPointer].y = getHeight(j, i, image);
+				vertices[vertexPointer].y = height;
 				vertices[vertexPointer].z = i * raw_vertex_width;
 				glm::vec3 normal = calculateNormal(j, i, image);
 				normals[vertexPointer].x = normal.x;

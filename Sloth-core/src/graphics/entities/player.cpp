@@ -2,7 +2,7 @@
 
 namespace sloth { namespace graphics {
 
-	void Player::move()
+	void Player::move(Terrain &terrain)
 	{
 		checkInputs();
 		float deltaFrameTime = static_cast<float>(util::Timer::deltaFrameTime);
@@ -13,9 +13,10 @@ namespace sloth { namespace graphics {
 		increasePosition(dx, 0.0f, dz);
 		m_UpwardSpeed += PLAYER_GRAVITY * deltaFrameTime;
 		increasePosition(0.0f, m_UpwardSpeed * deltaFrameTime, 0.0f);
-		if (m_Position.y < PLAYER_TERRAIN_HEIGHT) {
+		float terrainHeight = terrain.getHeightOfTerrain(m_Position.x, m_Position.z);
+		if (m_Position.y < terrainHeight) {
 			m_UpwardSpeed = 0;
-			m_Position.y = PLAYER_TERRAIN_HEIGHT;
+			m_Position.y = terrainHeight;
 			m_IsInAir = false;
 		}
 	}

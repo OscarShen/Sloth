@@ -50,6 +50,5 @@
 #define PLAYER_TURN_SPEED 60.0f
 #define PLAYER_GRAVITY -50.0f
 #define PLAYER_JUMP_POWER 30.0f
-#define PLAYER_TERRAIN_HEIGHT 0.0f
 
 #endif // !SLOTH_MACRO_H_

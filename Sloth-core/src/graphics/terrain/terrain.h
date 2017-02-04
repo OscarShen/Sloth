@@ -6,6 +6,7 @@
 #include "../setup/macro.h"
 #include "multi_terrain.h"
 #include "../../utils/buffered_image.h"
+#include "../../utils/maths.h"
 
 #include <vector>
 
@@ -18,6 +19,7 @@ namespace sloth { namespace graphics {
 		float m_Z;
 		RawModel m_Model;
 		MultiTerrain m_Multi;
+		std::vector<std::vector<float>> heights;
 
 	public:
 		Terrain(int gridX, int gridZ, unsigned int texID, Loader & loader, std::string heightMapPath);
@@ -26,6 +28,8 @@ namespace sloth { namespace graphics {
 		inline const MultiTerrain& getMultiTerrain() const { return m_Multi; }
 		inline float getX() const { return m_X; }
 		inline float getZ() const { return m_Z; }
+		// 获取地形的高度值，这个高度值经过了线性插值
+		float getHeightOfTerrain(float worldX, float worldZ);
 
 	private:
 		RawModel generateTerrain(Loader &loader, std::string heightMapPath);
