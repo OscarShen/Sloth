@@ -1,8 +1,8 @@
 #version 450 core
 
 // In fog it has : visibility = exp(-(distance * density)^gradient)
-#define FOG_DENSITY 0.0007f
-#define FOG_GRADIENT 1000f
+#define FOG_DENSITY 0.0035f
+#define FOG_GRADIENT 5.0f
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 texCoord;
@@ -12,6 +12,10 @@ uniform mat4 projection = mat4(1.0f);
 uniform mat4 view = mat4(1.0f);
 uniform mat4 model = mat4(1.0f);
 uniform float useFakeLignting;
+
+uniform float numberOfRows; // atlases 的行数
+uniform vec2 offset; // 记录当前需要的纹理在atalases中的开始点
+
 
 out DATA {
 	vec3 pos;
@@ -29,7 +33,7 @@ void main()
 	vec4 positionInViewSpace = view * vec4(worldPosition, 1.0f);
 	gl_Position = projection * positionInViewSpace;
 	vs_out.pos = position;
-	vs_out.texCoord = texCoord;
+	vs_out.texCoord = (texCoord / numberOfRows) + offset;
 
 	vec3 actualNormal = normal;
 	if(useFakeLignting > 0.5f) {

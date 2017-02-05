@@ -82,6 +82,16 @@ namespace sloth { namespace graphics {
 		glProgramUniform3f(m_ID, m_LocSkyColor, r, g, b);
 	}
 
+	void StaticShader::loadNumberOfRows(int numberOfRaws)
+	{
+		glProgramUniform1f(m_ID, m_LocNumberOfRows, (float)numberOfRaws);
+	}
+
+	void StaticShader::loadOffset(float x, float y)
+	{
+		glProgramUniform2f(m_ID, m_LocOffset, x, y);
+	}
+
 	void StaticShader::getAllUniformLocation()
 	{
 		m_LocModel = glGetUniformLocation(m_ID, "model");
@@ -99,5 +109,7 @@ namespace sloth { namespace graphics {
 		}
 		m_LocUseFakeLighting = glGetUniformLocation(m_ID, "useFakeLignting");
 		m_LocSkyColor = glGetUniformLocation(m_ID, "skyColor");
+		m_LocNumberOfRows = glGetUniformLocation(m_ID, "numberOfRows");
+		m_LocOffset = glGetUniformLocation(m_ID, "offset");
 	}
 } }

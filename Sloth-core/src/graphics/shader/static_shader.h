@@ -26,6 +26,8 @@ namespace sloth { namespace graphics {
 		int m_LocReflectivity;
 		int m_LocUseFakeLighting;
 		int m_LocSkyColor;
+		int m_LocNumberOfRows;
+		int m_LocOffset;
 
 	public:
 		static StaticShader *inst();
@@ -38,6 +40,8 @@ namespace sloth { namespace graphics {
 		virtual void loadShineVariable(const float shininess, const float reflectivity) override;
 		virtual void loadUseFakeLighting(const bool useFake) override;
 		virtual void loadSkyColor(const float r, const float g, const float b);
+		virtual void loadNumberOfRows(int numberOfRaws);
+		virtual void loadOffset(float x, float y);
 
 
 	private:

@@ -27,6 +27,7 @@ namespace sloth { namespace graphics {
 				glDrawElements(GL_TRIANGLES, it->first.getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
 			}
 			TextureManager2D::inst()->unbindTexture();
+			enable_culling();
 		}
 	}
 
@@ -36,10 +37,12 @@ namespace sloth { namespace graphics {
 		RawModel rawModel = model.getRawModel();
 		Texture2D *texture = tm->getTexture(model.getTexID());
 		glBindVertexArray(rawModel.getVaoID());
+		auto shader = StaticShader::inst();
+		shader->loadNumberOfRows(texture->getNumberOfRows());
 		if (texture->hasTransparency()) {
 			disable_culling();
 		}
-		StaticShader::inst()->loadUseFakeLighting(texture->isUseFakeLighting());
+		shader->loadUseFakeLighting(texture->isUseFakeLighting());
 		tm->activateTexUnit(0);
 		tm->bindTexture(model.getTexID());
 	}
@@ -47,9 +50,11 @@ namespace sloth { namespace graphics {
 	void StaticRenderer::prepareInstance(Entity & entity)
 	{
 		auto texture = entity.getTexturedModel().getTexture();
-		StaticShader::inst()->loadModelMatrix(util::Maths::createModelMatrix(entity.getPosition(),
+		auto shader = StaticShader::inst();
+		shader->loadModelMatrix(util::Maths::createModelMatrix(entity.getPosition(),
 			entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale()));
-		StaticShader::inst()->loadShineVariable(texture->getShininess(), texture->getReflectivity());
+		shader->loadShineVariable(texture->getShininess(), texture->getReflectivity());
+		shader->loadOffset(entity.getTextureXOffset(), entity.getTextureYOffset());
 	}
 
 	void StaticRenderer::unbindTexturedModel()

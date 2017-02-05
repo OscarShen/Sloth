@@ -25,6 +25,8 @@ namespace sloth { namespace graphics {
 
 		bool m_HasTransparency = false;
 		bool m_UseFakeLighting = false;
+
+		int m_NumberOfRows = 1;
 	public:
 		// Constructor (sets default texture modes)
 		constexpr Texture2D()
@@ -51,6 +53,7 @@ namespace sloth { namespace graphics {
 		inline GLint getFilterMagParam() const { return m_Filter_Max; }
 		inline bool hasTransparency() const { return m_HasTransparency; }
 		inline bool isUseFakeLighting() const { return m_UseFakeLighting; }
+		inline int getNumberOfRows() const { return m_NumberOfRows; }
 
 		void setWrapS(GLint param);
 		void setWrapT(GLint param);
@@ -60,6 +63,7 @@ namespace sloth { namespace graphics {
 		void setReflectivity(float reflectivity) { m_Reflectivity = reflectivity; }
 		void setTransparency(bool hasTransparency) { m_HasTransparency = hasTransparency; }
 		void setUseFakeLighting(bool useFakeLighting) { m_UseFakeLighting = useFakeLighting; }
+		void setNumberOfRows(unsigned int numberOfRows) { m_NumberOfRows = numberOfRows; }
 
 		friend TextureManager2D;
 	};

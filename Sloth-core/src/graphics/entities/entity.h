@@ -16,6 +16,9 @@ namespace sloth { namespace graphics {
 		float m_RotX, m_RotY, m_RotZ;
 		float m_Scale;
 
+		// 记录使用 atlases 中哪一个纹理
+		int m_TextureIndex = 0;
+
 	public:
 		constexpr Entity(
 			const TexturedModel &model,
@@ -23,6 +26,15 @@ namespace sloth { namespace graphics {
 			const float rotX, const float rotY, const float rotZ,
 			float scale
 		) : m_Model(model), m_Position(position), m_RotX(rotX), m_RotY(rotY), 
+			m_RotZ(rotZ), m_Scale(scale) {}
+
+		constexpr Entity(
+			const TexturedModel &model,
+			const glm::vec3 &position,
+			int textureIndex,
+			const float rotX, const float rotY, const float rotZ,
+			float scale
+		) : m_Model(model), m_Position(position), m_TextureIndex(textureIndex), m_RotX(rotX), m_RotY(rotY),
 			m_RotZ(rotZ), m_Scale(scale) {}
 
 
@@ -35,6 +47,10 @@ namespace sloth { namespace graphics {
 
 		void increaseRotation(float dx, float dy, float dz);
 		void increasePosition(float dx, float dy, float dz);
+
+		float getTextureXOffset();
+		float getTextureYOffset();
+
 	};
 
 } }

@@ -1,8 +1,8 @@
 #version 450 core
 
 // In fog it has : visibility = exp(-(distance * density)^gradient)
-#define FOG_DENSITY 0.0007f
-#define FOG_GRADIENT 1000.0f
+#define FOG_DENSITY 0.0035f
+#define FOG_GRADIENT 5.0f
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 texCoord;

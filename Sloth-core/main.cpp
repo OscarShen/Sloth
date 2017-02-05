@@ -17,6 +17,7 @@
 #include "src/graphics/renderer/multiple_renderer.h"
 #include "src/graphics/terrain/multi_terrain.h"
 #include "src/graphics/entities/player.h"
+#include "src/graphics/camera/camera_3rd.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -39,7 +40,7 @@ enum Texture
 	GTEXTURE = 8,
 	BTEXTURE = 9,
 	BLENDMAP = 10,
-
+	PLAYER = 11
 };
 
 enum Shader
@@ -61,46 +62,51 @@ int main()
 	tm->loadTexture(Texture::TREE, "res/tree.png");
 	tm->loadTexture(Texture::FERN, "res/fern.png", true);
 	tm->getTexture(Texture::FERN)->setTransparency(true);
+	tm->getTexture(Texture::FERN)->setNumberOfRows(2);
+
 	tm->loadTexture(Texture::GRASS_TEXTURE, "res/grassTexture.png", true);
 	tm->getTexture(Texture::GRASS_TEXTURE)->setUseFakeLighting(true);
 	tm->getTexture(Texture::GRASS_TEXTURE)->setReflectivity(false);
+	tm->loadTexture(Texture::PLAYER, "res/playerTexture.png");
 
 	tm->loadTexture(Texture::BACKGROUND, "res/grass.png");
-	tm->loadTexture(Texture::RTEXTURE, "res/rocks.png");
+	tm->loadTexture(Texture::RTEXTURE, "res/mud.png");
 	tm->loadTexture(Texture::GTEXTURE, "res/grassFlowers.png");
 	tm->loadTexture(Texture::BTEXTURE, "res/path.png");
 	tm->loadTexture(Texture::BLENDMAP, "res/blendMap.png");
 
-	Terrain terrain(0, 0, MultiTerrain(Texture::BACKGROUND, Texture::RTEXTURE, Texture::GTEXTURE, Texture::BTEXTURE, Texture::BLENDMAP), loader);
+	Terrain terrain(0, 0, MultiTerrain(Texture::BACKGROUND, Texture::RTEXTURE, Texture::GTEXTURE, Texture::BTEXTURE, Texture::BLENDMAP), loader, "res/heightmap2.jpg");
 	TexturedModel tree(ModelLoader::loadModel("res/tree.obj", loader), Texture::TREE);
 	TexturedModel fern(ModelLoader::loadModel("res/fern.obj", loader), Texture::FERN);
 	TexturedModel grassModel(ModelLoader::loadModel("res/grassModel.obj", loader), Texture::GRASS_TEXTURE);
-	TexturedModel dragon(ModelLoader::loadModel("res/bunny.obj", loader), Texture::WHITE);
+	TexturedModel person(ModelLoader::loadModel("res/person.obj", loader), Texture::PLAYER);
 
 	std::vector<Entity> entities;
 	float p = 1.0f / 800.0f;
-	for (int i = 0; i < 500; ++i) {
+	for (int i = 0; i < 100; ++i) {
 		int r1 = rand() % 800, r2 = rand() % 800;
-		entities.push_back(Entity(tree, glm::vec3(r1, 0, r2), 0, 0, 0, 3));
+		entities.push_back(Entity(tree, glm::vec3(r1, terrain.getHeightOfTerrain((float) r1,(float) r2), r2), 0, 0, 0, 10));
 	}
 	for (int i = 0; i < 200; ++i) {
-		int r1 = rand() % 800, r2 = rand() % 800, r3 = rand() % 800, r4 = rand() % 800;
-		entities.push_back(Entity(fern, glm::vec3(r1, 0, r2), 0, 0, 0, 1));
-		entities.push_back(Entity(grassModel, glm::vec3(r3, 0, r4), 0, 0, 0, 2));
+		int r1 = rand() % 800, r2 = rand() % 800, r3 = rand() % 800, r4 = rand() % 800, r5 = rand() % 4;
+		entities.push_back(Entity(fern, glm::vec3(r1, terrain.getHeightOfTerrain((float) r1, (float) r2), r2), r5, 0, 0, 0, 1));
+		entities.push_back(Entity(grassModel, glm::vec3(r3, terrain.getHeightOfTerrain((float) r3, (float) r4), r4), 0, 0, 0, 2));
 	}
 
-	Light sun(glm::vec3(10000.0f, 10000.0f, 10000.0f), glm::vec3(1.2f));
-	Player player(dragon, glm::vec3(0.0f), 0.0f, 0.0f, 0.0f, 1.0f);
+	Light sun(glm::vec3(0.0f, 10000.0f, 0.0f), glm::vec3(1.2f));
+	Player player(person, glm::vec3(400.0f, 0.0f, 400.0f), 0.0f, 0.0f, 0.0f, 1.0f);
+	//Camera3rd camera(player);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	while (window.isRunning())
 	{
 		window.clear();
 #pragma region USER
-		player.move();
+		player.move(terrain);
 		renderer.submitEntity(player);
 		renderer.submitTerrain(terrain);
 		for (size_t i = 0; i < entities.size(); ++i) {
@@ -109,7 +115,7 @@ int main()
 		renderer.render(sun, camera);
 #pragma endregion
 		Timer::calculateFPS();
-		graphics::Input::process(&window, &camera, static_cast<float>(Timer::deltaFrameTime));
+		camera.process(&window);
 		window.update();
 		if (Timer::frameCounter % 60 == 0)
 			printf("%d fps\n", Timer::FPS);
