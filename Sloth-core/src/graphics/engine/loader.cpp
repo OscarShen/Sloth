@@ -19,6 +19,14 @@ namespace sloth { namespace graphics {
 		return RawModel(va->getVaoID(), indices.size());
 	}
 
+	RawModel Loader::loadToVAO(std::vector<glm::vec2>& positions, std::vector<glm::vec2>& texCoords)
+	{
+		VertexArray *va = createVAO();
+		va->addBuffer(new Buffer(&positions[0].x, positions.size() * 2, 2), 0);
+		va->addBuffer(new Buffer(&texCoords[0].x, texCoords.size() * 2, 2), 1);
+		return RawModel(va->getVaoID(), positions.size());
+	}
+
 	void Loader::cleanUp()
 	{
 		for (size_t i = 0; i < m_Vaos.size(); ++i) {
@@ -29,9 +37,9 @@ namespace sloth { namespace graphics {
 
 	VertexArray* Loader::createVAO()
 	{
-		m_Vaos.push_back(new VertexArray());
-		return m_Vaos.back();
+		auto va = new VertexArray();
+		m_Vaos.push_back(va);
+		return va;
 	}
-
 } }
 

@@ -29,6 +29,14 @@ namespace sloth { namespace graphics {
 			std::vector<glm::vec3> &normals,
 			std::vector<unsigned int> &indices
 		);
+
+		// 主要用于建立二维GUI矩形
+		RawModel loadToVAO(
+			std::vector<glm::vec2> &positions,
+			std::vector<glm::vec2> &texCoords
+		);
+
+
 		void cleanUp();
 
 	private:

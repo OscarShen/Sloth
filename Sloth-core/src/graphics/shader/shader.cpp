@@ -82,8 +82,9 @@ namespace sloth { namespace graphics {
 		glProgramUniformMatrix4fv(m_ID, glGetUniformLocation(this->m_ID, name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
-	void Shader::setVertexAttrib4f(unsigned int index, float x0, float x1, float x2, float x3)
+	void Shader::loadMatrix4(int location, const glm::mat4 & matrix)
 	{
+		glProgramUniformMatrix4fv(m_ID, location, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	void Shader::checkCompileErrors(const GLuint shader, const std::string type)

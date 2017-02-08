@@ -1,0 +1,14 @@
+#version 450 core
+
+in vec2 TexCoord;
+
+out vec4 out_Color;
+
+uniform sampler2D guiTexture;
+
+void main(void){
+	
+	out_Color = texture(guiTexture, TexCoord);
+	if(out_Color.a < 0.5f) { discard; }
+
+}

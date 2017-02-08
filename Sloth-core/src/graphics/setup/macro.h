@@ -6,11 +6,16 @@
 #define SCREEN_HEIGHT 600
 
 #define GLSL_MAX_LIGHTS 4
-// 着色器路径
+// 着色器路径 path of shaders
+// 静态着色器 static shader
 #define STATIC_VERTEX_FILE "src/shader/basic.vert"
 #define STATIC_FRAGMENT_FILE "src/shader/basic.frag"
+// 地形着色器 terrain shader
 #define TERRAIN_VERTEX_FILE "src/shader/terrain.vert"
 #define TERRAIN_FRAGMENT_FILE "src/shader/terrain.frag"
+// GUI着色器  GUI shader
+#define GUI_VERTEX_FILE "src/shader/gui.vert"
+#define GUI_FRAGMENT_FILE "src/shader/gui.frag"
 
 // 地形设置
 #define TERRAIN_SIZE 800.0f	// 地形大小为 TERRAIN_SIZE * TERRAIN_SIZE
