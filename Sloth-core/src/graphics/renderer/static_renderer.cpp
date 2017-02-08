@@ -14,6 +14,7 @@ namespace sloth { namespace graphics {
 		prepareInstance(entity);
 		glDrawElements(GL_TRIANGLES, entity.getTexturedModel().getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
 		TextureManager2D::inst()->unbindTexture();
+		unbindTexturedModel();
 	}
 
 	void StaticRenderer::render(std::map<TexturedModel, std::vector<Entity>> &entities)
@@ -27,7 +28,7 @@ namespace sloth { namespace graphics {
 				glDrawElements(GL_TRIANGLES, it->first.getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
 			}
 			TextureManager2D::inst()->unbindTexture();
-			enable_culling();
+			unbindTexturedModel();
 		}
 	}
 

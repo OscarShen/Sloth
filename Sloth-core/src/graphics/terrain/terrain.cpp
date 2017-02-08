@@ -21,8 +21,8 @@ namespace sloth { namespace graphics {
 		float gridSquareSize = TERRAIN_SIZE / static_cast<float>(heights.size() - 1);
 		float oneDivideGridSquareSize = 1.0f / gridSquareSize;
 		// 给方格编号，左上角为0,0
-		int gridX = (int) glm::floor(terrainX * oneDivideGridSquareSize);
-		int gridZ = (int) glm::floor(terrainZ * oneDivideGridSquareSize);
+		unsigned int gridX = (unsigned int) glm::floor(terrainX * oneDivideGridSquareSize);
+		unsigned int gridZ = (unsigned int) glm::floor(terrainZ * oneDivideGridSquareSize);
 		if (gridX >= heights.size() - 1 || gridZ >= heights.size() - 1 || gridX < 0 || gridZ < 0) {
 			return 0;
 		}

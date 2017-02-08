@@ -46,7 +46,9 @@ namespace sloth { namespace graphics {
 
 	private:
 		StaticShader();
-		void getAllUniformLocation();
+
+	protected:
+		virtual void getAllUniformLocation() override;
 	};
 
 } }

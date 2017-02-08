@@ -18,6 +18,9 @@
 #include "src/graphics/terrain/multi_terrain.h"
 #include "src/graphics/entities/player.h"
 #include "src/graphics/camera/camera_3rd.h"
+#include "src/graphics/gui/gui_renderer.h"
+#include "src/graphics/gui/gui_shader.h"
+#include "src/graphics/gui/gui_texture.hpp"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -40,7 +43,9 @@ enum Texture
 	GTEXTURE = 8,
 	BTEXTURE = 9,
 	BLENDMAP = 10,
-	PLAYER = 11
+	PLAYER = 11,
+
+	GUI_HEALTH = 30
 };
 
 enum Shader
@@ -52,7 +57,6 @@ enum Shader
 int main()
 {
 	SlothWindow window("Sloth!", SCREEN_WIDTH, SCREEN_HEIGHT);
-	Camera camera;
 	Loader loader;
 	TextureManager2D * tm = TextureManager2D::inst();
 	TerrainShader *terrainShader = TerrainShader::inst();
@@ -93,9 +97,16 @@ int main()
 		entities.push_back(Entity(grassModel, glm::vec3(r3, terrain.getHeightOfTerrain((float) r3, (float) r4), r4), 0, 0, 0, 2));
 	}
 
+	auto guiShader = GuiShader::inst();
+	GuiRenderer guiRenderer(loader);
+	tm->loadTexture(Texture::GUI_HEALTH, "res/grass.png", true);
+	std::vector<GuiTexture> guiTextures;
+	guiTextures.push_back(GuiTexture(Texture::GUI_HEALTH, glm::vec2(0.0f), glm::vec2(0.25f)));
+
 	Light sun(glm::vec3(0.0f, 10000.0f, 0.0f), glm::vec3(1.2f));
 	Player player(person, glm::vec3(400.0f, 0.0f, 400.0f), 0.0f, 0.0f, 0.0f, 1.0f);
-	//Camera3rd camera(player);
+	Camera3rd camera(player);
+	//Camera camera;
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -106,13 +117,14 @@ int main()
 	{
 		window.clear();
 #pragma region USER
-		player.move(terrain);
-		renderer.submitEntity(player);
-		renderer.submitTerrain(terrain);
-		for (size_t i = 0; i < entities.size(); ++i) {
-			renderer.submitEntity(entities[i]);
-		}
-		renderer.render(sun, camera);
+		//player.move(terrain);
+		//renderer.submitEntity(player);
+		//renderer.submitTerrain(terrain);
+		//for (size_t i = 0; i < entities.size(); ++i) {
+		//	renderer.submitEntity(entities[i]);
+		//}
+		//renderer.render(sun, camera);
+		guiRenderer.render(guiTextures);
 #pragma endregion
 		Timer::calculateFPS();
 		camera.process(&window);

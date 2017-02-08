@@ -41,7 +41,9 @@ namespace sloth { namespace graphics {
 
 	private:
 		TerrainShader();
-		void getAllUniformLocation();
+
+	protected:
+		virtual void getAllUniformLocation() override;
 	};
 
 } }
