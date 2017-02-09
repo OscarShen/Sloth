@@ -43,9 +43,11 @@ namespace sloth { namespace graphics {
 	{
 		glProgramUniform3f(m_ID, m_LocLightPos[0], light.position[0], light.position[1], light.position[2]);
 		glProgramUniform3f(m_ID, m_LocLightColor[0], light.color[0], light.color[1], light.color[2]);
+		glProgramUniform3f(m_ID, m_LocAttenuation[0], light.attenuation[0], light.attenuation[1], light.attenuation[2]);
 		for (int i = 1; i < GLSL_MAX_LIGHTS; ++i) {
 			glProgramUniform3f(m_ID, m_LocLightPos[i], 0.0f, 0.0f, 0.0f);
 			glProgramUniform3f(m_ID, m_LocLightColor[i], 0.0f, 0.0f, 0.0f);
+			glProgramUniform3f(m_ID, m_LocAttenuation[i], 1.0f, 0.0f, 0.0f);
 		}
 	}
 
@@ -55,10 +57,12 @@ namespace sloth { namespace graphics {
 			if (i < lights.size()) {
 				glProgramUniform3f(m_ID, m_LocLightPos[i], lights[i].position[0], lights[i].position[1], lights[i].position[2]);
 				glProgramUniform3f(m_ID, m_LocLightColor[i], lights[i].color[0], lights[i].color[1], lights[i].color[2]);
+				glProgramUniform3f(m_ID, m_LocAttenuation[i], lights[i].attenuation[0], lights[i].attenuation[1], lights[i].attenuation[2]);
 			}
 			else {
 				glProgramUniform3f(m_ID, m_LocLightPos[i], 0.0f, 0.0f, 0.0f);
 				glProgramUniform3f(m_ID, m_LocLightColor[i], 0.0f, 0.0f, 0.0f);
+				glProgramUniform3f(m_ID, m_LocAttenuation[i], 1.0f, 0.0f, 0.0f);
 			}
 		}
 	}
@@ -92,11 +96,13 @@ namespace sloth { namespace graphics {
 		m_LocReflectivity = glGetUniformLocation(m_ID, "reflectivity");
 		m_LocLightPos = new int[GLSL_MAX_LIGHTS];
 		m_LocLightColor = new int[GLSL_MAX_LIGHTS];
+		m_LocAttenuation = new int[GLSL_MAX_LIGHTS];
 
 		for (int i = 0; i < GLSL_MAX_LIGHTS; ++i) {
 			char c = '0' + i;
 			m_LocLightPos[i] = glGetUniformLocation(m_ID, (std::string("lightPosition[") + c + "]").c_str());
 			m_LocLightColor[i] = glGetUniformLocation(m_ID, (std::string("lightColor[") + c + "]").c_str());
+			m_LocAttenuation[i] = glGetUniformLocation(m_ID, (std::string("attenuation[") + c + "]").c_str());
 		}
 		m_LocSkyColor = glGetUniformLocation(m_ID, "skyColor");
 		m_LocBackgroundTexture = glGetUniformLocation(m_ID, "backgroundTexture");
