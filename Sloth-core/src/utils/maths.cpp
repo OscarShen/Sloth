@@ -22,8 +22,8 @@ namespace sloth { namespace util {
 	glm::mat4 Maths::createTransformationMatrix(const glm::vec2 translation, const glm::vec2 scale)
 	{
 		glm::mat4 matrix;
-		matrix = glm::scale(matrix, glm::vec3(scale, 1.0f));
 		matrix = glm::translate(matrix, glm::vec3(translation, 0.0f));
+		matrix = glm::scale(matrix, glm::vec3(scale, 1.0f));
 		return matrix;
 	}
 

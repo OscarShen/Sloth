@@ -1,10 +1,12 @@
 #version 450 core
 
+// 最大灯光数
 #define MAX_LIGHT 4
 uniform sampler2D tex0;
 
 uniform vec3 lightPosition[MAX_LIGHT];
 uniform vec3 lightColor[MAX_LIGHT];
+
 uniform float shininess = 128.0f;
 uniform float reflectivity = 1.0f;
 uniform vec3 skyColor;

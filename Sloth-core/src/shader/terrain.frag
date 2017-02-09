@@ -1,5 +1,6 @@
 #version 450 core
 
+// 最大灯光数
 #define MAX_LIGHT 4
 // One terrain texture to tile n times in a edge
 #define TERRAIN_TILE_NUMBLE 40.0f

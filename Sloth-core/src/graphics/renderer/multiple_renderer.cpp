@@ -34,6 +34,23 @@ namespace sloth { namespace graphics {
 		m_Terrains.clear();
 	}
 
+	void MultipleRenderer::render(const std::vector<Light>& lights, const RawCamera & camera)
+	{
+		auto staticShader = StaticShader::inst();
+		staticShader->loadLights(lights);
+		staticShader->loadViewMatrix(camera);
+		m_StaticRenderer->render(m_Entities);
+		staticShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
+		auto terrainShader = TerrainShader::inst();
+		terrainShader->loadLights(lights);
+		terrainShader->loadViewMatrix(camera);
+		m_TerrainRenderer->render(m_Terrains);
+		terrainShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
+		// Clear up to avoid memory overflow, we will submit every entity per frame.
+		m_Entities.clear();
+		m_Terrains.clear();
+	}
+
 	void MultipleRenderer::submitTerrain(const Terrain & terrain)
 	{
 		m_Terrains.push_back(terrain);
