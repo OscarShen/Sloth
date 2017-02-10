@@ -17,6 +17,73 @@ namespace sloth { namespace graphics {
 		m_inst = nullptr;
 	}
 
+	void TextureManager2D::loadCubeMap(unsigned int cubeMapID, const std::vector<std::string>& cubeMapPaths, bool alpha, unsigned int mipmap)
+	{
+		auto cubeMap = new TextureCubeMap();
+		// 重复就先删除已有的
+		if (m_CubeMaps.find(cubeMapID) != m_CubeMaps.end()) { unloadCubeMap(cubeMapID); }
+		unsigned int glID = 0;
+		glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &glID);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, glID);
+		if (alpha)
+		{
+			cubeMap->setInternalFormat(GL_RGBA8);
+			cubeMap->setImageFormat(GL_RGBA);
+		}
+		cubeMap->setMipmap(mipmap);
+		int width, height;
+		for (size_t i = 0; i < cubeMapPaths.size(); ++i) {
+			unsigned char* image = SOIL_load_image(cubeMapPaths[i].c_str(),
+				&width, &height, 0, alpha ? SOIL_LOAD_RGBA : SOIL_LOAD_RGB);
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, cubeMap->getMipmap(), cubeMap->getInternalFormat(),
+				width, height, 0, cubeMap->getImageFormat(), GL_UNSIGNED_BYTE, image);
+			SOIL_free_image_data(image);
+		}
+		glTextureParameteri(glID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTextureParameteri(glID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		cubeMap->setID(glID);
+		cubeMap->setWidth(width);
+		cubeMap->setHeight(height);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+		m_CubeMaps[cubeMapID] = cubeMap;
+	}
+
+	void TextureManager2D::unloadCubeMap(unsigned int cubeMapID)
+	{
+		if (m_CubeMaps.find(cubeMapID) != m_CubeMaps.end())
+		{
+			unsigned int glID = m_CubeMaps[cubeMapID]->getID();
+			glDeleteTextures(1, &glID);
+			delete m_CubeMaps[cubeMapID];
+			m_CubeMaps.erase(cubeMapID);
+		}
+	}
+
+	void TextureManager2D::unloadAllCubeMap()
+	{
+		auto i = m_CubeMaps.begin();
+
+		while (i != m_CubeMaps.end())
+		{
+			auto j = i;
+			i++;
+			unloadCubeMap(j->first);
+		}
+		m_CubeMaps.clear();
+	}
+
+	void TextureManager2D::bindCubeMap(unsigned int cubeMapID)
+	{
+		if (m_CubeMaps.find(cubeMapID) != m_CubeMaps.end())
+			glBindTexture(GL_TEXTURE_CUBE_MAP, m_CubeMaps[cubeMapID]->getID());
+	}
+
+	void TextureManager2D::unbindCubeMap()
+	{
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+	}
+
 	void TextureManager2D::loadTexture(const unsigned int texID, const char *file, bool alpha, unsigned int mipmap)
 	{
 		if (m_texID.find(texID) != m_texID.end())
@@ -76,7 +143,6 @@ namespace sloth { namespace graphics {
 			unloadTexture(j->first);
 		}
 
-		//clear the texture map
 		m_texID.clear();
 	}
 

@@ -16,6 +16,9 @@
 // GUI着色器  GUI shader
 #define GUI_VERTEX_FILE "src/shader/gui.vert"
 #define GUI_FRAGMENT_FILE "src/shader/gui.frag"
+// 天空盒着色器 skybox shader
+#define SKYBOX_VERTEX_FILE "src/shader/skybox.vert"
+#define SKYBOX_FRAGMENT_FILE "src/shader/skybox.frag"
 
 // 地形设置
 #define TERRAIN_SIZE 800.0f	// 地形大小为 TERRAIN_SIZE * TERRAIN_SIZE

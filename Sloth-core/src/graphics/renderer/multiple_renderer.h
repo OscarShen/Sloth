@@ -16,6 +16,7 @@
 
 #include "../renderer/static_renderer.h"
 #include "../renderer/terrain_renderer.h"
+#include "../renderer/skybox_renderer.h"
 #include "../model/textured_model.hpp"
 #include "../setup/global_function.h"
 #include <map>
@@ -30,25 +31,29 @@ namespace sloth { namespace graphics {
 
 		TerrainRenderer *m_TerrainRenderer;
 
+		SkyboxRenderer *m_SkyboxRenderer;
+
 		std::map<TexturedModel, std::vector<Entity>> m_Entities;
 		std::vector<Terrain> m_Terrains;
 
 	public:
-		MultipleRenderer();
+		MultipleRenderer(Loader &loader);
+
 		~MultipleRenderer();
 		/************************************************************************
-		* @description	: 传入一个灯光进行渲染
+		* @description	: 渲染单个灯光下的 实例、地形、天空盒
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月9日14:03:57
 		***********************************************************************/
-		void render(const Light &sun, const RawCamera &camera);
+		void render(const Light &sun, const RawCamera &camera, unsigned int cubeMapID);
 
 		/************************************************************************
-		* @description	: 传入灯光和相机进行渲染，灯光最大数为 GLSL_MAX_LIGHTS 宏
+		* @description	: 渲染多个灯光下的 实例、地形、天空盒
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月9日14:03:27
 		***********************************************************************/
-		void render(const std::vector<Light> &lights, const RawCamera &camera);
+		void render(const std::vector<Light> &lights, const RawCamera &camera, unsigned int cubeMapID);
+
 		void submitTerrain(const Terrain &terrain);
 		void submitEntity(const Entity &entity);
 	};

@@ -30,12 +30,24 @@ namespace sloth { namespace graphics {
 			std::vector<unsigned int> &indices
 		);
 
-		// 主要用于建立二维GUI矩形
+		/************************************************************************
+		* @description	: 建立一个只包含vec2位置和纹理的RawModel，主要用于建立二维GUI矩形
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月9日14:03:57
+		***********************************************************************/
 		RawModel loadToVAO(
 			std::vector<glm::vec2> &positions,
 			std::vector<glm::vec2> &texCoords
 		);
 
+		/************************************************************************
+		* @description	: 建立一个只包含vec3位置的RawModel
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月9日14:03:57
+		***********************************************************************/
+		RawModel loadToVAO(
+			std::vector<glm::vec3> &positions
+		);
 
 		void cleanUp();
 

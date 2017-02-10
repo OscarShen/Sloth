@@ -2,50 +2,67 @@
 
 namespace sloth { namespace graphics {
 
-	MultipleRenderer::MultipleRenderer()
+	MultipleRenderer::MultipleRenderer(Loader &loader)
 	{
 		enable_culling();
 		auto &&projection = glm::perspective(PERSPECTIVE_FOV, PERSPECTIVE_ASPECT,
 			PERSPECTIVE_NEAR_PLANE, PERSPECTIVE_FAR_PLANE);
 		m_StaticRenderer = new StaticRenderer(projection);
 		m_TerrainRenderer = new TerrainRenderer(projection);
+		m_SkyboxRenderer = new SkyboxRenderer(loader, projection);
 	}
 
 	MultipleRenderer::~MultipleRenderer()
 	{
-		delete m_StaticRenderer;
-		delete m_TerrainRenderer;
+		if(m_StaticRenderer!=nullptr)
+			delete m_StaticRenderer;
+		if (m_TerrainRenderer != nullptr)
+			delete m_TerrainRenderer;
+		if (m_SkyboxRenderer != nullptr)
+			delete m_SkyboxRenderer;
 	}
 
-	void MultipleRenderer::render(const Light & sun, const RawCamera & camera)
+	void MultipleRenderer::render(const Light & sun, const RawCamera & camera, unsigned int cubeMapID)
 	{
+		// äÖÈ¾Ä£ÐÍ
 		auto staticShader = StaticShader::inst();
 		staticShader->loadLight(sun);
 		staticShader->loadViewMatrix(camera);
 		m_StaticRenderer->render(m_Entities);
 		staticShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
+		// äÖÈ¾µØÐÎ
 		auto terrainShader = TerrainShader::inst();
 		terrainShader->loadLight(sun);
 		terrainShader->loadViewMatrix(camera);
 		m_TerrainRenderer->render(m_Terrains);
 		terrainShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
+		// äÖÈ¾Ìì¿ÕºÐ
+		auto skyboxShader = SkyboxShader::inst();
+		m_SkyboxRenderer->render(cubeMapID, camera);
+
 		// Clear up to avoid memory overflow, we will submit every entity per frame.
 		m_Entities.clear();
 		m_Terrains.clear();
 	}
 
-	void MultipleRenderer::render(const std::vector<Light>& lights, const RawCamera & camera)
+	void MultipleRenderer::render(const std::vector<Light>& lights, const RawCamera & camera, unsigned int cubeMapID)
 	{
+		// äÖÈ¾Ä£ÐÍ
 		auto staticShader = StaticShader::inst();
 		staticShader->loadLights(lights);
 		staticShader->loadViewMatrix(camera);
 		m_StaticRenderer->render(m_Entities);
 		staticShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
+		// äÖÈ¾µØÐÎ
 		auto terrainShader = TerrainShader::inst();
 		terrainShader->loadLights(lights);
 		terrainShader->loadViewMatrix(camera);
 		m_TerrainRenderer->render(m_Terrains);
 		terrainShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
+		// äÖÈ¾Ìì¿ÕºÐ
+		auto skyboxShader = SkyboxShader::inst();
+		m_SkyboxRenderer->render(cubeMapID, camera);
+
 		// Clear up to avoid memory overflow, we will submit every entity per frame.
 		m_Entities.clear();
 		m_Terrains.clear();
