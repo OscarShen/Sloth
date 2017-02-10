@@ -27,6 +27,7 @@ namespace sloth { namespace graphics {
 		unsigned int m_ID;
 	public:
 		Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath = nullptr);
+		virtual ~Shader() {}
 
 		void loadFloat(const char *name, float value);
 		void loadInteger(const char *name, int value);
@@ -38,16 +39,6 @@ namespace sloth { namespace graphics {
 		void loadVector4f(const char *name, const glm::vec4 &value);
 		void loadMatrix4(const char *name, const glm::mat4 &matrix);
 		void loadMatrix4(int location, const glm::mat4 &matrix);
-
-		// TODO:清理不必要的重载方法 2017年2月8日14:23:29
-		virtual void loadModelMatrix(const glm::mat4 &model) {}
-		virtual void loadViewMatrix(const RawCamera &camera) {}
-		virtual void loadProjectionMatrix(const glm::mat4 &projection) {}
-		virtual void loadLight(const Light &light) {}
-		virtual void loadLights(const std::vector<Light> &lights) {}
-		virtual void loadShineVariable(const float shininess, const float reflectivity) {}
-		virtual void loadUseFakeLighting(const bool useFake) {}
-
 
 		inline unsigned int getID() const { return this->m_ID; }
 

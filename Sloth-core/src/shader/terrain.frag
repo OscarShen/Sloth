@@ -77,8 +77,5 @@ void main()
 		totalSpecular += spec * lightColor[i] * reflectivity * oneDivideAttFactor;
 	}
 	frag_out = (vec4(totalDiffuse, 1.0f)  + ambient) * totalColor + vec4(totalSpecular, 1.0f);
-	//frag_out = totalColor * ambient + vec4(totalSpecular, 1.0f);
-	//frag_out = vec4(attFactor);
-	//frag_out = ambient * totalColor;
-	//frag_out = mix(vec4(skyColor, 1.0f), frag_out, visibility);
+	frag_out = mix(vec4(skyColor, 1.0f), frag_out, visibility);
 }

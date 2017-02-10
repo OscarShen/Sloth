@@ -42,23 +42,23 @@ namespace sloth { namespace graphics {
 
 
 	public:
-		~TerrainShader();
 		static TerrainShader* inst();
-		virtual void loadModelMatrix(const glm::mat4 &model) override;
-		virtual void loadViewMatrix(const RawCamera &camera) override;
-		virtual void loadProjectionMatrix(const glm::mat4 &projection) override;
-		virtual void loadLight(const Light &light) override;
+		virtual ~TerrainShader();
+		void loadModelMatrix(const glm::mat4 &model);
+		void loadViewMatrix(const RawCamera &camera);
+		void loadProjectionMatrix(const glm::mat4 &projection);
+		void loadLight(const Light &light);
 
 		/************************************************************************
 		* @description	: 加载灯光相关的变量值——位置、颜色、衰减
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月8日16:52:25
 		***********************************************************************/
-		virtual void loadLights(const std::vector<Light> &lights) override;
+		void loadLights(const std::vector<Light> &lights);
 
-		virtual void loadShineVariable(const float shininess, const float reflectivity) override;
-		virtual void loadSkyColor(const float r, const float g, const float b);
-		virtual void connectTextureUnits();
+		void loadShineVariable(const float shininess, const float reflectivity);
+		void loadSkyColor(const float r, const float g, const float b);
+		void connectTextureUnits();
 
 	private:
 		TerrainShader();

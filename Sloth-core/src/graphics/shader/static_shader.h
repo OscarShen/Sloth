@@ -45,24 +45,24 @@ namespace sloth { namespace graphics {
 
 	public:
 		static StaticShader *inst();
-		~StaticShader();
-		virtual void loadModelMatrix(const glm::mat4 &model) override;
-		virtual void loadViewMatrix(const RawCamera &camera) override;
-		virtual void loadProjectionMatrix(const glm::mat4 &projection) override;
-		virtual void loadLight(const Light &light) override;
+		virtual ~StaticShader();
+		void loadModelMatrix(const glm::mat4 &model);
+		void loadViewMatrix(const RawCamera &camera);
+		void loadProjectionMatrix(const glm::mat4 &projection);
+		void loadLight(const Light &light);
 
 		/************************************************************************
 		* @description	: 加载灯光相关的变量值——位置、颜色、衰减
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月8日16:52:25
 		***********************************************************************/
-		virtual void loadLights(const std::vector<Light> &lights) override;
+		void loadLights(const std::vector<Light> &lights);
 
-		virtual void loadShineVariable(const float shininess, const float reflectivity) override;
-		virtual void loadUseFakeLighting(const bool useFake) override;
-		virtual void loadSkyColor(const float r, const float g, const float b);
-		virtual void loadNumberOfRows(int numberOfRaws);
-		virtual void loadOffset(float x, float y);
+		void loadShineVariable(const float shininess, const float reflectivity);
+		void loadUseFakeLighting(const bool useFake);
+		void loadSkyColor(const float r, const float g, const float b);
+		void loadNumberOfRows(int numberOfRaws);
+		void loadOffset(float x, float y);
 
 
 	private:
