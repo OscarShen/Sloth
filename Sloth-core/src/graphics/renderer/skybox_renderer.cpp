@@ -1,7 +1,7 @@
 #include "skybox_renderer.h"
 
 namespace sloth { namespace graphics {
-	float SkyboxRenderer::m_Size = 1.0f;
+	float SkyboxRenderer::m_Size = 100.0f;
 	std::vector<glm::vec3> SkyboxRenderer::m_Vertices = {
 		glm::vec3(-m_Size,  m_Size, -m_Size),
 		glm::vec3(-m_Size, -m_Size, -m_Size),

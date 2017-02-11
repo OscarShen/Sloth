@@ -27,6 +27,9 @@ namespace sloth { namespace graphics {
 		int m_LocView;
 		int m_LocProjection;
 
+		// 雾气颜色
+		int m_LocFogColor;
+
 	public:
 		/***********************************************************************
 		* @description	: 单例模式获得 SkyboxShader 的实例
@@ -50,6 +53,13 @@ namespace sloth { namespace graphics {
 		* @creat		: 2017年2月10日13:55:04
 		***********************************************************************/
 		void loadProjectionMatrix(const glm::mat4 &projection);
+
+		/***********************************************************************
+		* @description	: 加载 fogColor 矩阵到 OpenGL
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月11日18:08:21
+		***********************************************************************/
+		void loadFogColor(float r, float g, float b);
 
 	private:
 		SkyboxShader();

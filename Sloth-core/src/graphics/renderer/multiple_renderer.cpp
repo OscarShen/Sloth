@@ -62,6 +62,7 @@ namespace sloth { namespace graphics {
 		// äÖÈ¾Ìì¿ÕºÐ
 		auto skyboxShader = SkyboxShader::inst();
 		m_SkyboxRenderer->render(cubeMapID, camera);
+		skyboxShader->loadFogColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
 
 		// Clear up to avoid memory overflow, we will submit every entity per frame.
 		m_Entities.clear();

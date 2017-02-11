@@ -10,6 +10,11 @@ namespace sloth { namespace graphics {
 		return m_Inst;
 	}
 
+	void SkyboxShader::loadFogColor(float r, float g, float b)
+	{
+		glProgramUniform3f(m_ID, m_LocFogColor, r, g, b);
+	}
+
 	SkyboxShader::SkyboxShader()
 		:Shader(SKYBOX_VERTEX_FILE, SKYBOX_FRAGMENT_FILE)
 	{
@@ -35,6 +40,7 @@ namespace sloth { namespace graphics {
 	{
 		m_LocProjection = glGetUniformLocation(m_ID, "projection");
 		m_LocView = glGetUniformLocation(m_ID, "view");
+		m_LocFogColor = glGetUniformLocation(m_ID, "fogColor");
 	}
 
 } }
