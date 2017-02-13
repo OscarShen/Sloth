@@ -45,6 +45,8 @@ namespace sloth { namespace graphics {
 		inline float getRotZ() const { return m_RotZ; }
 		inline float getScale() const { return m_Scale; }
 
+		void setPosition(const glm::vec3 &position) { m_Position = position; }
+
 		void increaseRotation(float dx, float dy, float dz);
 		void increasePosition(float dx, float dy, float dz);
 

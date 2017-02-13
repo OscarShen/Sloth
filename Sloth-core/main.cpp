@@ -21,6 +21,7 @@
 #include "src/graphics/gui/gui_renderer.h"
 #include "src/graphics/gui/gui_shader.h"
 #include "src/graphics/gui/gui_texture.hpp"
+#include "src/utils/mouse_picker.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -45,7 +46,9 @@ enum Texture
 	BLENDMAP = 10,
 	PLAYER = 11,
 
-	GUI_HEALTH = 30
+	GUI_HEALTH = 30,
+
+	CUBE_MAP_DAY = 1000
 };
 
 enum Shader
@@ -60,7 +63,7 @@ int main()
 	Loader loader;
 	TextureManager2D * tm = TextureManager2D::inst();
 	TerrainShader *terrainShader = TerrainShader::inst();
-	MultipleRenderer renderer;
+	MultipleRenderer renderer(loader);
 
 	tm->loadTexture(Texture::WHITE, "res/white.png");
 	tm->loadTexture(Texture::TREE, "res/tree.png");
@@ -78,6 +81,9 @@ int main()
 	tm->loadTexture(Texture::GTEXTURE, "res/grassFlowers.png");
 	tm->loadTexture(Texture::BTEXTURE, "res/path.png");
 	tm->loadTexture(Texture::BLENDMAP, "res/blendMap.png");
+
+	std::vector<std::string> cubeMapPath = { "res/right.png","res/left.png", "res/top.png", "res/bottom.png", "res/back.png", "res/front.png" };
+	tm->loadCubeMap(Texture::CUBE_MAP_DAY, cubeMapPath);
 
 	Terrain terrain(0, 0, MultiTerrain(Texture::BACKGROUND, Texture::RTEXTURE, Texture::GTEXTURE, Texture::BTEXTURE, Texture::BLENDMAP), loader, "res/heightmap2.jpg");
 	TexturedModel tree(ModelLoader::loadModel("res/tree.obj", loader), Texture::TREE);
@@ -99,14 +105,22 @@ int main()
 
 	auto guiShader = GuiShader::inst();
 	GuiRenderer guiRenderer(loader);
-	tm->loadTexture(Texture::GUI_HEALTH, "res/grass.png", true);
+	tm->loadTexture(Texture::GUI_HEALTH, "res/health.png", true);
 	std::vector<GuiTexture> guiTextures;
-	guiTextures.push_back(GuiTexture(Texture::GUI_HEALTH, glm::vec2(0.0f), glm::vec2(0.25f)));
+	guiTextures.push_back(GuiTexture(Texture::GUI_HEALTH, glm::vec2(-0.5f, -0.7f), glm::vec2(0.3f)));
 
-	Light sun(glm::vec3(0.0f, 10000.0f, 0.0f), glm::vec3(1.2f));
+	//Light sun(glm::vec3(0.0f, 10000.0f, 0.0f), glm::vec3(1.2f));
+	std::vector<Light> lights;
+	lights.push_back(Light(glm::vec3(400.0f, 10.0f, 400.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f,0.01f,0.002f)));
+	//lights.push_back(Light(glm::vec3(000.0f, 100.0f, -100.0f), glm::vec3(0.0f, 1.0f, 0.0f),glm::vec3(1.0f,0.2f,0.07f)));
+	//lights.push_back(Light(glm::vec3(100.0f, 100.0f, 000.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
 	Player player(person, glm::vec3(400.0f, 0.0f, 400.0f), 0.0f, 0.0f, 0.0f, 1.0f);
+
 	Camera3rd camera(player);
 	//Camera camera;
+
+	MousePicker picker(camera, renderer.getProjectionMatrix(),terrain);
+	Entity pickerTree(tree, glm::vec3(400.0f, terrain.getHeightOfTerrain(400.0f, 400.0f), 400.0f), 0, 0, 0, 10);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -117,13 +131,20 @@ int main()
 	{
 		window.clear();
 #pragma region USER
-		//player.move(terrain);
-		//renderer.submitEntity(player);
-		//renderer.submitTerrain(terrain);
-		//for (size_t i = 0; i < entities.size(); ++i) {
-		//	renderer.submitEntity(entities[i]);
-		//}
-		//renderer.render(sun, camera);
+
+
+		picker.update();
+		glm::vec3 terrainPoint = picker.getCurrentTerrainPosition();
+		pickerTree.setPosition(terrainPoint);
+
+		player.move(terrain);
+		renderer.submitEntity(player);
+		renderer.submitEntity(pickerTree);
+		renderer.submitTerrain(terrain);
+		for (size_t i = 0; i < entities.size(); ++i) {
+			renderer.submitEntity(entities[i]);
+		}
+		renderer.render(lights, camera, Texture::CUBE_MAP_DAY);
 		guiRenderer.render(guiTextures);
 #pragma endregion
 		Timer::calculateFPS();

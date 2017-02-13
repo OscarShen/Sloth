@@ -36,6 +36,9 @@ namespace sloth { namespace graphics {
 		std::map<TexturedModel, std::vector<Entity>> m_Entities;
 		std::vector<Terrain> m_Terrains;
 
+		// 用于存储投影矩阵
+		glm::mat4 m_ProjectionMatrix;
+
 	public:
 		MultipleRenderer(Loader &loader);
 
@@ -56,6 +59,13 @@ namespace sloth { namespace graphics {
 
 		void submitTerrain(const Terrain &terrain);
 		void submitEntity(const Entity &entity);
+
+		/************************************************************************
+		* @description	: 获得存储的 projection 矩阵
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月12日19:12:21
+		***********************************************************************/
+		inline glm::mat4 getProjectionMatrix() const { return m_ProjectionMatrix; }
 	};
 
 } }

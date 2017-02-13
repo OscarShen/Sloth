@@ -13,7 +13,7 @@ namespace sloth { namespace graphics {
 		m_Model = generateTerrain(loader, heightMapPath);
 	}
 
-	float Terrain::getHeightOfTerrain(float worldX, float worldZ)
+	float Terrain::getHeightOfTerrain(float worldX, float worldZ) const
 	{
 		float terrainX = worldX - m_X;
 		float terrainZ = worldZ - m_Z;

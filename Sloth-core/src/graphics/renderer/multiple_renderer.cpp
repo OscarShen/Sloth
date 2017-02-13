@@ -5,11 +5,11 @@ namespace sloth { namespace graphics {
 	MultipleRenderer::MultipleRenderer(Loader &loader)
 	{
 		enable_culling();
-		auto &&projection = glm::perspective(PERSPECTIVE_FOV, PERSPECTIVE_ASPECT,
+		m_ProjectionMatrix = glm::perspective(PERSPECTIVE_FOV, PERSPECTIVE_ASPECT,
 			PERSPECTIVE_NEAR_PLANE, PERSPECTIVE_FAR_PLANE);
-		m_StaticRenderer = new StaticRenderer(projection);
-		m_TerrainRenderer = new TerrainRenderer(projection);
-		m_SkyboxRenderer = new SkyboxRenderer(loader, projection);
+		m_StaticRenderer = new StaticRenderer(m_ProjectionMatrix);
+		m_TerrainRenderer = new TerrainRenderer(m_ProjectionMatrix);
+		m_SkyboxRenderer = new SkyboxRenderer(loader, m_ProjectionMatrix);
 	}
 
 	MultipleRenderer::~MultipleRenderer()

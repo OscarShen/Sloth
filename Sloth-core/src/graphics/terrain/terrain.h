@@ -29,7 +29,7 @@ namespace sloth { namespace graphics {
 		inline float getX() const { return m_X; }
 		inline float getZ() const { return m_Z; }
 		// 获取地形的高度值，这个高度值经过了线性插值
-		float getHeightOfTerrain(float worldX, float worldZ);
+		float getHeightOfTerrain(float worldX, float worldZ) const;
 
 	private:
 		RawModel generateTerrain(Loader &loader, std::string heightMapPath);
