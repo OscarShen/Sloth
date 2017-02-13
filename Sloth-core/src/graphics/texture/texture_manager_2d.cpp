@@ -2,19 +2,19 @@
 
 namespace sloth { namespace graphics {
 
-	TextureManager2D* TextureManager2D::m_inst(nullptr);
+	TextureManager2D* TextureManager2D::m_Inst(nullptr);
 
 	TextureManager2D* TextureManager2D::inst()
 	{
-		if (!m_inst)
-			m_inst = new TextureManager2D();
-		return m_inst;
+		if (!m_Inst)
+			m_Inst = new TextureManager2D();
+		return m_Inst;
 	}
 
 	TextureManager2D::~TextureManager2D()
 	{
 		unloadAllTextures();
-		m_inst = nullptr;
+		m_Inst = nullptr;
 	}
 
 	void TextureManager2D::loadCubeMap(unsigned int cubeMapID, const std::vector<std::string>& cubeMapPaths, bool alpha, unsigned int mipmap)

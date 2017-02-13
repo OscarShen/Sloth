@@ -14,7 +14,7 @@ namespace sloth { namespace graphics {
 	class TextureManager2D
 	{
 	protected:
-		static TextureManager2D* m_inst;
+		static TextureManager2D* m_Inst;
 		std::map<unsigned int, Texture2D*> m_texID;
 		std::map<unsigned int, TextureCubeMap*> m_CubeMaps;
 

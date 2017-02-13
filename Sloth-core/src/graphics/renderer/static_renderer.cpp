@@ -61,7 +61,6 @@ namespace sloth { namespace graphics {
 	void StaticRenderer::unbindTexturedModel()
 	{
 		glBindVertexArray(0);
-		enable_culling();
 	}
 
 } }

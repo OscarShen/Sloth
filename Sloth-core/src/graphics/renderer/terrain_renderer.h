@@ -1,3 +1,14 @@
+/************************************************************************
+* @project 		:  sloth
+* @class   		:  TerrainRenderer
+* @version 		:  v1.0.0
+* @description	:  terrain 的渲染操作类
+* @author		:  Oscar Shen
+* @creat 		:  2016年12月13日21:56:23
+* @revise 		:
+************************************************************************
+* Copyright @ OscarShen 2016. All rights reserved.
+************************************************************************/
 #pragma once
 #ifndef SLOTH_TERRAIN_RENDERER_H_
 #define SLOTH_TERRAIN_RENDERER_H_
@@ -19,7 +30,7 @@ namespace sloth { namespace graphics {
 		TerrainRenderer(glm::mat4 &projection);
 		~TerrainRenderer() {}
 
-		void render(std::vector<Terrain> &terrain);
+		void render(std::vector<Terrain*> &terrain);
 
 	private:
 		void prepareTerrain(Terrain &terrain);

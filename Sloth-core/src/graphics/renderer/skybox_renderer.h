@@ -37,7 +37,6 @@ namespace sloth { namespace graphics {
 
 		/***********************************************************************
 		* @description	: 构造天空盒renderer
-						  cubeMapID : 需要渲染的天空盒自定义句柄
 						  loader	: sloth所有的VAO都由 loader 加载
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月10日14:00:24

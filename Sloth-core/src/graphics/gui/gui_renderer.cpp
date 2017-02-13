@@ -38,7 +38,7 @@ namespace sloth { namespace graphics {
 		for (auto it = guis.begin(); it != guis.end(); ++it) {
 			tm->activateTexUnit(0);
 			tm->bindTexture(it->getTexID());
-			glm::mat4 mat = util::Maths::createTransformationMatrix(it->getPosition(), it->getScale());
+			glm::mat4 mat = util::Maths::createModelMatrix(it->getPosition(), it->getScale());
 			GuiShader::inst()->loadTransformation(mat);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, m_Quad.getVertexCount());
  		}
