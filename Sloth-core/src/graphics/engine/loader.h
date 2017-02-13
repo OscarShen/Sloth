@@ -49,6 +49,16 @@ namespace sloth { namespace graphics {
 			std::vector<glm::vec3> &positions
 		);
 
+		/************************************************************************
+		* @description	: 建立一个只包含dimention位置的RawModel
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月13日18:56:46
+		***********************************************************************/
+		RawModel loadToVAO(
+			std::vector<float> &position,
+			int dimention
+		);
+
 		void cleanUp();
 
 	private:

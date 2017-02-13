@@ -19,9 +19,12 @@
 // 天空盒着色器 skybox shader
 #define SKYBOX_VERTEX_FILE "src/shader/skybox.vert"
 #define SKYBOX_FRAGMENT_FILE "src/shader/skybox.frag"
+// 水面着色器 water shader
+#define WATER_VERTEX_FILE "src/shader/water.vert"
+#define WATER_FRAGMENT_FILE "src/shader/water.frag"
 
 // 地形设置
-#define TERRAIN_SIZE 800.0f	// 地形大小为 TERRAIN_SIZE * TERRAIN_SIZE
+#define TERRAIN_SIZE 40.0f	// 地形大小为 TERRAIN_SIZE * TERRAIN_SIZE
 //#define TERRAIN_VERTEX_COUNT 128 // 地形三角形细分程度
 #define TERRAIN_MAX_HEIGHT 40.0f // 地形最高高度
 #define TERRAIN_MAX_PIXEL_COLOR 256*256*256 //
@@ -37,8 +40,8 @@
 #define CAMERA_INIT_RIGHT	glm::normalize(glm::cross(CAMERA_INIT_UP, CAMERA_INIT_POS + CAMERA_INIT_FRONT))
 #define CAMERA_INIT_PITCH	0.0f
 #define CAMERA_INIT_YAW		-90.0f
-#define MOUSE_SENSITIVITY	2.0f
-#define MOVE_SPEED			20.0f
+#define MOUSE_SENSITIVITY	1.0f
+#define MOVE_SPEED			30.0f
 
 #define FOG_COLOR_RED 0.5f
 #define FOG_COLOR_BLUE 0.5f
@@ -71,5 +74,13 @@
 * @creat		: 2017年2月12日19:21:38
 ***********************************************************************/
 #define MOUSE_PICKER_RAY_CASTING_RANGE 600.0f
+
+// 位置：src/water/water_tile
+/************************************************************************
+* @description	: 鼠标选取发出光线的最大范围
+* @author		: Oscar Shen
+* @creat		: 2017年2月13日18:26:31
+***********************************************************************/
+#define WATER_TILE_SIZE 15.0f
 
 #endif // !SLOTH_MACRO_H_
