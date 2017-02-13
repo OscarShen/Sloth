@@ -19,7 +19,7 @@ namespace sloth { namespace util {
 		return l1 * v1.y + l2 * v2.y + l3 * v3.y;
 	}
 
-	glm::mat4 Maths::createTransformationMatrix(const glm::vec2 translation, const glm::vec2 scale)
+	glm::mat4 Maths::createModelMatrix(const glm::vec2 translation, const glm::vec2 scale)
 	{
 		glm::mat4 matrix;
 		matrix = glm::translate(matrix, glm::vec3(translation, 0.0f));

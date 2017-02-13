@@ -34,6 +34,13 @@ namespace sloth { namespace graphics {
 		return RawModel(va->getVaoID(), positions.size());
 	}
 
+	RawModel Loader::loadToVAO(std::vector<float>& positions, int dimention)
+	{
+		VertexArray *va = createVAO();
+		va->addBuffer(new Buffer(positions.data(), positions.size(), dimention), 0);
+		return RawModel(va->getVaoID(), positions.size() / dimention);
+	}
+
 	void Loader::cleanUp()
 	{
 		for (size_t i = 0; i < m_Vaos.size(); ++i) {

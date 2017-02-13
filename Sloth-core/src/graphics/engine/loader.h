@@ -1,3 +1,15 @@
+/************************************************************************
+ * @project 	:  sloth
+ * @class   	:  Loader
+ * @version 	:  v1.0.0
+ * @description :  所有的VAO都需要由 Loader 类来加载至 OpenGL。换言之，所有的
+				   RawModel 只能由 Loader 来生成
+ * @author		:  Oscar Shen
+ * @creat 		:  2017年2月13日21:54:09
+ * @revise 		:
+************************************************************************
+ * Copyright @ OscarShen 2017. All rights reserved.
+************************************************************************/
 #pragma once
 #ifndef SLOTH_LOADER_H_
 #define SLOTH_LOADER_H_
@@ -47,6 +59,16 @@ namespace sloth { namespace graphics {
 		***********************************************************************/
 		RawModel loadToVAO(
 			std::vector<glm::vec3> &positions
+		);
+
+		/************************************************************************
+		* @description	: 建立一个只包含dimention位置的RawModel
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月13日18:56:46
+		***********************************************************************/
+		RawModel loadToVAO(
+			std::vector<float> &position,
+			int dimention
 		);
 
 		void cleanUp();
