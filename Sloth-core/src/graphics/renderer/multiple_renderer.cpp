@@ -4,7 +4,6 @@ namespace sloth { namespace graphics {
 
 	MultipleRenderer::MultipleRenderer(Loader &loader)
 	{
-		enable_culling();
 		m_ProjectionMatrix = glm::perspective(PERSPECTIVE_FOV, PERSPECTIVE_ASPECT,
 			PERSPECTIVE_NEAR_PLANE, PERSPECTIVE_FAR_PLANE);
 		m_StaticRenderer = new StaticRenderer(m_ProjectionMatrix);
@@ -69,9 +68,20 @@ namespace sloth { namespace graphics {
 		m_Terrains.clear();
 	}
 
-	void MultipleRenderer::submitTerrain(const Terrain & terrain)
+	void MultipleRenderer::renderScene(const std::vector<Entity>& entities, std::vector<Terrain*>& terrains, const std::vector<Light>& lights, const RawCamera & camera, unsigned int cubeMapID)
 	{
-		m_Terrains.push_back(terrain);
+		for (auto terrain : terrains) {
+			submitTerrain(*terrain);
+		}
+		for (auto &i : entities) {
+			submitEntity(i);
+		}
+		render(lights, camera, cubeMapID);
+	}
+
+	void MultipleRenderer::submitTerrain(Terrain & terrain)
+	{
+		m_Terrains.push_back(&terrain);
 	}
 
 	void MultipleRenderer::submitEntity(const Entity & entity)

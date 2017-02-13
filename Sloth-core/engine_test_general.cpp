@@ -51,18 +51,11 @@ enum Texture
 	CUBE_MAP_DAY = 1000
 };
 
-enum Shader
-{
-	BASIC_SHADER = 1,
-	DEPTH_SHADER = 2
-};
-
 int main()
 {
 	SlothWindow window("Sloth!", SCREEN_WIDTH, SCREEN_HEIGHT);
 	Loader loader;
 	TextureManager2D * tm = TextureManager2D::inst();
-	TerrainShader *terrainShader = TerrainShader::inst();
 	MultipleRenderer renderer(loader);
 
 	tm->loadTexture(Texture::WHITE, "res/white.png");

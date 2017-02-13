@@ -19,7 +19,7 @@ namespace sloth { namespace graphics {
 		TerrainRenderer(glm::mat4 &projection);
 		~TerrainRenderer() {}
 
-		void render(std::vector<Terrain> &terrain);
+		void render(std::vector<Terrain*> &terrain);
 
 	private:
 		void prepareTerrain(Terrain &terrain);

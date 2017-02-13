@@ -32,7 +32,7 @@ namespace sloth { namespace util {
 		 * @author		: Oscar Shen
 		 * @creat		: 2017Äê2ÔÂ8ÈÕ16:52:25
 		 ***********************************************************************/
-		static glm::mat4 createTransformationMatrix(const glm::vec2 translation, const glm::vec2 scale);
+		static glm::mat4 createModelMatrix(const glm::vec2 translation, const glm::vec2 scale);
 	};
 
 

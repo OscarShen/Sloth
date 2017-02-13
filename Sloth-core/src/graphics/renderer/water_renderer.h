@@ -16,7 +16,7 @@
 #include "../model/raw_model.hpp"
 #include "../engine/loader.h"
 #include "../shader/water_shader.h"
-#include "../water/water_tile.h"
+#include "../water/water_tile.hpp"
 #include "../../utils/maths.h"
 
 namespace sloth { namespace graphics {

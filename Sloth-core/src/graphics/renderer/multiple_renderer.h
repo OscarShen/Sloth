@@ -34,7 +34,7 @@ namespace sloth { namespace graphics {
 		SkyboxRenderer *m_SkyboxRenderer;
 
 		std::map<TexturedModel, std::vector<Entity>> m_Entities;
-		std::vector<Terrain> m_Terrains;
+		std::vector<Terrain*> m_Terrains;
 
 		// 用于存储投影矩阵
 		glm::mat4 m_ProjectionMatrix;
@@ -57,7 +57,10 @@ namespace sloth { namespace graphics {
 		***********************************************************************/
 		void render(const std::vector<Light> &lights, const RawCamera &camera, unsigned int cubeMapID);
 
-		void submitTerrain(const Terrain &terrain);
+		void renderScene(const std::vector<Entity> &entities, std::vector<Terrain*> &terrains, const std::vector<Light> &lights,
+			const RawCamera &camera, unsigned int cubeMapID);
+
+		void submitTerrain(Terrain &terrain);
 		void submitEntity(const Entity &entity);
 
 		/************************************************************************

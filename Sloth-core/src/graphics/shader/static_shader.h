@@ -26,7 +26,7 @@ namespace sloth { namespace graphics {
 	class StaticShader : public Shader
 	{
 	private:
-		static StaticShader *m_inst;
+		static StaticShader *m_Inst;
 
 		int m_LocModel;
 		int m_LocView;

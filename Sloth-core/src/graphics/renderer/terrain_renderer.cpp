@@ -8,13 +8,13 @@ namespace sloth { namespace graphics {
 		ts->connectTextureUnits();
 	}
 
-	void TerrainRenderer::render(std::vector<Terrain>& terrains)
+	void TerrainRenderer::render(std::vector<Terrain*>& terrains)
 	{
 		TerrainShader::inst()->use();
-		for (auto it = terrains.begin(); it != terrains.end(); ++it) {
-			prepareTerrain(*it);
-			loadModelMatrix(*it);
-			glDrawElements(GL_TRIANGLES, it->getModel().getVertexCount(),
+		for (auto i:terrains) {
+			prepareTerrain(*i);
+			loadModelMatrix(*i);
+			glDrawElements(GL_TRIANGLES, i->getModel().getVertexCount(),
 				GL_UNSIGNED_INT, nullptr);
 			glBindVertexArray(0);
 		}
@@ -22,6 +22,8 @@ namespace sloth { namespace graphics {
 
 	void TerrainRenderer::prepareTerrain(Terrain & terrain)
 	{
+		// 地形暂时先设为 1,0
+		TerrainShader::inst()->loadShineVariable(1.0f, 0.0f);
 		RawModel rawModel = terrain.getModel();
 		glBindVertexArray(rawModel.getVaoID());
 		bindMultiTerrain(terrain);

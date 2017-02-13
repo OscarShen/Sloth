@@ -2,7 +2,7 @@
 
 namespace sloth { namespace graphics {
 
-	StaticShader* StaticShader::m_inst(nullptr);
+	StaticShader* StaticShader::m_Inst(nullptr);
 
 	StaticShader::StaticShader()
 		:Shader(STATIC_VERTEX_FILE, STATIC_FRAGMENT_FILE)
@@ -12,16 +12,16 @@ namespace sloth { namespace graphics {
 
 	StaticShader::~StaticShader()
 	{
-		delete m_inst;
+		delete m_Inst;
 		delete[] m_LocLightPos;
 		delete[] m_LocLightColor;
 	}
 
 	StaticShader * StaticShader::inst()
 	{
-		if (!m_inst)
-			m_inst = new StaticShader();
-		return m_inst;
+		if (!m_Inst)
+			m_Inst = new StaticShader();
+		return m_Inst;
 	}
 
 	void StaticShader::loadModelMatrix(const glm::mat4 & model)

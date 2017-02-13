@@ -10,7 +10,7 @@ uniform vec3 lightPosition[MAX_LIGHT];	// 位置
 uniform vec3 lightColor[MAX_LIGHT];		// 颜色
 uniform vec3 attenuation[MAX_LIGHT];	// 灯光衰减，每个vec3向量i位置对应衰减i次项
 
-uniform float shininess = 32.0f;
+uniform float shininess = 128.0f;
 uniform float reflectivity = 1.0f;
 uniform vec3 skyColor;
 
