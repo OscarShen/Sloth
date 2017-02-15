@@ -15,8 +15,7 @@
 
 #include <GL/glew.h>
 #include <vector>
-#include "../setup/macro.h"
-#include "../texture/texture_manager_2d.h"
+#include "../../config/macro.h"
 namespace sloth { namespace graphics {
 
 	class FrameBuffer
@@ -35,9 +34,9 @@ namespace sloth { namespace graphics {
 
 		~FrameBuffer();
 
-		void addColorAttachment(unsigned int texID, unsigned int index, unsigned int width, unsigned int height);
+		void addColorAttachment(unsigned int index, unsigned int width, unsigned int height);
 
-		void addDepthTextureAttachment(unsigned int texID, unsigned int width, unsigned int height);
+		void addDepthTextureAttachment(unsigned int width, unsigned int height);
 
 		void addDepthRenderBufferAttachment(unsigned int width, unsigned int height);
 

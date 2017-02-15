@@ -18,6 +18,7 @@
 #include "../renderer/terrain_renderer.h"
 #include "../renderer/skybox_renderer.h"
 #include "../model/textured_model.hpp"
+#include "../texture/cube_map_texture.hpp"
 #include "../setup/global_function.h"
 #include <map>
 #include <vector>
@@ -43,22 +44,16 @@ namespace sloth { namespace graphics {
 		MultipleRenderer(Loader &loader);
 
 		~MultipleRenderer();
-		/************************************************************************
-		* @description	: 渲染单个灯光下的 实例、地形、天空盒
-		* @author		: Oscar Shen
-		* @creat		: 2017年2月9日14:03:57
-		***********************************************************************/
-		void render(const Light &sun, const RawCamera &camera, unsigned int cubeMapID);
 
 		/************************************************************************
 		* @description	: 渲染多个灯光下的 实例、地形、天空盒
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月9日14:03:27
 		***********************************************************************/
-		void render(const std::vector<Light> &lights, const RawCamera &camera, unsigned int cubeMapID);
+		void render(const std::vector<Light> &lights, const RawCamera &camera, const CubeMapTexture &texture);
 
 		void renderScene(const std::vector<Entity> &entities, std::vector<Terrain*> &terrains, const std::vector<Light> &lights,
-			const RawCamera &camera, unsigned int cubeMapID);
+			const RawCamera &camera, const CubeMapTexture &texture);
 
 		void submitTerrain(Terrain &terrain);
 		void submitEntity(const Entity &entity);

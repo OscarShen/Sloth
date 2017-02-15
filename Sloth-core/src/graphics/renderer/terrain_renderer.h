@@ -15,7 +15,6 @@
 #include "../shader/terrain_shader.h"
 #include "../terrain/terrain.h"
 #include "../model/textured_model.hpp"
-#include "../texture/texture_manager_2d.h"
 #include "../entities/entity.h"
 #include "../../utils/maths.h"
 #include <glm/glm.hpp>

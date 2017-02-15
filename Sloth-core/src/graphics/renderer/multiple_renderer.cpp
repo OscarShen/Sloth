@@ -21,46 +21,23 @@ namespace sloth { namespace graphics {
 			delete m_SkyboxRenderer;
 	}
 
-	void MultipleRenderer::render(const Light & sun, const RawCamera & camera, unsigned int cubeMapID)
-	{
-		// äÖÈ¾Ä£ÐÍ
-		auto staticShader = StaticShader::inst();
-		staticShader->loadLight(sun);
-		staticShader->loadViewMatrix(camera);
-		m_StaticRenderer->render(m_Entities);
-		staticShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
-		// äÖÈ¾µØÐÎ
-		auto terrainShader = TerrainShader::inst();
-		terrainShader->loadLight(sun);
-		terrainShader->loadViewMatrix(camera);
-		m_TerrainRenderer->render(m_Terrains);
-		terrainShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
-		// äÖÈ¾Ìì¿ÕºÐ
-		auto skyboxShader = SkyboxShader::inst();
-		m_SkyboxRenderer->render(cubeMapID, camera);
-
-		// Clear up to avoid memory overflow, we will submit every entity per frame.
-		m_Entities.clear();
-		m_Terrains.clear();
-	}
-
-	void MultipleRenderer::render(const std::vector<Light>& lights, const RawCamera & camera, unsigned int cubeMapID)
+	void MultipleRenderer::render(const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture)
 	{
 		// äÖÈ¾Ä£ÐÍ
 		auto staticShader = StaticShader::inst();
 		staticShader->loadLights(lights);
 		staticShader->loadViewMatrix(camera);
-		m_StaticRenderer->render(m_Entities);
 		staticShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
+		m_StaticRenderer->render(m_Entities);
 		// äÖÈ¾µØÐÎ
 		auto terrainShader = TerrainShader::inst();
 		terrainShader->loadLights(lights);
 		terrainShader->loadViewMatrix(camera);
-		m_TerrainRenderer->render(m_Terrains);
 		terrainShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
-		// äÖÈ¾Ìì¿ÕºÐ
+		m_TerrainRenderer->render(m_Terrains);
+		//// äÖÈ¾Ìì¿ÕºÐ
 		auto skyboxShader = SkyboxShader::inst();
-		m_SkyboxRenderer->render(cubeMapID, camera);
+		m_SkyboxRenderer->render(texture.getID(), camera);
 		skyboxShader->loadFogColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
 
 		// Clear up to avoid memory overflow, we will submit every entity per frame.
@@ -68,7 +45,7 @@ namespace sloth { namespace graphics {
 		m_Terrains.clear();
 	}
 
-	void MultipleRenderer::renderScene(const std::vector<Entity>& entities, std::vector<Terrain*>& terrains, const std::vector<Light>& lights, const RawCamera & camera, unsigned int cubeMapID)
+	void MultipleRenderer::renderScene(const std::vector<Entity>& entities, std::vector<Terrain*>& terrains, const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture)
 	{
 		for (auto terrain : terrains) {
 			submitTerrain(*terrain);
@@ -76,7 +53,7 @@ namespace sloth { namespace graphics {
 		for (auto &i : entities) {
 			submitEntity(i);
 		}
-		render(lights, camera, cubeMapID);
+		render(lights, camera, texture);
 	}
 
 	void MultipleRenderer::submitTerrain(Terrain & terrain)

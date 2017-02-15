@@ -54,19 +54,18 @@ namespace sloth { namespace graphics {
 	void SkyboxRenderer::render(unsigned int cubeMapID, const RawCamera & camera)
 	{
 		auto shader = SkyboxShader::inst();
-		auto tm = TextureManager2D::inst();
 		shader->enable();
 		shader->loadViewMatrix(camera);
 		glBindVertexArray(m_Cube.getVaoID());
 		glEnableVertexAttribArray(0);
 		glActiveTexture(GL_TEXTURE0);
-		tm->bindCubeMap(cubeMapID);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapID);
 		// 只有在没有任何物体可见的情况下天空盒才会被渲染
 		// 浮点数精度原因，靠近远平面部分的片元可以会发生冲突
 		glDepthFunc(GL_LEQUAL);
 		glDrawArrays(GL_TRIANGLES, 0, m_Cube.getVertexCount());
 		glDepthFunc(GL_LESS);
-		tm->unbindCubeMap();
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 		glDisableVertexAttribArray(0);
 		glBindVertexArray(0);
 		shader->disable();

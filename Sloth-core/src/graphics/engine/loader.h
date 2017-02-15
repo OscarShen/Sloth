@@ -22,14 +22,16 @@
 #include "../buffers/vertex_array.h"
 #include "../model/raw_model.hpp"
 #include "../model/model_data.hpp"
-#include "../texture/texture_manager_2d.h"
+#include "../../config/macro.h"
+#include "../../config/header.hpp"
 
 namespace sloth { namespace graphics {
 
 	class Loader
 	{
 	private:
-		std::vector<VertexArray*> m_Vaos;
+		std::vector<VertexArray*> m_Vaos1;
+		std::vector<unsigned int> m_Textures;
 
 	public:
 		Loader() {}
@@ -71,10 +73,16 @@ namespace sloth { namespace graphics {
 			int dimention
 		);
 
+		unsigned int loadTexture(const std::string &fileName, bool alpha = false);
+
+		unsigned int loadCubeMap(const std::vector<std::string> &cubeMapPaths, bool alpha = false);
+
 		void cleanUp();
 
 	private:
 		VertexArray* createVAO();
+
+		unsigned int setupTexture(int width, int height, unsigned char *data, bool alpha);
 	};
 
 

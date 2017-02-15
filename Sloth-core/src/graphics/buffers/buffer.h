@@ -3,22 +3,23 @@
 #define SLOTH_BUFFER_H_
 
 #include <GL/glew.h>
+#include "../../config/header.hpp"
 
 namespace sloth { namespace graphics {
 
 	class Buffer
 	{
 	private:
-		GLuint m_BufferID;
-		GLuint m_ComponentCount;
+		unsigned int m_BufferID;
+		unsigned int m_ComponentCount;
 
 	public:
-		Buffer(GLfloat *data, GLsizei count, GLuint componentCount);
+		Buffer(float *data, unsigned int count, unsigned int componentCount);
 		~Buffer();
-		inline GLuint getComponentCount() const { return m_ComponentCount; }
+		inline unsigned int getComponentCount() const { return m_ComponentCount; }
 		void bind() const;
 		void unbind() const;
-		GLuint getBufferID() const { return m_BufferID; }
+		unsigned int getBufferID() const { return m_BufferID; }
 	};
 
 } }

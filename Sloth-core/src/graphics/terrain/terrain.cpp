@@ -1,14 +1,14 @@
 #include "terrain.h"
 
 namespace sloth { namespace graphics {
-	Terrain::Terrain(int gridX, int gridZ, unsigned int texID, Loader & loader, std::string heightMapPath)
-		:m_X(gridX * TERRAIN_SIZE), m_Z(gridZ * TERRAIN_SIZE), m_Multi(MultiTerrain(texID, 0, 0, 0, 0))
+	Terrain::Terrain(int gridX, int gridZ, unsigned int ID, Loader & loader, std::string heightMapPath)
+		:m_X(gridX * TERRAIN_SIZE), m_Z(gridZ * TERRAIN_SIZE), m_Pack(TerrainTexturePack(ID, 0, 0, 0, 0))
 	{
 		m_Model = generateTerrain(loader, heightMapPath);
 	}
 
-	Terrain::Terrain(int gridX, int gridZ, MultiTerrain m_Multi, Loader & loader, std::string heightMapPath)
-		: m_X(gridX * TERRAIN_SIZE), m_Z(gridZ * TERRAIN_SIZE), m_Multi(m_Multi)
+	Terrain::Terrain(int gridX, int gridZ, TerrainTexturePack m_Pack, Loader & loader, std::string heightMapPath)
+		: m_X(gridX * TERRAIN_SIZE), m_Z(gridZ * TERRAIN_SIZE), m_Pack(m_Pack)
 	{
 		m_Model = generateTerrain(loader, heightMapPath);
 	}

@@ -2,8 +2,11 @@
 #ifndef SLOTH_MACRO_H_
 #define SLOTH_MACRO_H_
 
+#include <GL/glew.h>
+
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+
 
 #define GLSL_MAX_LIGHTS 4
 // 着色器路径 path of shaders
@@ -76,11 +79,12 @@
 #define MOUSE_PICKER_RAY_CASTING_RANGE 600.0f
 
 // 位置：src/water/water_tile
-/************************************************************************
-* @description	: 鼠标选取发出光线的最大范围
-* @author		: Oscar Shen
-* @creat		: 2017年2月13日18:26:31
-***********************************************************************/
-#define WATER_TILE_SIZE 15.0f
+#define WATER_TILE_SIZE 15.0f	// 鼠标选取发出光线的最大范围
+// 位置：src/water/water_frame_buffer
+#define WATER_REFLECTION_WIDTH 320	// 水面反射纹理宽度
+#define WATER_REFLECTION_HEIGHT 180 // 水面反射纹理高度
+#define WATER_REFRACTION_WIDTH 1280	// 水面折射纹理高度
+#define WATER_REFRACTION_HEIGHT 720	// 水面折射纹理宽度
+
 
 #endif // !SLOTH_MACRO_H_

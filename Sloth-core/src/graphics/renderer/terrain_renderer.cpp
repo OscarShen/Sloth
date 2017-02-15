@@ -14,8 +14,7 @@ namespace sloth { namespace graphics {
 		for (auto i:terrains) {
 			prepareTerrain(*i);
 			loadModelMatrix(*i);
-			glDrawElements(GL_TRIANGLES, i->getModel().getVertexCount(),
-				GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, i->getModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
 			glBindVertexArray(0);
 		}
 	}
@@ -37,12 +36,11 @@ namespace sloth { namespace graphics {
 
 	void TerrainRenderer::bindMultiTerrain(Terrain & terrain)
 	{
-		auto tm = TextureManager2D::inst();
-		auto multi_terrain = terrain.getMultiTerrain();
-		glBindTextureUnit(0, tm->getTexture(multi_terrain.getBackgroundTexID())->getID());
-		glBindTextureUnit(1, tm->getTexture(multi_terrain.getRedTexID())->getID());
-		glBindTextureUnit(2, tm->getTexture(multi_terrain.getGreenTexID())->getID());
-		glBindTextureUnit(3, tm->getTexture(multi_terrain.getBlueTexID())->getID());
-		glBindTextureUnit(4, tm->getTexture(multi_terrain.getBlendMapTexID())->getID());
+		auto terrainPack = terrain.getTexturePack();
+		glBindTextureUnit(0, terrainPack.getBackgroundID());
+		glBindTextureUnit(1, terrainPack.getRedID());
+		glBindTextureUnit(2, terrainPack.getGreenID());
+		glBindTextureUnit(3, terrainPack.getBlueID());
+		glBindTextureUnit(4, terrainPack.getBlendMapID());
 	}
 } }

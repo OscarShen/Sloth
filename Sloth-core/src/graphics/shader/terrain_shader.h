@@ -14,7 +14,7 @@
 #define SLOTH_TERRAIN_SHADER_H_
 
 #include "shader.h"
-#include "../setup/macro.h"
+#include "../../config/macro.h"
 
 namespace sloth { namespace graphics {
 

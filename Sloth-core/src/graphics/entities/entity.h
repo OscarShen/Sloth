@@ -3,7 +3,6 @@
 #define SLOTH_ENTITY_H_
 
 #include "../model/textured_model.hpp"
-#include "../texture/texture_2d.h"
 
 #include <glm/glm.hpp>
 namespace sloth { namespace graphics {

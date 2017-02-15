@@ -29,15 +29,14 @@ namespace sloth { namespace graphics {
 		glBindVertexArray(m_Quad.getVaoID());
 		glEnableVertexArrayAttrib(m_Quad.getVaoID(), 0);
 		glEnableVertexArrayAttrib(m_Quad.getVaoID(), 1);
-		auto tm = TextureManager2D::inst();
 		// 开启混合模式，a 分量不等于 1.0 的像素不进行渲染
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		// 关闭深度测试，因为深度测试会影响会相互覆盖，即使 a 分量不为 1.0
 		glDisable(GL_DEPTH_TEST);
 		for (auto it = guis.begin(); it != guis.end(); ++it) {
-			tm->activateTexUnit(0);
-			tm->bindTexture(it->getTexID());
+			glActiveTexture(0);
+			glBindTexture(GL_TEXTURE_2D, it->getID());
 			glm::mat4 mat = util::Maths::createModelMatrix(it->getPosition(), it->getScale());
 			GuiShader::inst()->loadTransformation(mat);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, m_Quad.getVertexCount());

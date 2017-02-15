@@ -13,7 +13,7 @@
 #ifndef SLOTH_WATER_TILE_H_
 #define SLOTH_WATER_TILE_H_
 
-#include "../setup/macro.h"
+#include "../../config/macro.h"
 
 namespace sloth { namespace graphics {
 

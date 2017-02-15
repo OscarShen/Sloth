@@ -19,7 +19,7 @@
 #include <vector>
 #include "../entities/light.hpp"
 #include "../camera/camera.h"
-#include "../setup/macro.h"
+#include "../../config/macro.h"
 
 namespace sloth { namespace graphics {
 

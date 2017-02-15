@@ -8,7 +8,6 @@
 #include "../shader/static_shader.h"
 #include "../model/textured_model.hpp"
 #include "../entities/entity.h"
-#include "../texture/texture_manager_2d.h"
 #include "../../utils/maths.h"
 #include "../setup/global_function.h"
 namespace sloth { namespace graphics {
@@ -23,7 +22,7 @@ namespace sloth { namespace graphics {
 		void render(std::map<TexturedModel, std::vector<Entity>> &entities);
 
 	private:
-		void prepareTexturedModel(const TexturedModel &model);
+		void prepareTexturedModel(const TexturedModel &model) const;
 
 		void prepareInstance(Entity &entity);
 

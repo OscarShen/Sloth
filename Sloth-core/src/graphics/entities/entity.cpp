@@ -16,14 +16,14 @@ namespace sloth { namespace graphics {
 
 	float Entity::getTextureXOffset()
 	{
-		int column = m_TextureIndex % m_Model.getTexture()->getNumberOfRows();
-		return (float)column / (float)m_Model.getTexture()->getNumberOfRows();
+		int column = m_TextureIndex % m_Model.getTexture().getNumberOfRows();
+		return (float)column / (float)m_Model.getTexture().getNumberOfRows();
 	}
 
 	float Entity::getTextureYOffset()
 	{
-		int row = m_TextureIndex / m_Model.getTexture()->getNumberOfRows();
-		return (float)row / (float)m_Model.getTexture()->getNumberOfRows();
+		int row = m_TextureIndex / m_Model.getTexture().getNumberOfRows();
+		return (float)row / (float)m_Model.getTexture().getNumberOfRows();
 	}
 
 } }

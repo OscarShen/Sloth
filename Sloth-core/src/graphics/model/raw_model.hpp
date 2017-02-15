@@ -19,7 +19,7 @@ namespace sloth { namespace graphics {
 
 		inline unsigned int getVaoID() const { return m_VAO; }
 
-		inline unsigned int getVertexCount() const{ return m_VertexCount; }
+		inline unsigned int getVertexCount() const { return m_VertexCount; }
 	};
 
 } }

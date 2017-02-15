@@ -16,7 +16,7 @@
 #include <glm/glm.hpp>
 #include "../graphics/camera/raw_camera.h"
 #include "../graphics/info/info.h"
-#include "../graphics/setup/macro.h"
+#include "../config/macro.h"
 #include "../graphics/terrain/terrain.h"
 namespace sloth { namespace util {
 

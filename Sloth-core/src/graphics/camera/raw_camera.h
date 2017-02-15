@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
-#include "../setup/macro.h"
+#include "../../config/macro.h"
 #include "../window.h"
 
 namespace sloth { namespace graphics {

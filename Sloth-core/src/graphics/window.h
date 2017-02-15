@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "info/info.h"
-#include "setup/macro.h"
+#include "../config/macro.h"
 
 namespace sloth { namespace graphics {
 
