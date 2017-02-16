@@ -37,6 +37,11 @@ namespace sloth { namespace graphics {
 		Loader() {}
 		~Loader();
 
+		/************************************************************************
+		* @description	: 输入3维位置、2维纹理、3维法向量、以及顶点索引
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月16日10:00:40
+		***********************************************************************/
 		RawModel loadToVAO(
 			std::vector<glm::vec3> &positions,
 			std::vector<glm::vec2> &texCoords,
@@ -73,10 +78,25 @@ namespace sloth { namespace graphics {
 			int dimention
 		);
 
+		/************************************************************************
+		* @description	: 加载二维纹理
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月13日18:56:46
+		***********************************************************************/
 		unsigned int loadTexture(const std::string &fileName, bool alpha = false);
 
+		/************************************************************************
+		* @description	: 加载立方体纹理
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月13日18:56:46
+		***********************************************************************/
 		unsigned int loadCubeMap(const std::vector<std::string> &cubeMapPaths, bool alpha = false);
 
+		/************************************************************************
+		* @description	: 清除当前 Loader 加载的所有资源
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月16日10:02:02
+		***********************************************************************/
 		void cleanUp();
 
 	private:

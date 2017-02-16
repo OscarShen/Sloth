@@ -1,3 +1,14 @@
+/************************************************************************
+* @project 		:  sloth
+* @class   		:  GuiTexture
+* @version 		:  v1.0.0
+* @description	:  用于渲染 GUI 的纹理
+* @author		:  Oscar Shen
+* @creat 		:  2017年2月16日10:46:44
+* @revise 		:
+************************************************************************
+* Copyright @ OscarShen 2017. All rights reserved.
+************************************************************************/
 #pragma once
 #ifndef SLOTH_GUI_TEXTURE
 #define SLOTH_GUI_TEXTURE

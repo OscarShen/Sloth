@@ -35,7 +35,7 @@ namespace sloth { namespace graphics {
 		// 关闭深度测试，因为深度测试会影响会相互覆盖，即使 a 分量不为 1.0
 		glDisable(GL_DEPTH_TEST);
 		for (auto it = guis.begin(); it != guis.end(); ++it) {
-			glActiveTexture(0);
+			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, it->getID());
 			glm::mat4 mat = util::Maths::createModelMatrix(it->getPosition(), it->getScale());
 			GuiShader::inst()->loadTransformation(mat);
