@@ -41,7 +41,7 @@ namespace sloth { namespace graphics {
 		auto shader = StaticShader::inst();
 		shader->loadNumberOfRows(texture.getNumberOfRows());
 		if (texture.hasTransparency()) {
-			disable_culling();
+			glDisable(GL_CULL_FACE);
 		}
 		shader->loadUseFakeLighting(texture.isUseFakeLighting());
 		glActiveTexture(GL_TEXTURE0);
@@ -61,6 +61,7 @@ namespace sloth { namespace graphics {
 	void StaticRenderer::unbindTexturedModel()
 	{
 		glBindVertexArray(0);
+		glEnable(GL_CULL_FACE);
 	}
 
 } }

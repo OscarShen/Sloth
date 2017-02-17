@@ -96,6 +96,11 @@ namespace sloth { namespace graphics {
 		glProgramUniform2f(m_ID, m_LocOffset, x, y);
 	}
 
+	void StaticShader::loadClipPlane(const glm::vec4 & clipPlane)
+	{
+		glProgramUniform4f(m_ID, m_LocClipPlane, clipPlane.x, clipPlane.y, clipPlane.z, clipPlane.w);
+	}
+
 	void StaticShader::getAllUniformLocation()
 	{
 		m_LocModel = glGetUniformLocation(m_ID, "model");
@@ -118,5 +123,6 @@ namespace sloth { namespace graphics {
 		m_LocSkyColor = glGetUniformLocation(m_ID, "skyColor");
 		m_LocNumberOfRows = glGetUniformLocation(m_ID, "numberOfRows");
 		m_LocOffset = glGetUniformLocation(m_ID, "offset");
+		m_LocClipPlane = glGetUniformLocation(m_ID, "clipPlane");
 	}
 } }

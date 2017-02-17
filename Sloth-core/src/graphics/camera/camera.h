@@ -36,6 +36,8 @@ namespace sloth { namespace graphics {
 
 		virtual glm::mat4 getViewMatrix() const override;
 
+		void invertPitch();
+
 	private:
 		void process_keyboard(SlothWindow * window);
 

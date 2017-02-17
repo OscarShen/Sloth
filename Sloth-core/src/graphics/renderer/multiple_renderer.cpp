@@ -21,31 +21,35 @@ namespace sloth { namespace graphics {
 			delete m_SkyboxRenderer;
 	}
 
-	void MultipleRenderer::render(const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture)
+	void MultipleRenderer::render(const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture, const glm::vec4 & clipPlane)
 	{
 		// 渲染模型
+		// 某些模型会被裁剪
+		glDisable(GL_CULL_FACE);
 		auto staticShader = StaticShader::inst();
+		staticShader->loadClipPlane(clipPlane);
 		staticShader->loadLights(lights);
 		staticShader->loadViewMatrix(camera);
 		staticShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
 		m_StaticRenderer->render(m_Entities);
+		glEnable(GL_CULL_FACE);
 		// 渲染地形
 		auto terrainShader = TerrainShader::inst();
+		terrainShader->loadClipPlane(clipPlane);
 		terrainShader->loadLights(lights);
 		terrainShader->loadViewMatrix(camera);
 		terrainShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
 		m_TerrainRenderer->render(m_Terrains);
 		//// 渲染天空盒
 		auto skyboxShader = SkyboxShader::inst();
-		m_SkyboxRenderer->render(texture.getID(), camera);
 		skyboxShader->loadFogColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
-
+		m_SkyboxRenderer->render(texture.getID(), camera);
 		// Clear up to avoid memory overflow, we will submit every entity per frame.
 		m_Entities.clear();
 		m_Terrains.clear();
 	}
 
-	void MultipleRenderer::renderScene(const std::vector<Entity>& entities, std::vector<Terrain*>& terrains, const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture)
+	void MultipleRenderer::renderScene(const std::vector<Entity>& entities, std::vector<Terrain*>& terrains, const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane)
 	{
 		for (auto terrain : terrains) {
 			submitTerrain(*terrain);
@@ -53,7 +57,7 @@ namespace sloth { namespace graphics {
 		for (auto &i : entities) {
 			submitEntity(i);
 		}
-		render(lights, camera, texture);
+		render(lights, camera, texture, clipPlane);
 	}
 
 	void MultipleRenderer::submitTerrain(Terrain & terrain)

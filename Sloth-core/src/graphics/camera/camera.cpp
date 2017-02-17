@@ -13,6 +13,12 @@ namespace sloth { namespace graphics {
 		return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
 	}
 
+	void Camera::invertPitch()
+	{
+		m_Pitch = -m_Pitch; 
+		updateVectors();
+	}
+
 	void Camera::process_keyboard(SlothWindow * window)
 	{
 		float deltaFrameTime = static_cast<float>(util::Timer::deltaFrameTime);

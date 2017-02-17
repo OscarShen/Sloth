@@ -9,7 +9,6 @@
 #include "../model/textured_model.hpp"
 #include "../entities/entity.h"
 #include "../../utils/maths.h"
-#include "../setup/global_function.h"
 namespace sloth { namespace graphics {
 
 	class StaticRenderer

@@ -13,7 +13,7 @@ namespace sloth { namespace graphics {
 		ModelTexture m_Texture;
 
 	public:	
-		constexpr TexturedModel(const RawModel &rawModel, const ModelTexture &texture)
+		constexpr explicit TexturedModel(const RawModel &rawModel, const ModelTexture &texture)
 			:m_RawModel(rawModel), m_Texture(texture) {}
 
 		inline const RawModel& getRawModel() const { return m_RawModel; }

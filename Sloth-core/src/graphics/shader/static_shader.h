@@ -43,6 +43,8 @@ namespace sloth { namespace graphics {
 		int m_LocNumberOfRows;
 		int m_LocOffset;
 
+		int m_LocClipPlane;			// 裁剪平面方程
+
 	public:
 		static StaticShader *inst();
 		virtual ~StaticShader();
@@ -63,7 +65,7 @@ namespace sloth { namespace graphics {
 		void loadSkyColor(const float r, const float g, const float b);
 		void loadNumberOfRows(int numberOfRaws);
 		void loadOffset(float x, float y);
-
+		void loadClipPlane(const glm::vec4 &clipPlane);
 
 	private:
 		StaticShader();

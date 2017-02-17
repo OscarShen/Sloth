@@ -19,7 +19,6 @@
 #include "../renderer/skybox_renderer.h"
 #include "../model/textured_model.hpp"
 #include "../texture/cube_map_texture.hpp"
-#include "../setup/global_function.h"
 #include <map>
 #include <vector>
 
@@ -50,10 +49,10 @@ namespace sloth { namespace graphics {
 		* @author		: Oscar Shen
 		* @creat		: 2017Äê2ÔÂ9ÈÕ14:03:27
 		***********************************************************************/
-		void render(const std::vector<Light> &lights, const RawCamera &camera, const CubeMapTexture &texture);
+		void render(const std::vector<Light> &lights, const RawCamera &camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane);
 
 		void renderScene(const std::vector<Entity> &entities, std::vector<Terrain*> &terrains, const std::vector<Light> &lights,
-			const RawCamera &camera, const CubeMapTexture &texture);
+			const RawCamera &camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane);
 
 		void submitTerrain(Terrain &terrain);
 		void submitEntity(const Entity &entity);

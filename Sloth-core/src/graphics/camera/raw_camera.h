@@ -28,7 +28,9 @@ namespace sloth { namespace graphics {
 
 		virtual glm::mat4 getViewMatrix() const = 0;
 
-		virtual inline glm::vec3 getPosition() const { return m_Position; }
+		inline glm::vec3 getPosition() const { return m_Position; }
+
+		void setPosition(const glm::vec3 &position) { m_Position = position; }
 	};
 
 } }

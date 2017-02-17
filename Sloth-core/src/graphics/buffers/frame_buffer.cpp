@@ -1,4 +1,5 @@
 #include "frame_buffer.h"
+#include "../../utils/error_check.h"
 
 namespace sloth { namespace graphics {
 	FrameBuffer::FrameBuffer()
@@ -37,9 +38,9 @@ namespace sloth { namespace graphics {
 	{
 		unsigned int id;
 		glCreateTextures(GL_TEXTURE_2D, 1, &id);
-		glTextureStorage2D(id, 1, GL_RGB8, width, height);
-		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureStorage2D(id, 1, GL_DEPTH_COMPONENT32, width, height);
+		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, DEFAULT_TEXTURE_MAG_FILTER);
+		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, DEFAULT_TEXTURE_MIN_FILTER);
 		glNamedFramebufferTexture(m_ID, GL_DEPTH_ATTACHMENT, id, 0);
 		// 如果已经有depth attachment，则覆盖并删除
 		if (m_DepthTextureAttachment != 0) {
@@ -67,9 +68,9 @@ namespace sloth { namespace graphics {
 	{
 		// 保证 gl_texture_2d 没有绑定
 		glBindTexture(GL_TEXTURE_2D, 0);
-		// 清空帧
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_ID);
+		//// 清空帧
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glViewport(0, 0, width, height);
 	}
 

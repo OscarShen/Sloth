@@ -40,6 +40,8 @@ namespace sloth { namespace graphics {
 		int m_LocBTexture;
 		int m_LocBlendMapTexture;
 
+		int m_LocClipPlane;			// ≤√ºÙ∆Ω√Ê
+
 
 	public:
 		static TerrainShader* inst();
@@ -59,6 +61,7 @@ namespace sloth { namespace graphics {
 		void loadShineVariable(const float shininess, const float reflectivity);
 		void loadSkyColor(const float r, const float g, const float b);
 		void connectTextureUnits();
+		void loadClipPlane(const glm::vec4 &clipPlane);
 
 	private:
 		TerrainShader();
