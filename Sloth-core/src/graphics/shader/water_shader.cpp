@@ -16,6 +16,12 @@ namespace sloth { namespace graphics {
 		delete m_Inst;
 	}
 
+	void WaterShader::connectTextureUnit()
+	{
+		glProgramUniform1i(m_ID, m_LocReflectionTexture, 0);
+		glProgramUniform1i(m_ID, m_LocRefractionTexture, 1);
+	}
+
 	WaterShader::WaterShader()
 		:Shader(WATER_VERTEX_FILE, WATER_FRAGMENT_FILE)
 	{
@@ -27,6 +33,8 @@ namespace sloth { namespace graphics {
 		m_LocModel = glGetUniformLocation(m_ID, "model");
 		m_LocView = glGetUniformLocation(m_ID, "view");
 		m_LocProjection = glGetUniformLocation(m_ID, "projection");
+		m_LocReflectionTexture = glGetUniformLocation(m_ID, "reflectionTexture");
+		m_LocRefractionTexture = glGetUniformLocation(m_ID, "refractionTexture");
 	}
 
 	void WaterShader::loadModelMatrix(const glm::mat4 & model)

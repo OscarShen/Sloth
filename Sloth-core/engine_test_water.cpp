@@ -19,7 +19,6 @@ void main()
 	SlothWindow window("Sloth!", SCREEN_WIDTH, SCREEN_HEIGHT);
 	Loader loader;
 	MultipleRenderer renderer(loader);
-	WaterRenderer waterRenderer(loader, renderer.getProjectionMatrix());
 	GuiRenderer guiRenderer(loader);
 	Camera camera;
 
@@ -57,6 +56,7 @@ void main()
 
 	// ¿Îœﬂ‰÷»æ
 	WaterFrameBuffer wfb;
+	WaterRenderer waterRenderer(loader, renderer.getProjectionMatrix(), wfb);
 
 	// GUI
 	std::vector<GuiTexture> guis;
@@ -92,7 +92,6 @@ void main()
 		glDisable(GL_CLIP_DISTANCE0);
 		renderer.renderScene(entities, terrains, lights, camera, cubemap, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
 		waterRenderer.render(waters, camera);
-		guiRenderer.render(guis);
 #pragma endregion
 		Timer::calculateFPS();
 		camera.process(&window);

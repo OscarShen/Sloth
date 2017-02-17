@@ -25,6 +25,8 @@ namespace sloth { namespace graphics {
 		int m_LocModel;
 		int m_LocView;
 		int m_LocProjection;
+		int m_LocReflectionTexture;
+		int m_LocRefractionTexture;
 
 	public:
 		static WaterShader *inst();
@@ -50,6 +52,13 @@ namespace sloth { namespace graphics {
 		* @creat		: 2017年2月13日18:40:33
 		***********************************************************************/
 		void loadProjectionMatrix(const glm::mat4 &projection);
+
+		/***********************************************************************
+		* @description	: 绑定采样器单元
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月17日16:44:26
+		***********************************************************************/
+		void connectTextureUnit();
 
 	private:
 		WaterShader();

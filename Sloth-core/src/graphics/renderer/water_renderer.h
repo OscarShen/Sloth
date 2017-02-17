@@ -17,6 +17,7 @@
 #include "../engine/loader.h"
 #include "../shader/water_shader.h"
 #include "../water/water_tile.hpp"
+#include "../water/water_frame_buffer.h"
 #include "../../utils/maths.h"
 
 namespace sloth { namespace graphics {
@@ -25,16 +26,17 @@ namespace sloth { namespace graphics {
 	{
 	private:
 		RawModel m_Quad;
+		WaterFrameBuffer &m_Wfbo;
 
 	public:
-		WaterRenderer(Loader &loader, const glm::mat4 &projection);
+		WaterRenderer(Loader &loader, const glm::mat4 &projection , WaterFrameBuffer &waterfbo);
 
 		/***********************************************************************
 		* @description	: 构造天空盒renderer
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月13日21:54:54
 		***********************************************************************/
-		void render(std::vector<WaterTile> &water, Camera &camera);
+		void render(std::vector<WaterTile> &water, RawCamera &camera);
 
 	private:
 		/***********************************************************************
