@@ -3,7 +3,6 @@
 #define SLOTH_TERRAIN_H_
 #include "../model/raw_model.hpp"
 #include "../engine/loader.h"
-#include "../../config/macro.h"
 #include "terrain_texture_pack.hpp"
 #include "../../utils/buffered_image.h"
 #include "../../utils/maths.h"

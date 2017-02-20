@@ -22,7 +22,6 @@
 #include "../buffers/vertex_array.h"
 #include "../model/raw_model.hpp"
 #include "../model/model_data.hpp"
-#include "../../config/macro.h"
 #include "../../config/header.hpp"
 
 namespace sloth { namespace graphics {

@@ -1,11 +1,11 @@
 /************************************************************************ 
- * @project 	:  $rootnamespace$
- * @class   	:  $safeitemrootname$
+ * @project 	:  sloth
+ * @class   	:  WaterFrameBuffer
  * @version 	:  v1.0.0
- * @description :  
- * @author		:  $username$
- * @creat 		:  $time$
- * @revise 		:  $time$
+ * @description :  封装用于绘制反射和折射的帧缓存
+ * @author		:  Oscar Shen
+ * @creat 		:  2017年2月20日15:36:19
+ * @revise 		:  
 ************************************************************************ 
  * Copyright @ OscarShen 2017. All rights reserved. 
 ************************************************************************/  
@@ -14,7 +14,7 @@
 #define SLOTH_WATER_FRAME_BUFFER_H_
 
 #include "../buffers/frame_buffer.h"
-#include "../../config/macro.h"
+#include "../../config/header.hpp"
 namespace sloth { namespace graphics {
 
 	class WaterFrameBuffer

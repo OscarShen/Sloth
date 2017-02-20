@@ -1,5 +1,4 @@
 #include "frame_buffer.h"
-#include "../../utils/error_check.h"
 
 namespace sloth { namespace graphics {
 	FrameBuffer::FrameBuffer()

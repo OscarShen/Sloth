@@ -38,6 +38,7 @@ namespace sloth { namespace graphics {
 		m_LocRefractionTexture = glGetUniformLocation(m_ID, "refractionTexture");
 		m_LocDudvMap = glGetUniformLocation(m_ID, "dudvMap");
 		m_LocMoveFactor = glGetUniformLocation(m_ID, "moveFactor");
+		m_LocCameraPosition = glGetUniformLocation(m_ID, "cameraPosition");
 	}
 
 	void WaterShader::loadModelMatrix(const glm::mat4 & model)
@@ -58,6 +59,12 @@ namespace sloth { namespace graphics {
 	void WaterShader::loadMoveFactor(float factor)
 	{
 		glProgramUniform1f(m_ID, m_LocMoveFactor, factor);
+	}
+
+	void WaterShader::loadCameraPosition(const RawCamera & camera)
+	{
+		auto position = camera.getPosition();
+		glProgramUniform3fv(m_ID,m_LocCameraPosition,1,&position.x);
 	}
 
 } }

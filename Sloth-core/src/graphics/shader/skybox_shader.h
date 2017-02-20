@@ -14,7 +14,7 @@
 #define SLOTH_SKYBOX_SHADER_H_
 
 #include "shader.h"
-#include "../../config/macro.h"
+#include "../../config/header.hpp"
 
 namespace sloth { namespace graphics {
 

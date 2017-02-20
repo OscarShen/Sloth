@@ -44,7 +44,7 @@
 #define WATER_FRAGMENT_FILE "src/shader/water.frag"
 
 // 地形设置
-#define TERRAIN_SIZE 40.0f	// 地形大小为 TERRAIN_SIZE * TERRAIN_SIZE
+#define TERRAIN_SIZE 80.0f	// 地形大小为 TERRAIN_SIZE * TERRAIN_SIZE
 //#define TERRAIN_VERTEX_COUNT 128 // 地形三角形细分程度
 #define TERRAIN_MAX_HEIGHT 40.0f // 地形最高高度
 #define TERRAIN_MAX_PIXEL_COLOR 256*256*256 //
@@ -96,7 +96,7 @@
 #define MOUSE_PICKER_RAY_CASTING_RANGE 600.0f
 
 // 位置：src/water/water_tile
-#define WATER_TILE_SIZE 15.0f	// 鼠标选取发出光线的最大范围
+#define WATER_TILE_SIZE 30.0f	// 鼠标选取发出光线的最大范围
 // 位置：src/water/water_frame_buffer
 #define WATER_REFLECTION_WIDTH 320	// 水面反射纹理宽度
 #define WATER_REFLECTION_HEIGHT 180 // 水面反射纹理高度

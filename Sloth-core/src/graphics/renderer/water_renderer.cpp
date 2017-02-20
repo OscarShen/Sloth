@@ -32,6 +32,7 @@ namespace sloth { namespace graphics {
 	{
 		WaterShader::inst()->enable();
 		WaterShader::inst()->loadViewMatrix(camera);
+		WaterShader::inst()->loadCameraPosition(camera);
 
 		m_MoveFactor += WATER_WAVE_SPEED * static_cast<float>(util::Timer::deltaFrameTime);
 		m_MoveFactor = std::fmod(m_MoveFactor, 1.0f);

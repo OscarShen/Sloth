@@ -51,10 +51,9 @@ void main()
 		"res/textures/skybox/back.png", 
 		"res/textures/skybox/front.png" };
 	CubeMapTexture cubemap(loader.loadCubeMap(cubeMapPath));
-
 	// Ë®Ãæ
 	std::vector<WaterTile> waters;
-	WaterTile water(20.0f, 20.0f, 0.0f);
+	WaterTile water(40.0f, 40.0f, 0.0f);
 	waters.push_back(water);
 
 	// µÆ¹â

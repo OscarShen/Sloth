@@ -2,7 +2,7 @@
 #ifndef SLOTH_PLAYER_H_
 #define SLOTH_PLAYER_H_
 #include "entity.h"
-#include "../../config/macro.h"
+#include "../../config/header.hpp"
 #include "../info/info.h"
 #include "../../utils/timer.h"
 #include "../terrain/terrain.h"

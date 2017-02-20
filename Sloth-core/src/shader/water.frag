@@ -2,6 +2,7 @@
 
 in vec4 clipSpace;
 in vec2 texCoord;
+in vec3 toCameraVector;
 
 uniform sampler2D reflectionTexture;
 uniform sampler2D refractionTexture;
@@ -37,7 +38,12 @@ void main(void) {
 	vec4 reflectionColor = texture(reflectionTexture, reflectionTexCoord);
 	vec4 refractionColor = texture(refractionTexture, refractionTexCoord);
 
-	out_Color = mix(reflectionColor, refractionColor, 0.5f);
+	vec3 n_ToCamera = normalize(toCameraVector);
+	float refractiveFactor = dot(n_ToCamera, vec3(0.0f, 1.0f, 0.0f));
+	// 折射占据上风
+	refractiveFactor = pow(refractiveFactor, 0.5f);
+
+	out_Color = mix(reflectionColor, refractionColor, refractiveFactor);
 	// 增加一点蓝色
 	out_Color = mix(out_Color, vec4(0.0f, 0.3f, 0.5f, 1.0f), 0.1f);
 }

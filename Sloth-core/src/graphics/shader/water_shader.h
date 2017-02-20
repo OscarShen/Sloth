@@ -29,6 +29,7 @@ namespace sloth { namespace graphics {
 		int m_LocRefractionTexture;
 		int m_LocDudvMap;
 		int m_LocMoveFactor;
+		int m_LocCameraPosition;
 
 	public:
 		static WaterShader *inst();
@@ -61,6 +62,13 @@ namespace sloth { namespace graphics {
 		* @creat		: 2017年2月20日14:31:16
 		***********************************************************************/
 		void loadMoveFactor(float factor);
+
+		/***********************************************************************
+		* @description	: 输入相机位置，计算 Fresnel Effect
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月20日15:14:12
+		***********************************************************************/
+		void loadCameraPosition(const RawCamera &camera);
 
 		/***********************************************************************
 		* @description	: 绑定采样器单元——反射纹理、折射纹理、dudv map
