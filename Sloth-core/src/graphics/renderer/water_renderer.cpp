@@ -8,11 +8,12 @@ namespace sloth { namespace graphics {
 		WaterShader::inst()->connectTextureUnit();
 		setVAO(loader);
 		m_DudvMap = loader.loadTexture(DUDV_MAP_PATH);
+		m_NormalMap = loader.loadTexture(NORMAL_MAP_PATH);
 	}
 
-	void WaterRenderer::render(std::vector<WaterTile>& water, RawCamera & camera)
+	void WaterRenderer::render(std::vector<WaterTile>& water, RawCamera & camera, const Light &light)
 	{
-		prepareRender(camera);
+		prepareRender(camera, light);
 		for (auto it = water.begin(); it != water.end(); ++it) {
 			glm::mat4 model = util::Maths::createModelMatrix(glm::vec3(it->getCenterX(), it->getHeight(), it->getCenterZ()), 0.0f, 0.0f, 0.0f, WATER_TILE_SIZE);
 			WaterShader::inst()->loadModelMatrix(model);
@@ -28,11 +29,12 @@ namespace sloth { namespace graphics {
 		m_Quad = loader.loadToVAO(vertices, 2);
 	}
 
-	void WaterRenderer::prepareRender(const RawCamera &camera)
+	void WaterRenderer::prepareRender(const RawCamera &camera, const Light &light)
 	{
 		WaterShader::inst()->enable();
 		WaterShader::inst()->loadViewMatrix(camera);
 		WaterShader::inst()->loadCameraPosition(camera);
+		WaterShader::inst()->loadLight(light);
 
 		m_MoveFactor += WATER_WAVE_SPEED * static_cast<float>(util::Timer::deltaFrameTime);
 		m_MoveFactor = std::fmod(m_MoveFactor, 1.0f);
@@ -47,6 +49,8 @@ namespace sloth { namespace graphics {
 		glBindTexture(GL_TEXTURE_2D, m_Wfbo.getRefractionTexture());
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, m_DudvMap);
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, m_NormalMap);
 	}
 
 	void WaterRenderer::unbind()

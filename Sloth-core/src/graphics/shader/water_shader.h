@@ -14,6 +14,7 @@
 #define SLOTH_WATER_SHADER_H_
 
 #include "shader.h"
+#include "../entities/light.hpp"
 
 namespace sloth { namespace graphics {
 
@@ -30,6 +31,9 @@ namespace sloth { namespace graphics {
 		int m_LocDudvMap;
 		int m_LocMoveFactor;
 		int m_LocCameraPosition;
+		int m_LocNormalMap;
+		int m_LocLightColor;
+		int m_LocLightPosition;
 
 	public:
 		static WaterShader *inst();
@@ -69,6 +73,13 @@ namespace sloth { namespace graphics {
 		* @creat		: 2017年2月20日15:14:12
 		***********************************************************************/
 		void loadCameraPosition(const RawCamera &camera);
+
+		/***********************************************************************
+		* @description	: 载入灯光
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月20日20:30:40
+		***********************************************************************/
+		void loadLight(const Light &light);
 
 		/***********************************************************************
 		* @description	: 绑定采样器单元——反射纹理、折射纹理、dudv map

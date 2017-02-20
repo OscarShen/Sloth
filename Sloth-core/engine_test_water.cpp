@@ -57,8 +57,9 @@ void main()
 	waters.push_back(water);
 
 	// µ∆π‚
+	Light sun(glm::vec3(4500.0f, 8000.0f, -3400.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	std::vector<Light> lights;
-	lights.push_back(Light(glm::vec3(4500.0f, 8000.0f, -3400.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f)));
+	lights.push_back(sun);
 
 	// ¿Îœﬂ‰÷»æ
 	WaterFrameBuffer wfb;
@@ -103,7 +104,7 @@ void main()
 
 		glDisable(GL_CLIP_DISTANCE0);
 		renderer.renderScene(entities, terrains, lights, camera, cubemap, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
-		waterRenderer.render(waters, camera);
+		waterRenderer.render(waters, camera, sun);
 
 #pragma endregion
 		Timer::calculateFPS();

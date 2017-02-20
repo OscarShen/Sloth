@@ -20,8 +20,12 @@
 #include "../water/water_frame_buffer.h"
 #include "../../utils/maths.h"
 
+
+// normal map 路径
+#define NORMAL_MAP_PATH "res/textures/matchingNormalMap.png"
+
 // dudv map 路径
-#define DUDV_MAP_PATH "res/textures/dudvMap.png"
+#define DUDV_MAP_PATH "res/textures/waterDUDV.png"
 // 水波荡漾参数
 #define WATER_WAVE_SPEED 0.03f
 
@@ -35,6 +39,8 @@ namespace sloth { namespace graphics {
 		// dudv map texture 的句柄
 		unsigned int m_DudvMap;
 
+		unsigned int m_NormalMap;
+
 		WaterFrameBuffer &m_Wfbo;
 
 		float m_MoveFactor = 0.0f;
@@ -47,7 +53,7 @@ namespace sloth { namespace graphics {
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月13日21:54:54
 		***********************************************************************/
-		void render(std::vector<WaterTile> &water, RawCamera &camera);
+		void render(std::vector<WaterTile> &water, RawCamera &camera, const Light &light);
 
 	private:
 		/***********************************************************************
@@ -62,7 +68,7 @@ namespace sloth { namespace graphics {
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月20日12:05:21
 		***********************************************************************/
-		void prepareRender(const RawCamera &camera);
+		void prepareRender(const RawCamera &camera, const Light &light);
 
 		/***********************************************************************
 		* @description	: 回复默认状态
