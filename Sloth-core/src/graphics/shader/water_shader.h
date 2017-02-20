@@ -27,6 +27,8 @@ namespace sloth { namespace graphics {
 		int m_LocProjection;
 		int m_LocReflectionTexture;
 		int m_LocRefractionTexture;
+		int m_LocDudvMap;
+		int m_LocMoveFactor;
 
 	public:
 		static WaterShader *inst();
@@ -54,7 +56,14 @@ namespace sloth { namespace graphics {
 		void loadProjectionMatrix(const glm::mat4 &projection);
 
 		/***********************************************************************
-		* @description	: 绑定采样器单元
+		* @description	: 设定水波荡漾的程度
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月20日14:31:16
+		***********************************************************************/
+		void loadMoveFactor(float factor);
+
+		/***********************************************************************
+		* @description	: 绑定采样器单元——反射纹理、折射纹理、dudv map
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月17日16:44:26
 		***********************************************************************/
