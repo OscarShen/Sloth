@@ -51,10 +51,16 @@ namespace sloth { namespace graphics {
 		glBindTexture(GL_TEXTURE_2D, m_DudvMap);
 		glActiveTexture(GL_TEXTURE3);
 		glBindTexture(GL_TEXTURE_2D, m_NormalMap);
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_2D, m_Wfbo.getRefractionDepthTexture());
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	void WaterRenderer::unbind()
 	{
+		glDisable(GL_BLEND);
 		glDisableVertexAttribArray(0);
 		glBindVertexArray(0);
 		WaterShader::inst()->disable();

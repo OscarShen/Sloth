@@ -22,6 +22,7 @@ namespace sloth { namespace graphics {
 		glProgramUniform1i(m_ID, m_LocRefractionTexture, 1);
 		glProgramUniform1i(m_ID, m_LocDudvMap, 2);
 		glProgramUniform1i(m_ID, m_LocNormalMap, 3);
+		glProgramUniform1i(m_ID, m_LocDepthMap, 4);
 	}
 
 	WaterShader::WaterShader()
@@ -43,6 +44,7 @@ namespace sloth { namespace graphics {
 		m_LocNormalMap = glGetUniformLocation(m_ID, "normalMap");
 		m_LocLightColor = glGetUniformLocation(m_ID, "lightColor");
 		m_LocLightPosition = glGetUniformLocation(m_ID, "lightPosition");
+		m_LocDepthMap = glGetUniformLocation(m_ID, "depthMap");
 	}
 
 	void WaterShader::loadModelMatrix(const glm::mat4 & model)

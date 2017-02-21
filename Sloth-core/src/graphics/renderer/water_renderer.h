@@ -27,7 +27,7 @@
 // dudv map 路径
 #define DUDV_MAP_PATH "res/textures/waterDUDV.png"
 // 水波荡漾参数
-#define WATER_WAVE_SPEED 0.03f
+#define WATER_WAVE_SPEED 0.02f
 
 
 namespace sloth { namespace graphics {

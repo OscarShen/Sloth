@@ -93,7 +93,7 @@ void main()
 		position.y -= distance;
 		camera.setPosition(position);
 		camera.invertPitch();
-		renderer.renderScene(entities, terrains, lights, camera, cubemap, glm::vec4(0.0f, 1.0f, 0.0f, -water.getHeight()));
+		renderer.renderScene(entities, terrains, lights, camera, cubemap, glm::vec4(0.0f, 1.0f, 0.0f, -water.getHeight() + 1.0f));
 		camera.invertPitch();
 		position.y += distance;
 		camera.setPosition(position);

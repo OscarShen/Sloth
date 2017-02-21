@@ -34,6 +34,7 @@ namespace sloth { namespace graphics {
 		int m_LocNormalMap;
 		int m_LocLightColor;
 		int m_LocLightPosition;
+		int m_LocDepthMap;
 
 	public:
 		static WaterShader *inst();
