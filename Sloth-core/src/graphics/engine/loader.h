@@ -49,6 +49,19 @@ namespace sloth { namespace graphics {
 		);
 
 		/************************************************************************
+		* @description	: 输入3维位置、2维纹理、3维法向量、3维正切坐标以及顶点索引
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月16日10:00:40
+		***********************************************************************/
+		RawModel loadToVAO(
+			std::vector<glm::vec3> &positions,
+			std::vector<glm::vec2> &texCoords,
+			std::vector<glm::vec3> &normals,
+			std::vector<glm::vec3> &tangents,
+			std::vector<unsigned int> &indices
+		);
+
+		/************************************************************************
 		* @description	: 建立一个只包含vec2位置和纹理的RawModel，主要用于建立二维GUI矩形
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月9日14:03:57

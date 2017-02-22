@@ -9,6 +9,7 @@ namespace sloth { namespace graphics {
 		m_StaticRenderer = new StaticRenderer(m_ProjectionMatrix);
 		m_TerrainRenderer = new TerrainRenderer(m_ProjectionMatrix);
 		m_SkyboxRenderer = new SkyboxRenderer(loader, m_ProjectionMatrix);
+		m_NormapMappingRenderer = new NormalMappingRenderer(m_ProjectionMatrix);
 	}
 
 	MultipleRenderer::~MultipleRenderer()
@@ -19,6 +20,8 @@ namespace sloth { namespace graphics {
 			delete m_TerrainRenderer;
 		if (m_SkyboxRenderer != nullptr)
 			delete m_SkyboxRenderer;
+		if (m_NormapMappingRenderer != nullptr)
+			delete m_NormapMappingRenderer;
 	}
 
 	void MultipleRenderer::render(const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture, const glm::vec4 & clipPlane)
@@ -33,6 +36,13 @@ namespace sloth { namespace graphics {
 		staticShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
 		m_StaticRenderer->render(m_Entities);
 		glEnable(GL_CULL_FACE);
+		// 渲染有法线贴图的模型
+		auto normalMappingShader = NormalMappingShader::inst();
+		normalMappingShader->loadClipPlane(clipPlane);
+		normalMappingShader->loadLights(lights);
+		normalMappingShader->loadViewMatrix(camera);
+		normalMappingShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
+		m_NormapMappingRenderer->render(m_NormalMappingEntities);
 		// 渲染地形
 		auto terrainShader = TerrainShader::inst();
 		terrainShader->loadClipPlane(clipPlane);
@@ -47,15 +57,19 @@ namespace sloth { namespace graphics {
 		// Clear up to avoid memory overflow, we will submit every entity per frame.
 		m_Entities.clear();
 		m_Terrains.clear();
+		m_NormalMappingEntities.clear();
 	}
 
-	void MultipleRenderer::renderScene(const std::vector<Entity>& entities, std::vector<Terrain*>& terrains, const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane)
+	void MultipleRenderer::renderScene(const std::vector<Entity>& entities, const std::vector<Entity> &normalMappingEntities, std::vector<Terrain*>& terrains, const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane)
 	{
 		for (auto terrain : terrains) {
 			submitTerrain(*terrain);
 		}
 		for (auto &i : entities) {
 			submitEntity(i);
+		}
+		for (auto &i : normalMappingEntities) {
+			submitNormalMappingEntity(i);
 		}
 		render(lights, camera, texture, clipPlane);
 	}
@@ -78,5 +92,17 @@ namespace sloth { namespace graphics {
 		}
 	}
 
+	void MultipleRenderer::submitNormalMappingEntity(const Entity & normalMappingEntity)
+	{
+		TexturedModel &model = normalMappingEntity.getTexturedModel();
+		auto pos = m_NormalMappingEntities.find(model);
+		if (pos != m_NormalMappingEntities.end()) {
+			pos->second.push_back(normalMappingEntity);
+		}
+		else {
+			m_NormalMappingEntities.insert(std::pair<TexturedModel, std::vector<Entity>>(
+				model, std::vector<Entity>{ normalMappingEntity }));
+		}
+	}
 
 } }

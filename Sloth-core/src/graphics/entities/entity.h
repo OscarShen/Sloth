@@ -49,8 +49,8 @@ namespace sloth { namespace graphics {
 		void increaseRotation(float dx, float dy, float dz);
 		void increasePosition(float dx, float dy, float dz);
 
-		float getTextureXOffset();
-		float getTextureYOffset();
+		float getTextureXOffset() const;
+		float getTextureYOffset() const;
 
 	};
 

@@ -17,6 +17,8 @@ namespace sloth { namespace graphics {
 		bool m_UseFakeLighting = false;
 
 		unsigned int m_NumberOfRows = 1;
+
+		unsigned int m_NormalMap = 0;
 	public:
 		// Constructor (sets default texture modes)
 		constexpr ModelTexture() : m_ID(0) {}
@@ -29,12 +31,14 @@ namespace sloth { namespace graphics {
 		inline bool hasTransparency() const { return m_HasTransparency; }
 		inline bool isUseFakeLighting() const { return m_UseFakeLighting; }
 		inline unsigned int getNumberOfRows() const { return m_NumberOfRows; }
+		inline unsigned int getNormalMap() const { return m_NormalMap; }
 
 		void setShininess(float shininess) { m_Shininess = shininess; }
 		void setReflectivity(float reflectivity) { m_Reflectivity = reflectivity; }
 		void setTransparency(bool hasTransparency) { m_HasTransparency = hasTransparency; }
 		void setUseFakeLighting(bool useFakeLighting) { m_UseFakeLighting = useFakeLighting; }
 		void setNumberOfRows(unsigned int numberOfRows) { m_NumberOfRows = numberOfRows; }
+		void setNormalMap(unsigned int normalMap) { m_NormalMap = normalMap; }
 	};
 
 } }

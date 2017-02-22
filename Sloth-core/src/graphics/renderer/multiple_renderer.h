@@ -17,6 +17,7 @@
 #include "../renderer/static_renderer.h"
 #include "../renderer/terrain_renderer.h"
 #include "../renderer/skybox_renderer.h"
+#include "../normalMappingRenderer/normal_mapping_renderer.h"
 #include "../model/textured_model.hpp"
 #include "../texture/cube_map_texture.hpp"
 #include <map>
@@ -33,6 +34,9 @@ namespace sloth { namespace graphics {
 
 		SkyboxRenderer *m_SkyboxRenderer;
 
+		NormalMappingRenderer *m_NormapMappingRenderer;
+
+		std::map<TexturedModel, std::vector<Entity>> m_NormalMappingEntities;
 		std::map<TexturedModel, std::vector<Entity>> m_Entities;
 		std::vector<Terrain*> m_Terrains;
 
@@ -51,11 +55,21 @@ namespace sloth { namespace graphics {
 		***********************************************************************/
 		void render(const std::vector<Light> &lights, const RawCamera &camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane);
 
-		void renderScene(const std::vector<Entity> &entities, std::vector<Terrain*> &terrains, const std::vector<Light> &lights,
+		/***********************************************************************
+		* @description	: 加载model矩阵
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月13日18:40:33
+		***********************************************************************/
+		void renderScene(const std::vector<Entity> &entities, 
+			const std::vector<Entity> &normalMappingEntities, 
+			std::vector<Terrain*> &terrains, 
+			const std::vector<Light> &lights,
 			const RawCamera &camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane);
 
 		void submitTerrain(Terrain &terrain);
 		void submitEntity(const Entity &entity);
+
+		void submitNormalMappingEntity(const Entity &normalMappingEntity);
 
 		/************************************************************************
 		* @description	: 获得存储的 projection 矩阵

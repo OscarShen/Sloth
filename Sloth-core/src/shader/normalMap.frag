@@ -2,16 +2,17 @@
 
 // 最大灯光数
 #define MAX_LIGHT 4
-in vec3 worldPosition;
-in vec3 toCameraVector;
-in float visibility;
-in vec2 TexCoord;
-in vec3 Normal;
 
+in vec2 TexCoord;
+in float visibility;
+in vec3 lightPosition_Tangent[MAX_LIGHT];
+in vec3 worldPosition_Tangent;
+in vec3 toCameraVector_Tangent;
 uniform sampler2D diffuseMap;
+uniform sampler2D normalMap;
 
 // 灯光属性
-uniform vec3 lightPosition[MAX_LIGHT];	// 位置
+//uniform vec3 lightPosition[MAX_LIGHT];	// 位置
 uniform vec3 lightColor[MAX_LIGHT];		// 颜色
 uniform vec3 attenuation[MAX_LIGHT];	// 灯光衰减，每个vec3向量i位置对应衰减i次项
 
@@ -23,8 +24,9 @@ out vec4 frag_out;
 
 void main()
 {
-	vec3 n_ToCameraVector = normalize(toCameraVector);
-	vec3 n_Normal = normalize(Normal);
+	vec3 n_ToCameraVector = normalize(toCameraVector_Tangent);
+	vec3 normal = texture(normalMap, TexCoord).rgb;
+	vec3 n_Normal = normalize(normal * 2.0f - 1.0f);
 	vec3 totalDiffuse = vec3(0.0f);
 	vec3 totalSpecular = vec3(0.0f);
 	vec3 toLightVector; // 从片元世界坐标指向光源世界坐标
@@ -40,7 +42,7 @@ void main()
 
 	for(int i=0; i < MAX_LIGHT; ++i) {
 		// 从片元世界坐标指向光源世界坐标
-		toLightVector = lightPosition[i] - worldPosition;
+		toLightVector = lightPosition_Tangent[i] - worldPosition_Tangent;
 
 		// Attenuation
 		// 像素点到光源的距离
