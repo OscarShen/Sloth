@@ -1,5 +1,7 @@
 #include "info.h"
+#include <iostream>
 namespace sloth { namespace graphics {
+	int Input::windowWidth = SCREEN_WIDTH, Input::windowHeight = SCREEN_HEIGHT;
 	double Input::cursorPosX = 0.0, Input::cursorPosY = 0.0;
 	double Input::lastCursorPosX = 0.0, Input::lastCursorPosY = 0.0;
 	std::vector<bool> Input::keys = std::vector<bool>(MAX_KEYS, false);
@@ -11,6 +13,8 @@ namespace sloth { namespace graphics {
 		win->setWidth(width);
 		win->setHeight(height);
 		glViewport(0, 0, width, height);
+		Input::windowWidth = width;
+		Input::windowHeight = height;
 	}
 
 	void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)

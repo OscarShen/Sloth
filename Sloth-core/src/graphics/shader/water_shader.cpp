@@ -13,7 +13,6 @@ namespace sloth { namespace graphics {
 
 	WaterShader::~WaterShader()
 	{
-		delete m_Inst;
 	}
 
 	void WaterShader::connectTextureUnit()

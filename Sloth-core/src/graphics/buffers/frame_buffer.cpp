@@ -76,7 +76,7 @@ namespace sloth { namespace graphics {
 	void FrameBuffer::unbind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		glViewport(0, 0, Input::windowWidth, Input::windowHeight);
 	}
 
 	void FrameBuffer::setDrawBuffer(unsigned int index)

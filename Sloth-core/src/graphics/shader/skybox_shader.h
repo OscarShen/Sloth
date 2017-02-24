@@ -37,6 +37,7 @@ namespace sloth { namespace graphics {
 		* @creat		: 2017Äê2ÔÂ10ÈÕ13:51:27
 		***********************************************************************/
 		static SkyboxShader* inst();
+		static void deleteShader() { delete m_Inst; }
 
 		virtual ~SkyboxShader() {}
 

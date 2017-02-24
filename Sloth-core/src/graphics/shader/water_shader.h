@@ -38,6 +38,7 @@ namespace sloth { namespace graphics {
 
 	public:
 		static WaterShader *inst();
+		static void deleteShader() { delete m_Inst; }
 		virtual ~WaterShader();
 
 		/***********************************************************************

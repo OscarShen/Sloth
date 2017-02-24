@@ -12,9 +12,10 @@ namespace sloth { namespace graphics {
 
 	NormalMappingShader::~NormalMappingShader()
 	{
-		delete m_Inst;
 		delete[] m_LocLightPos;
 		delete[] m_LocLightColor;
+		delete[] m_LocAttenuation;
+		m_Inst = nullptr;
 	}
 
 	NormalMappingShader * NormalMappingShader::inst()

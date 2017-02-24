@@ -47,6 +47,7 @@ namespace sloth { namespace graphics {
 
 	public:
 		static StaticShader *inst();
+		static void deleteShader() { delete m_Inst; }
 		virtual ~StaticShader();
 		void loadModelMatrix(const glm::mat4 &model);
 		void loadViewMatrix(const RawCamera &camera);
@@ -66,6 +67,7 @@ namespace sloth { namespace graphics {
 		void loadNumberOfRows(int numberOfRaws);
 		void loadOffset(float x, float y);
 		void loadClipPlane(const glm::vec4 &clipPlane);
+
 
 	private:
 		StaticShader();

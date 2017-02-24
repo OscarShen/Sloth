@@ -12,9 +12,10 @@ namespace sloth { namespace graphics {
 
 	StaticShader::~StaticShader()
 	{
-		delete m_Inst;
 		delete[] m_LocLightPos;
 		delete[] m_LocLightColor;
+		delete[] m_LocAttenuation;
+		m_Inst = nullptr;
 	}
 
 	StaticShader * StaticShader::inst()

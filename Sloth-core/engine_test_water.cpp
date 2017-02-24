@@ -1,3 +1,7 @@
+#ifdef _DEBUG
+#include <vld.h>
+#include <vld_def.h>
+#endif // _DEBUG
 
 #include "src/graphics/window.h"
 #include "src/graphics/engine/loader.h"
@@ -10,6 +14,8 @@
 #include "src/utils/mouse_picker.h"
 #include "src/utils/error_check.h"
 #include "src/utils/mouse_picker.h"
+
+
 
 using namespace sloth;
 using namespace graphics;
@@ -126,4 +132,15 @@ void main()
 		if (Timer::frameCounter % 60 == 0)
 			printf("%d fps\n", Timer::FPS);
 	}
+	delete terrain;
+	WaterShader::deleteShader();
+	glfwTerminate();
 }
+
+//#include <vector>
+//int main() {
+//	std::vector<std::vector<int>> a;
+//	std::vector<int> b;
+//	a = std::vector<std::vector<int>>(3, std::vector<int>(3, 1));
+//	a.push_back(b);
+//}

@@ -51,6 +51,7 @@ namespace sloth { namespace graphics {
 
 	public:
 		static NormalMappingShader *inst();
+		static void deleteShader() { delete m_Inst; }
 		virtual ~NormalMappingShader();
 		void loadModelMatrix(const glm::mat4 &model);
 		void loadViewMatrix(const RawCamera &camera);

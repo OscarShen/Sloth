@@ -12,6 +12,7 @@ namespace sloth { namespace graphics {
 	class Input
 	{
 	public:
+		static int windowWidth, windowHeight;
 		static double cursorPosX, cursorPosY;
 		static double lastCursorPosX, lastCursorPosY;
 		static std::vector<bool> keys;

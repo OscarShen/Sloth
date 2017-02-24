@@ -15,6 +15,7 @@
 
 #include "../buffers/frame_buffer.h"
 #include "../../config/header.hpp"
+#include "../info/info.h"
 namespace sloth { namespace graphics {
 
 	class WaterFrameBuffer

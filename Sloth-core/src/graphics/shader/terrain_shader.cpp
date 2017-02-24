@@ -12,9 +12,10 @@ namespace sloth { namespace graphics {
 
 	TerrainShader::~TerrainShader()
 	{
-		delete m_Inst;
 		delete[] m_LocLightPos;
 		delete[] m_LocLightColor;
+		delete[] m_LocAttenuation;
+		m_Inst = nullptr;
 	}
 
 	TerrainShader * TerrainShader::inst()

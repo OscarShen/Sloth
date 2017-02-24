@@ -22,6 +22,10 @@ namespace sloth { namespace graphics {
 			delete m_SkyboxRenderer;
 		if (m_NormapMappingRenderer != nullptr)
 			delete m_NormapMappingRenderer;
+		StaticShader::deleteShader();
+		TerrainShader::deleteShader();
+		SkyboxShader::deleteShader();
+		NormalMappingShader::deleteShader();
 	}
 
 	void MultipleRenderer::render(const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture, const glm::vec4 & clipPlane)

@@ -23,6 +23,13 @@ namespace sloth { namespace graphics {
 	public:
 		Terrain(int gridX, int gridZ, unsigned int texID, Loader & loader, std::string heightMapPath);
 		Terrain(int gridX, int gridZ, TerrainTexturePack m_Pack, Loader & loader, std::string heightMapPath);
+		~Terrain()
+		{
+			for (size_t i = 0; i < heights.size(); ++i) {
+				heights[i].clear();
+			}
+			heights.clear();
+		}
 		inline RawModel getModel() const { return m_Model; }
 		inline const TerrainTexturePack& getTexturePack() const { return m_Pack; }
 		inline float getX() const { return m_X; }

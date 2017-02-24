@@ -15,6 +15,7 @@
 
 #include <GL/glew.h>
 #include <vector>
+#include "../info/info.h"
 #include "../../config/header.hpp"
 namespace sloth { namespace graphics {
 

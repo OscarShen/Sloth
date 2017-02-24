@@ -45,6 +45,7 @@ namespace sloth { namespace graphics {
 
 	public:
 		static TerrainShader* inst();
+		static void deleteShader() { delete m_Inst; }
 		virtual ~TerrainShader();
 		void loadModelMatrix(const glm::mat4 &model);
 		void loadViewMatrix(const RawCamera &camera);
