@@ -49,6 +49,17 @@ namespace sloth { namespace graphics {
 		);
 
 		/************************************************************************
+		* @description	: 输入2维位置、2维纹理，返回VAO句柄
+		* @author		: Oscar Shen
+		* @creat		: 2017年2月27日22:03:05
+		***********************************************************************/
+		unsigned int loadToVAO(
+			std::vector<float> &positions,
+			std::vector<float> &texCoords
+			);
+
+
+		/************************************************************************
 		* @description	: 输入3维位置、2维纹理、3维法向量、3维正切坐标以及顶点索引
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月16日10:00:40
