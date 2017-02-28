@@ -1,7 +1,7 @@
-#ifdef _DEBUG
-#include <vld.h>
-#include <vld_def.h>
-#endif // _DEBUG
+//#ifdef _DEBUG
+//#include <vld.h>
+//#include <vld_def.h>
+//#endif // _DEBUG
 
 #include "src/graphics/window.h"
 #include "src/graphics/engine/loader.h"
@@ -10,11 +10,11 @@
 #include "src/graphics/renderer/multiple_renderer.h"
 #include "src/graphics/gui/gui_renderer.h"
 #include "src/graphics/water/water_frame_buffer.h"
+#include "src/graphics/font/fontRenderer/font_renderer.h"
 #include "src/utils/timer.h"
 #include "src/utils/mouse_picker.h"
 #include "src/utils/error_check.h"
 #include "src/utils/mouse_picker.h"
-
 
 
 using namespace sloth;
@@ -27,6 +27,7 @@ void main()
 	Loader loader;
 	MultipleRenderer renderer(loader);
 	GuiRenderer guiRenderer(loader);
+	TextMaster textMaster(loader);
 	Camera camera;
 
 	// µØÐÎ
@@ -85,9 +86,16 @@ void main()
 
 	// GUI
 	std::vector<GuiTexture> guis;
-	guis.push_back(GuiTexture(loader.loadTexture("res/health.png", true), glm::vec2(-0.5f), glm::vec2(0.3f)));
+	unsigned int verdana = loader.loadTexture("res/verdana.png", true);
+	guis.push_back(GuiTexture(verdana, glm::vec2(-0.5f), glm::vec2(0.3f)));
 	guis.push_back(GuiTexture(wfb.getReflectionTexture(), glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f)));
 	guis.push_back(GuiTexture(wfb.getRefractionTexture(), glm::vec2(0.5f, 0.5f), glm::vec2(0.3f)));
+
+	// ×ÖÌå
+	std::shared_ptr<FontType> font = std::shared_ptr<FontType>(new FontType(verdana, "res/verdana.fnt"));
+	std::shared_ptr<GUIText> text = std::shared_ptr<GUIText>(new GUIText("This is a test text!\nThis is a test text!\nThis is a test text!\nThis is a test text!\n", 5, font, glm::vec2(0.0f, 1.0f), 1.0f, true));
+	text->setColor(glm::vec3(1.0f));
+	textMaster.loadText(text);
 
 	MousePicker mousePicker(camera, renderer.getProjectionMatrix(), *terrain);
 
@@ -124,7 +132,12 @@ void main()
 		renderer.renderScene(entities, normalMappingEntities, terrains, lights, camera, cubemap, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
 		waterRenderer.render(waters, camera, sun);
 
-		slothCheckError(__FILE__, __LINE__);
+		//guiRenderer.render(guis);
+
+		glCheckError();
+		textMaster.render();
+		glCheckError();
+
 #pragma endregion
 		Timer::calculateFPS();
 		camera.process(&window);
