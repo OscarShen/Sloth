@@ -31,7 +31,7 @@ namespace sloth { namespace graphics {
 #define META_FILE_PAD_BOTTON 2
 #define	META_FILE_PAD_RIGHT 3
 
-#define META_FILE_DESIRED_PADDING 3
+#define META_FILE_DESIRED_PADDING 10
 
 #define META_FILE_SPLITTER " "
 #define META_FILE_NUMBER_SEPARATOR ","

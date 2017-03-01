@@ -1,7 +1,7 @@
-//#ifdef _DEBUG
-//#include <vld.h>
-//#include <vld_def.h>
-//#endif // _DEBUG
+#ifdef _DEBUG
+#include <vld.h>
+#include <vld_def.h>
+#endif // _DEBUG
 
 #include "src/graphics/window.h"
 #include "src/graphics/engine/loader.h"
@@ -86,14 +86,12 @@ void main()
 
 	// GUI
 	std::vector<GuiTexture> guis;
-	unsigned int verdana = loader.loadTexture("res/verdana.png", true);
-	guis.push_back(GuiTexture(verdana, glm::vec2(-0.5f), glm::vec2(0.3f)));
 	guis.push_back(GuiTexture(wfb.getReflectionTexture(), glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f)));
 	guis.push_back(GuiTexture(wfb.getRefractionTexture(), glm::vec2(0.5f, 0.5f), glm::vec2(0.3f)));
 
 	// ×ÖÌå
-	std::shared_ptr<FontType> font = std::shared_ptr<FontType>(new FontType(verdana, "res/verdana.fnt"));
-	std::shared_ptr<GUIText> text = std::shared_ptr<GUIText>(new GUIText("This is a test text!\nThis is a test text!\nThis is a test text!\nThis is a test text!\n", 5, font, glm::vec2(0.0f, 1.0f), 1.0f, true));
+	std::shared_ptr<FontType> font = std::shared_ptr<FontType>(new FontType(loader.loadTexture("res/consolas.png", true), "res/consolas.fnt"));
+	std::shared_ptr<GUIText> text = std::shared_ptr<GUIText>(new GUIText("This is a test text! This is a test text! This is a test text! This is a test text!", 3, font, glm::vec2(0.0f, 1.0f), 1.0f, true));
 	text->setColor(glm::vec3(1.0f));
 	textMaster.loadText(text);
 
