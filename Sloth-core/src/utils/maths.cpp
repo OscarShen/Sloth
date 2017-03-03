@@ -1,4 +1,4 @@
-#include "maths.h"
+﻿#include "maths.h"
 namespace sloth { namespace util {
 	glm::mat4 Maths::createModelMatrix(const glm::vec3 & position, float rotX, float rotY, float rotZ, float scale)
 	{
@@ -25,6 +25,31 @@ namespace sloth { namespace util {
 		matrix = glm::translate(matrix, glm::vec3(translation, 0.0f));
 		matrix = glm::scale(matrix, glm::vec3(scale, 1.0f));
 		return matrix;
+	}
+
+	glm::vec3 Maths::rayPlaneIntersection(const glm::vec3 & ray_origin, const glm::vec3 & ray_dir, const glm::vec3 & p1, const glm::vec3 & p2, const glm::vec3 & p3)
+	{
+		// e + td = x + β(y − x) + γ(z − x)
+		// x = m_QuadLT, y = m_QuadLD, z = m_QuadRD
+		// 光线与三角形平面投影，克拉默法则
+		float a = p1.x - p2.x;
+		float b = p1.y - p2.y;
+		float c = p1.z - p2.z;
+		float d = p1.x - p3.x;
+		float e = p1.y - p3.y;
+		float f = p1.z - p3.z;
+		float g = ray_dir.x;
+		float h = ray_dir.y;
+		float i = ray_dir.z;
+		float j = p1.x - ray_origin.x;
+		float k = p1.y - ray_origin.y;
+		float l = p1.z - ray_origin.z;
+
+		float M = a*(e*i - h*f) + b*(g*f - d*i) + c*(d*h - e*g);
+		//float beta = (j*(e*i - h*f) + k*(g*f - d*i) + l*(d*h - e*g)) / M;
+		//float gamma = (i*(a*k - j*b) + h*(j*c - a*l) + g*(b*l - k*c))/M;
+		float t = -(f*(a*k - j*b) + e*(j*c - a*l) + d*(b*l - k*c)) / M;
+		return ray_origin + ray_dir*t;
 	}
 
 } }

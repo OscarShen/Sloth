@@ -34,6 +34,8 @@ namespace sloth { namespace graphics {
 	public:
 		static FontShader* inst();
 
+		static void cleanUp();
+
 		/***********************************************************************
 		* @description	: ¼ÓÔØ×ÖÌåÑÕÉ«
 		* @author		: Oscar Shen

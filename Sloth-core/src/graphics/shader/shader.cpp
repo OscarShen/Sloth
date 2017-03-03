@@ -45,6 +45,14 @@ namespace sloth { namespace graphics {
 			glDeleteShader(gShader);
 	}
 
+	void Shader::storeAllUniformLocation(std::vector<Uniform*> &uniforms)
+	{
+		for (auto item : uniforms) {
+			item->storeUniformLocation(m_ID);
+		}
+		glValidateProgram(m_ID);
+	}
+
 	void Shader::loadFloat(const char *name, float value)
 	{
 		glProgramUniform1f(m_ID, glGetUniformLocation(this->m_ID, name), value);

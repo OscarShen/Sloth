@@ -16,6 +16,11 @@ namespace sloth { namespace graphics {
 		return m_Inst;
 	}
 
+	void FontShader::cleanUp()
+	{
+		delete m_Inst;
+	}
+
 	void sloth::graphics::FontShader::loadColor(const glm::vec3 & color)
 	{
 		glProgramUniform3f(m_ID, m_LocColor, color.x, color.y, color.z);

@@ -1,10 +1,10 @@
-/************************************************************************
+ï»¿/************************************************************************
 * @project 		:  sloth
 * @class   		:  Maths
 * @version 		:  v1.0.0
-* @description	:  ÓÃÓÚ²Ù×÷ OpenGL gui shader Êı¾İ
+* @description	:  ç”¨äºæ“ä½œ OpenGL gui shader æ•°æ®
 * @author		:  Oscar Shen
-* @creat 		:  2016Äê12ÔÂ3ÈÕ14:09:57
+* @creat 		:  2016å¹´12æœˆ3æ—¥14:09:57
 * @revise 		:
 ************************************************************************
 * Copyright @ OscarShen 2016. All rights reserved.
@@ -22,17 +22,20 @@ namespace sloth { namespace util {
 	public:
 		static glm::mat4 createModelMatrix(const glm::vec3 &position, float rotX, float rotY, float rotZ, float scale);
 
-		// ÇóµÃµÑ¿¨¶û¶şÎ¬×ø±ê pos Î»ÖÃµÄÈıÎ¬×ø±ê²åÖµµÄ×ø±ê
-		// ¼´ÒÑÖªÈı½ÇĞÎÖĞÁ½¸ö×ø±ê£¬ÇóÔÚÆ½ÃæÉÏµÄÁíÒ»¸ö×ø±ê
+		// æ±‚å¾—ç¬›å¡å°”äºŒç»´åæ ‡ pos ä½ç½®çš„ä¸‰ç»´åæ ‡æ’å€¼çš„åæ ‡
+		// å³å·²çŸ¥ä¸‰è§’å½¢ä¸­ä¸¤ä¸ªåæ ‡ï¼Œæ±‚åœ¨å¹³é¢ä¸Šçš„å¦ä¸€ä¸ªåæ ‡
 		static float barycentric(glm::vec3 &v1, glm::vec3 &v2, glm::vec3 &v3, glm::vec2 &pos);
 
 		/************************************************************************
-		 * @description	: ¹¹Ôì 2D ×ª»»¾ØÕó£¬°üÀ¨Æ½ÒÆ¡¢Ëõ·Å·ÖÁ¿£¬²»°üÀ¨Ğı×ª£¬¾ØÕó
-						  ¼ÆËãË³ĞòÊÇÏÈËõ·Å£¬ÔÙÆ½ÒÆ
+		 * @description	: æ„é€  2D è½¬æ¢çŸ©é˜µï¼ŒåŒ…æ‹¬å¹³ç§»ã€ç¼©æ”¾åˆ†é‡ï¼Œä¸åŒ…æ‹¬æ—‹è½¬ï¼ŒçŸ©é˜µ
+						  è®¡ç®—é¡ºåºæ˜¯å…ˆç¼©æ”¾ï¼Œå†å¹³ç§»
 		 * @author		: Oscar Shen
-		 * @creat		: 2017Äê2ÔÂ8ÈÕ16:52:25
+		 * @creat		: 2017å¹´2æœˆ8æ—¥16:52:25
 		 ***********************************************************************/
 		static glm::mat4 createModelMatrix(const glm::vec2 translation, const glm::vec2 scale);
+
+		static glm::vec3 rayPlaneIntersection(const glm::vec3 & ray_origin, const glm::vec3 & ray_dir,
+			const glm::vec3 & p1, const glm::vec3 & p2, const glm::vec3 & p3);
 	};
 
 

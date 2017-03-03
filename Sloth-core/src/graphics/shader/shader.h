@@ -2,6 +2,7 @@
 #ifndef SLOTH_SHADER_H_
 #define SLOTH_SHADER_H_
 
+#include <GL/glew.h>
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -11,11 +12,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
 
-#include <GL/glew.h>
-
 #include "../../utils/string_util.h"
 #include "../entities/light.hpp"
 #include "../camera/camera.h"
+#include "uniform.h"
 
 namespace sloth { namespace graphics {
 
@@ -58,6 +58,7 @@ namespace sloth { namespace graphics {
 		// 获取所有与 GUI 相关的 uniform 变量地址，
 		// 在构造器中调用一次即可
 		virtual void getAllUniformLocation() {}
+		void storeAllUniformLocation(std::vector<Uniform*> &uniforms);
 	};
 } }
 #endif // !SLOTH_SHADER_H_

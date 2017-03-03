@@ -15,6 +15,7 @@
 #include "src/utils/mouse_picker.h"
 #include "src/utils/error_check.h"
 #include "src/utils/mouse_picker.h"
+#include "src/graphics/particle/ParticleMaster.h"
 
 
 using namespace sloth;
@@ -29,6 +30,7 @@ void main()
 	GuiRenderer guiRenderer(loader);
 	TextMaster textMaster(loader);
 	Camera camera;
+	ParticleMaster particleMaster(loader,renderer.getProjectionMatrix());
 
 	// 地形
 	auto background = loader.loadTexture("res/textures/grass.png");
@@ -72,7 +74,7 @@ void main()
 	CubeMapTexture cubemap(loader.loadCubeMap(cubeMapPath));
 	// 水面
 	std::vector<WaterTile> waters;
-	WaterTile water(40.0f, 40.0f, 0.0f);
+	WaterTile water(100.0f, 100.0f, 0.0f);
 	waters.push_back(water);
 
 	// 灯光
@@ -108,6 +110,11 @@ void main()
 		glEnable(GL_CLIP_DISTANCE0);
 
 		mousePicker.update();
+		particleMaster.update();
+
+		if (graphics::Input::keys[GLFW_KEY_Y]) {
+			particleMaster.addParticle(std::make_shared<Particle>(glm::vec3(40.0f, 0.0f, 40.0f), glm::vec3(0.0f, 30.0f, 0.0f), 1.0f, 4.0f, 0.0f, 1.0f));
+		}
 
 		//std::cout << mousePicker.getCurrentRay().x << " " << mousePicker.getCurrentRay().y << " " << mousePicker.getCurrentRay().z << std::endl;
 
@@ -127,14 +134,13 @@ void main()
 		wfb.unbind();
 
 		glDisable(GL_CLIP_DISTANCE0);
+
 		renderer.renderScene(entities, normalMappingEntities, terrains, lights, camera, cubemap, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
 		waterRenderer.render(waters, camera, sun);
 
-		//guiRenderer.render(guis);
+		particleMaster.renderParticles(camera);
 
-		glCheckError();
 		textMaster.render();
-		glCheckError();
 
 #pragma endregion
 		Timer::calculateFPS();
@@ -145,13 +151,6 @@ void main()
 	}
 	delete terrain;
 	WaterShader::deleteShader();
+	FontShader::cleanUp();
 	glfwTerminate();
 }
-
-//#include <vector>
-//int main() {
-//	std::vector<std::vector<int>> a;
-//	std::vector<int> b;
-//	a = std::vector<std::vector<int>>(3, std::vector<int>(3, 1));
-//	a.push_back(b);
-//}
