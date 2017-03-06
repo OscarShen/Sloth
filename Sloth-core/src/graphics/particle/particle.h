@@ -16,6 +16,7 @@
 #include <glm/glm.hpp>
 #include "../../config/header.hpp"
 #include "../../utils/timer.h"
+#include "particle_texture.hpp"
 namespace sloth { namespace graphics {
 
 	class Particle
@@ -27,6 +28,13 @@ namespace sloth { namespace graphics {
 		float m_LifeLength; // 粒子生命长度
 		float m_Rotation; // 粒子旋转程度，因为粒子会一直面对屏幕，故只有一个旋转分量
 		float m_Scale; // 粒子缩放大小
+
+		ParticleTexture m_Texture; // 粒子纹理
+
+		glm::vec2 m_TexOffsetNow = glm::vec2(0.0f); // 当前状态纹理的起始点
+		glm::vec2 m_TexOffsetNext = glm::vec2(0.0f); // 下一状态纹理的起始点
+		float m_BlendFactor = 0.0f; // 上述两种纹理的混合系数
+
 		float m_ElapsedTime = 0.0f; // 已存在的时间
 
 	public:
@@ -41,13 +49,31 @@ namespace sloth { namespace graphics {
 		* @author		: Oscar Shen
 		* @creat		: 2017年3月6日11:03:46
 		***********************************************************************/
-		constexpr Particle(const glm::vec3 &position, const glm::vec3 &velocity, float gravityEffect, float lifeLength, float rotation, float scale)
-			:m_Position(position), m_Velocity(velocity), m_GravityEffect(gravityEffect), m_LifeLength(lifeLength),
+		constexpr Particle(const ParticleTexture &particleTexture, const glm::vec3 &position, const glm::vec3 &velocity, float gravityEffect, float lifeLength, float rotation, float scale)
+			:m_Texture(particleTexture), m_Position(position), m_Velocity(velocity), m_GravityEffect(gravityEffect), m_LifeLength(lifeLength),
 			m_Rotation(rotation), m_Scale(scale) {}
 
+		inline ParticleTexture getTexture() const { return m_Texture; }
 		inline glm::vec3 getPosition() const { return m_Position; }
 		inline float getRotation() const { return m_Rotation; }
 		inline float getScale() const { return m_Scale; }
+
+		/***********************************************************************
+		* @description	: 返回粒子当前状态纹理的起始点
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月6日17:04:01
+		***********************************************************************/
+		inline glm::vec2 getTexOffsetNow() const { return m_TexOffsetNow; }
+
+		/***********************************************************************
+		* @description	: 返回粒子下一状态纹理的起始点
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月6日17:04:01
+		***********************************************************************/
+		inline glm::vec2 getTexOffsetNext() const { return m_TexOffsetNext; }
+
+		inline float getBlendFactor() const { return m_BlendFactor; }
+
 
 		/***********************************************************************
 		* @description	: 每帧调用一次，更新粒子状态
@@ -55,6 +81,22 @@ namespace sloth { namespace graphics {
 		* @creat		: 2017年3月6日11:03:46
 		***********************************************************************/
 		bool update();
+
+	private:
+		/***********************************************************************
+		* @description	: 根据纹理集中的纹理个数，平均分成 numberOfRow 个阶段，根据已经
+						  粒子存在的寿命判断需要插值的两种纹理。
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月6日11:03:46
+		***********************************************************************/
+		void updateTextureCoordInfo();
+
+		/***********************************************************************
+		* @description	: 
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月6日11:03:46
+		***********************************************************************/
+		void setTextureOffset(glm::vec2 &offset, unsigned int index);
 	};
 
 } }

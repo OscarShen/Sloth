@@ -100,9 +100,10 @@ void main()
 	textMaster.loadText(text);
 
 	// СЃзг
-	ParticleSystem particleSystem(50.0f, 25.0f, 0.3f, 4.0f, 1.0f);
+	ParticleTexture particleTexture(loader.loadTexture("res/particleAtlas.png", true), 4);
+	ParticleSystem particleSystem(particleTexture, 250.0f, 1.0f, 0.0f, 4.0f, 1.0f);
 	particleSystem.randomizeRotation();
-	particleSystem.setDirection(glm::vec3(1.0f, 1.0f, 0.0f), 0.1f);
+	particleSystem.setDirection(glm::vec3(0.0f, 1.0f, 0.0f), 0.4f);
 	particleSystem.setLifeError(0.1f);
 	particleSystem.setSpeedError(0.4f);
 	particleSystem.setScaleError(0.8f);
@@ -147,7 +148,7 @@ void main()
 		particleMaster.renderParticles(camera);
 
 		textMaster.render();
-
+		glCheckError();
 #pragma endregion
 		Timer::calculateFPS();
 		camera.process(&window);

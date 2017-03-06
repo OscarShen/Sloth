@@ -14,6 +14,7 @@
 #define SLOTH_PARTICLE_RENDERER_H_
 #include <vector>
 #include <list>
+#include <unordered_map>
 #include "../model/raw_model.hpp"
 #include "../engine/loader.h"
 #include "particle_shader.h"
@@ -29,7 +30,7 @@ namespace sloth { namespace graphics {
 		ParticleRenderer() {}
 		ParticleRenderer(Loader &loader, const glm::mat4 &projection);
 
-		void render(std::list<std::shared_ptr<Particle>> &particles, RawCamera &camera);
+		void render(const std::unordered_map<ParticleTexture, std::shared_ptr<std::list<std::shared_ptr<Particle>>>> & particles, RawCamera &camera);
 
 	private:
 		void prepare();

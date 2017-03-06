@@ -35,8 +35,10 @@ namespace sloth { namespace graphics {
 
 		bool m_RandomRotation = false; // 是否随机旋转
 
-		glm::vec3 m_Direction = glm::vec3(0.0f);
-		float m_DirectionDeviation = 0.0f;
+		glm::vec3 m_Direction = glm::vec3(0.0f); // 粒子椎体的方向
+		float m_DirectionDeviation = 0.0f; // 粒子椎体的偏移大小
+
+		ParticleTexture m_Texture; // 粒子纹理
 
 	public:
 		/***********************************************************************
@@ -49,8 +51,9 @@ namespace sloth { namespace graphics {
 		* @author		: Oscar Shen
 		* @creat		: 2017年3月6日11:03:46
 		***********************************************************************/
-		constexpr ParticleSystem(float particlesPerSecond, float speed, float gravityComplent, float lifeLength, float scale)
-			:m_ParticlesPerSecond(particlesPerSecond), m_AverageSpeed(speed), m_GravityComplient(gravityComplent), m_AverageLifeLength(lifeLength), m_AverageScale(scale) {}
+		constexpr ParticleSystem(const ParticleTexture& particleTexture, float particlesPerSecond, float speed, float gravityComplent, float lifeLength, float scale)
+			:m_ParticlesPerSecond(particlesPerSecond), m_AverageSpeed(speed), m_GravityComplient(gravityComplent), m_AverageLifeLength(lifeLength), m_AverageScale(scale)
+		, m_Texture(particleTexture) {}
 
 		/***********************************************************************
 		* @description	: 生成指定位置 systemCenter 的粒子，并且添加到指定的 particleMaster 中

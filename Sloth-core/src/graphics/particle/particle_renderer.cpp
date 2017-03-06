@@ -10,12 +10,18 @@ namespace sloth { namespace graphics {
 		ParticleShader::inst()->projection.loadMatrix4(projection);
 	}
 
-	void ParticleRenderer::render(std::list<std::shared_ptr<Particle>> & particles, RawCamera & camera)
+	void ParticleRenderer::render(const std::unordered_map<ParticleTexture ,std::shared_ptr<std::list<std::shared_ptr<Particle>>>> & particles, RawCamera & camera)
 	{
 		prepare();
-		for (auto &particle : particles) {
-			updateModelView(particle->getPosition(), particle->getRotation(), particle->getScale(), camera.getViewMatrix());
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, m_Quad.getVertexCount());
+		for (auto &pair : particles) {
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, pair.first.getTextureID());
+			for (auto &particle : *(pair.second)) {
+				updateModelView(particle->getPosition(), particle->getRotation(), particle->getScale(), camera.getViewMatrix());
+				ParticleShader::inst()->loadTextureCoordInfo(particle->getTexOffsetNow(), particle->getTexOffsetNext(),
+					pair.first.getNumberOfRows(), particle->getBlendFactor());
+				glDrawArrays(GL_TRIANGLE_STRIP, 0, m_Quad.getVertexCount());
+			}
 		}
 		unbind();
 	}
@@ -53,6 +59,7 @@ namespace sloth { namespace graphics {
 
 	void ParticleRenderer::unbind()
 	{
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glEnable(GL_CULL_FACE);
 		glDepthMask(true);
 		glDisable(GL_BLEND);

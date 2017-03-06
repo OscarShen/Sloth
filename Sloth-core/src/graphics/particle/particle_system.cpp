@@ -28,7 +28,7 @@ namespace sloth { namespace graphics {
 		velocity *= generateValue(m_AverageSpeed, m_SpeedError);
 		float scale = generateValue(m_AverageScale, m_ScaleError);
 		float lifeLength = generateValue(m_AverageLifeLength, m_LifeError);
-		particleMaster.addParticle(std::make_shared<Particle>(center, velocity, m_GravityComplient, lifeLength, generateRotation(), scale));
+		particleMaster.addParticle(std::make_shared<Particle>(m_Texture, center, velocity, m_GravityComplient, lifeLength, generateRotation(), scale));
 	}
 
 	float ParticleSystem::generateValue(float average, float errorMargin)

@@ -16,6 +16,7 @@
 #include "../shader/shader.h"
 #include "../shader/uniform_matrix4.h"
 #include "../shader/uniform_float.h"
+#include "../shader/uniform_vec2.h"
 namespace sloth { namespace graphics {
 
 #define PARTICLE_VERTEX_SHADER "src/graphics/particle/particle.vert"
@@ -29,8 +30,13 @@ namespace sloth { namespace graphics {
 	public:
 		UniformMatrix4 projection = UniformMatrix4("projection");
 		UniformMatrix4 modelView = UniformMatrix4("modelView");
+		UniformVec2 texOffsetNow = UniformVec2("texOffsetNow");
+		UniformVec2 texOffsetNext = UniformVec2("texOffsetNext");
+		UniformVec2 texCoordInfo = UniformVec2("texCoordInfo");
 		
 		static std::shared_ptr<ParticleShader> inst();
+
+		void loadTextureCoordInfo(const glm::vec2 &offsetNow, const glm::vec2 &offsetNext, float numRows, float blend);
 
 	private:
 		ParticleShader();

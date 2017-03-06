@@ -13,6 +13,7 @@
 #ifndef SLOTH_PARTICLE_MASTER
 #define SLOTH_PARTICLE_MASTER
 #include <list>
+#include <unordered_map>
 #include "particle.h"
 #include "particle_renderer.h"
 namespace sloth { namespace graphics {
@@ -20,7 +21,8 @@ namespace sloth { namespace graphics {
 	class ParticleMaster
 	{
 	private:
-		std::list<std::shared_ptr<Particle>> m_Particles;
+		std::unordered_map<ParticleTexture, std::shared_ptr<std::list<std::shared_ptr<Particle>>>> m_Particles;
+		
 		ParticleRenderer m_Renderer;
 
 	public:
