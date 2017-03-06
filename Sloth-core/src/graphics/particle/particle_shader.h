@@ -1,11 +1,11 @@
 /************************************************************************ 
- * @project 	:  $rootnamespace$
- * @class   	:  $safeitemrootname$
+ * @project 	:  sloth
+ * @class   	:  ParticleShader
  * @version 	:  v1.0.0
- * @description :  
- * @author		:  $username$
- * @creat 		:  $time$
- * @revise 		:  $time$
+ * @description :  粒子着色器操作类
+ * @author		:  Oscar Shen
+ * @creat 		:  2017年3月6日11:18:52
+ * @revise 		:  
 ************************************************************************ 
  * Copyright @ OscarShen 2017. All rights reserved. 
 ************************************************************************/  

@@ -15,7 +15,8 @@
 #include "src/utils/mouse_picker.h"
 #include "src/utils/error_check.h"
 #include "src/utils/mouse_picker.h"
-#include "src/graphics/particle/ParticleMaster.h"
+#include "src/graphics/particle/particle_master.h"
+#include "src/graphics/particle/particle_system.h"
 
 
 using namespace sloth;
@@ -31,6 +32,7 @@ void main()
 	TextMaster textMaster(loader);
 	Camera camera;
 	ParticleMaster particleMaster(loader,renderer.getProjectionMatrix());
+
 
 	// µØÐÎ
 	auto background = loader.loadTexture("res/textures/grass.png");
@@ -97,6 +99,14 @@ void main()
 	text->setColor(glm::vec3(1.0f));
 	textMaster.loadText(text);
 
+	// Á£×Ó
+	ParticleSystem particleSystem(50.0f, 25.0f, 0.3f, 4.0f, 1.0f);
+	particleSystem.randomizeRotation();
+	particleSystem.setDirection(glm::vec3(1.0f, 1.0f, 0.0f), 0.1f);
+	particleSystem.setLifeError(0.1f);
+	particleSystem.setSpeedError(0.4f);
+	particleSystem.setScaleError(0.8f);
+
 	MousePicker mousePicker(camera, renderer.getProjectionMatrix(), *terrain);
 
 	glEnable(GL_DEPTH_TEST);
@@ -107,16 +117,12 @@ void main()
 		window.clear();
 #pragma region USER
 
-		glEnable(GL_CLIP_DISTANCE0);
+		particleSystem.generateParticles(glm::vec3(100.0f, 0.0f, 100.0f), particleMaster);
 
 		mousePicker.update();
 		particleMaster.update();
 
-		if (graphics::Input::keys[GLFW_KEY_Y]) {
-			particleMaster.addParticle(std::make_shared<Particle>(glm::vec3(40.0f, 0.0f, 40.0f), glm::vec3(0.0f, 30.0f, 0.0f), 1.0f, 4.0f, 0.0f, 1.0f));
-		}
-
-		//std::cout << mousePicker.getCurrentRay().x << " " << mousePicker.getCurrentRay().y << " " << mousePicker.getCurrentRay().z << std::endl;
+		glEnable(GL_CLIP_DISTANCE0);
 
 		wfb.bindReflectionFrameBuffer();
 		float distance = (camera.getPosition().y - water.getHeight()) * 2;

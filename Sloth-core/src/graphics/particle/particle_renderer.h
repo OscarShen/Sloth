@@ -1,11 +1,11 @@
 /************************************************************************ 
- * @project 	:  $rootnamespace$
- * @class   	:  $safeitemrootname$
+ * @project 	:  sloth
+ * @class   	:  ParticleRenderer
  * @version 	:  v1.0.0
- * @description :  
- * @author		:  $username$
- * @creat 		:  $time$
- * @revise 		:  $time$
+ * @description :  粒子渲染类
+ * @author		:  Oscar Shen
+ * @creat 		:  2017年3月6日11:17:58
+ * @revise 		:  
 ************************************************************************ 
  * Copyright @ OscarShen 2017. All rights reserved. 
 ************************************************************************/  
@@ -19,7 +19,6 @@
 #include "particle_shader.h"
 #include "particle.h"
 namespace sloth { namespace graphics {
-
 	class ParticleRenderer
 	{
 	private:
@@ -27,6 +26,7 @@ namespace sloth { namespace graphics {
 		RawModel m_Quad;
 
 	public:
+		ParticleRenderer() {}
 		ParticleRenderer(Loader &loader, const glm::mat4 &projection);
 
 		void render(std::list<std::shared_ptr<Particle>> &particles, RawCamera &camera);

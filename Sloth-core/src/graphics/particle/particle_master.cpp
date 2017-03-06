@@ -1,4 +1,4 @@
-#include "ParticleMaster.h"
+#include "particle_master.h"
 
 sloth::graphics::ParticleMaster::ParticleMaster(Loader & loader, const glm::mat4 & projection)
 	:m_Renderer(loader,projection)

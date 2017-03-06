@@ -36,7 +36,6 @@ namespace sloth { namespace graphics {
 		glm::mat4 modelView;
 		// view 矩阵是正交矩阵，且粒子不需要旋转分量
 		modelView = glm::translate(position);
-		modelView = glm::scale(modelView, glm::vec3(scale));
 		modelView = glm::rotate(modelView, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelView[0][0] = view[0][0];
 		modelView[0][1] = view[1][0];
@@ -48,6 +47,7 @@ namespace sloth { namespace graphics {
 		modelView[2][1] = view[1][2];
 		modelView[2][2] = view[2][2];
 		modelView =  view * modelView;
+		modelView = glm::scale(modelView, glm::vec3(scale));
 		ParticleShader::inst()->modelView.loadMatrix4(modelView);
 	}
 

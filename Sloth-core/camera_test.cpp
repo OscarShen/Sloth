@@ -16,7 +16,6 @@
 #include "src/utils/error_check.h"
 #include "src/utils/mouse_picker.h"
 #include "src/graphics/renderer/test_renderer.h"
-#include "src/graphics/camera/fixed_camera.h"
 
 
 using namespace sloth;
@@ -31,7 +30,6 @@ void main()
 	GuiRenderer guiRenderer(loader);
 	TextMaster textMaster(loader);
 	Camera camera;
-	//FixedCamera camera;
 
 	TestRenderer testRenderer(renderer.getProjectionMatrix());
 
