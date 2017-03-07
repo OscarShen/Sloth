@@ -1,5 +1,4 @@
 #include "particle_system.h"
-
 namespace sloth { namespace graphics {
 
 	void ParticleSystem::generateParticles(const glm::vec3 &systemCenter, ParticleMaster &particleMaster)
@@ -11,8 +10,10 @@ namespace sloth { namespace graphics {
 		for (int i = 0; i < count; ++i) {
 			emitParticle(systemCenter, particleMaster);
 		}
-		if (partialParticle > 0.5f) { // 如果残留的粒子大于一半，就发射出去
+		m_PartialParticle += partialParticle;
+		if (m_PartialParticle > 1.0f) { // 如果残留的粒子大于1，就发射出去
 			emitParticle(systemCenter, particleMaster);
+			m_PartialParticle -= 1.0f;
 		}
 	}
 

@@ -17,6 +17,7 @@
 #include "../../config/header.hpp"
 #include "../../utils/timer.h"
 #include "particle_texture.hpp"
+#include "../camera/raw_camera.h"
 namespace sloth { namespace graphics {
 
 	class Particle
@@ -36,6 +37,8 @@ namespace sloth { namespace graphics {
 		float m_BlendFactor = 0.0f; // 上述两种纹理的混合系数
 
 		float m_ElapsedTime = 0.0f; // 已存在的时间
+
+		float m_Distance = 0.0f; // 粒子到相机的距离，用于进行排序
 
 	public:
 		/***********************************************************************
@@ -73,6 +76,7 @@ namespace sloth { namespace graphics {
 		inline glm::vec2 getTexOffsetNext() const { return m_TexOffsetNext; }
 
 		inline float getBlendFactor() const { return m_BlendFactor; }
+		inline float getDistance() const { return m_Distance; }
 
 
 		/***********************************************************************
@@ -80,7 +84,7 @@ namespace sloth { namespace graphics {
 		* @author		: Oscar Shen
 		* @creat		: 2017年3月6日11:03:46
 		***********************************************************************/
-		bool update();
+		bool update(const RawCamera &camera);
 
 	private:
 		/***********************************************************************

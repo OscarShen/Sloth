@@ -16,6 +16,7 @@
 #include <unordered_map>
 #include "particle.h"
 #include "particle_renderer.h"
+#include "insertion_sort.h"
 namespace sloth { namespace graphics {
 
 	class ParticleMaster
@@ -33,7 +34,7 @@ namespace sloth { namespace graphics {
 		* @author		: Oscar Shen
 		* @creat		: 2017年3月6日11:03:46
 		***********************************************************************/
-		void update();
+		void update(const RawCamera &camera);
 
 		/***********************************************************************
 		* @description	: 渲染容器中存储的所有粒子

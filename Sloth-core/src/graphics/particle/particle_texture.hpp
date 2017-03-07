@@ -22,13 +22,15 @@ namespace sloth { namespace graphics {
 	private:
 		unsigned int m_TextureID;
 		unsigned int m_NumberOfRows;
+		bool m_Additive;
 
 	public:
-		constexpr ParticleTexture(unsigned int textureID, unsigned int numberOfRows)
-			:m_TextureID(textureID), m_NumberOfRows(numberOfRows) {}
+		constexpr ParticleTexture(unsigned int textureID, unsigned int numberOfRows, bool additive = false)
+			:m_TextureID(textureID), m_NumberOfRows(numberOfRows), m_Additive(additive) {}
 
 		inline unsigned int getTextureID() const { return m_TextureID; }
 		inline unsigned int getNumberOfRows() const { return m_NumberOfRows;  }
+		inline bool isAdditive() const { return m_Additive; }
 
 		friend bool operator==(const ParticleTexture& left, const ParticleTexture& right);
 	};

@@ -16,10 +16,14 @@ namespace sloth { namespace graphics {
 		for (auto &pair : particles) {
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, pair.first.getTextureID());
+			if (pair.first.isAdditive())
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+			else
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			for (auto &particle : *(pair.second)) {
 				updateModelView(particle->getPosition(), particle->getRotation(), particle->getScale(), camera.getViewMatrix());
 				ParticleShader::inst()->loadTextureCoordInfo(particle->getTexOffsetNow(), particle->getTexOffsetNext(),
-					pair.first.getNumberOfRows(), particle->getBlendFactor());
+					static_cast<float>(pair.first.getNumberOfRows()), particle->getBlendFactor());
 				glDrawArrays(GL_TRIANGLE_STRIP, 0, m_Quad.getVertexCount());
 			}
 		}
@@ -32,7 +36,8 @@ namespace sloth { namespace graphics {
 		glBindVertexArray(m_Quad.getVaoID());
 		glEnableVertexAttribArray(0);
 		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glDepthMask(false);
 		glDisable(GL_CULL_FACE);
 	}

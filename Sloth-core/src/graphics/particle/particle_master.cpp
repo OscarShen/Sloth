@@ -5,12 +5,12 @@ sloth::graphics::ParticleMaster::ParticleMaster(Loader & loader, const glm::mat4
 {
 }
 
-void sloth::graphics::ParticleMaster::update()
+void sloth::graphics::ParticleMaster::update(const RawCamera &camera)
 {
 	for (auto mapIt = m_Particles.begin(); mapIt != m_Particles.end(); ++mapIt) {
 		auto listIt = mapIt->second->begin();
 		while(listIt != mapIt->second->end()) {
-			bool stillAlive = (*listIt)->update();
+			bool stillAlive = (*listIt)->update(camera);
 			if (!stillAlive) { // 生命到期则删除
 				auto temp = listIt;
 				++listIt;
@@ -22,13 +22,14 @@ void sloth::graphics::ParticleMaster::update()
 		if (mapIt->second->empty()) { // 如果容器中所有元素都删除了
 			m_Particles.erase(mapIt);
 		}
+		else {
+			//InsertionSort::sortHighToLow(*(mapIt->second));
+		}
 	}
 }
 
 void sloth::graphics::ParticleMaster::renderParticles(RawCamera & camera)
 {
-	//for(auto it = m_Particles.begin(); it!=m_Particles.end();++it)
-	//	m_Renderer.render(*(it->second), camera);
 	m_Renderer.render(m_Particles, camera);
 }
 

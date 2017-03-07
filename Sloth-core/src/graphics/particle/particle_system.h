@@ -40,6 +40,8 @@ namespace sloth { namespace graphics {
 
 		ParticleTexture m_Texture; // 粒子纹理
 
+		float m_PartialParticle = 0.0f; // 记录还没画出的小部分粒子，则留存下来，等待下一帧
+
 	public:
 		/***********************************************************************
 		* @description	: 设置生成粒子的基本参数——无误差
