@@ -31,6 +31,7 @@ namespace sloth { namespace graphics {
 	private:
 		std::vector<VertexArray*> m_Vaos1;
 		std::vector<unsigned int> m_Textures;
+		std::vector<unsigned int> m_Vbos;
 
 	public:
 		Loader() {}
@@ -110,6 +111,34 @@ namespace sloth { namespace graphics {
 			std::vector<float> &position,
 			int dimention
 		);
+
+		/************************************************************************
+		* @description	: 创建一个指定大小的 vbo，大小指定后不可变更
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月8日22:04:37
+		***********************************************************************/
+		unsigned int createEmptyVbo(unsigned int floatCount);
+
+		/************************************************************************
+		* @description	: 用于实例渲染的属性数据组织
+						  vao : 需要将数据绑定到的 vao
+						  vbo : 存储实例数据的缓冲
+						  attribute : 当前组织的属性编号
+						  dataSize : vao 该属性对应的向量大小，vec2->2，vec4->4
+						  instancedDataLength : 单个实例的总数据长度
+						  offset : 这个属性在总数据中的字节起始位置
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月8日22:09:40
+		***********************************************************************/
+		void addIntancedAttribute(unsigned int vao, unsigned int vbo, unsigned int attribute,
+			unsigned int dataSize, unsigned int instancedDataLength, unsigned int offset);
+
+		/************************************************************************
+		* @description	: 将组织好的数据导入 vbo
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月8日22:10:16
+		***********************************************************************/
+		void updateVbo(unsigned int vbo, std::vector<float> &vboData);
 
 		/************************************************************************
 		* @description	: 加载二维纹理

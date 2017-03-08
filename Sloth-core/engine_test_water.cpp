@@ -101,9 +101,9 @@ void main()
 
 	// СЃзг
 	ParticleTexture particleTexture(loader.loadTexture("res/particleAtlas.png", true), 4);
-	ParticleSystem particleSystem(particleTexture, 200.0f, 5.0f, 0.3f, 4.0f, 2.0f);
+	ParticleSystem particleSystem(particleTexture, 200.0f, 35.0f, 0.3f, 4.0f, 2.0f);
 	particleSystem.randomizeRotation();
-	particleSystem.setDirection(glm::vec3(0.0f, 1.0f, 0.0f), 1.4f);
+	particleSystem.setDirection(glm::vec3(0.0f, 1.0f, 0.0f), 90.0f);
 	particleSystem.setLifeError(0.6f);
 	particleSystem.setSpeedError(0.4f);
 	particleSystem.setScaleError(0.8f);
@@ -153,7 +153,7 @@ void main()
 		Timer::calculateFPS();
 		camera.process(&window);
 		window.update();
-		if (Timer::frameCounter % 1060 == 0)
+		if (Timer::frameCounter % 60 == 0)
 			printf("%d fps\n", Timer::FPS);
 	}
 	delete terrain;

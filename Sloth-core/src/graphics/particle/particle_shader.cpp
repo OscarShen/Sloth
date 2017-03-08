@@ -10,17 +10,10 @@ namespace sloth { namespace graphics {
 		return m_Inst;
 	}
 
-	void ParticleShader::loadTextureCoordInfo(const glm::vec2 & offsetNow, const glm::vec2 & offsetNext, float numRows, float blend)
-	{
-		texOffsetNow.loadVec2(offsetNow);
-		texOffsetNext.loadVec2(offsetNext);
-		texCoordInfo.loadVec2(numRows, blend);
-	}
-
 	ParticleShader::ParticleShader()
 		:Shader(PARTICLE_VERTEX_SHADER,PARTICLE_FRAGMENT_SHADER)
 	{
-		std::vector<Uniform*> uniforms{ &projection, &modelView, &texOffsetNow, &texOffsetNext, &texCoordInfo};
+		std::vector<Uniform*> uniforms{ &projection, &numberOfRows };
 		Shader::storeAllUniformLocation(uniforms);
 	}
 

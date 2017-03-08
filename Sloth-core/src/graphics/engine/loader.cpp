@@ -67,6 +67,28 @@ namespace sloth { namespace graphics {
 		return RawModel(va->getVaoID(), positions.size() / dimention);
 	}
 
+	unsigned int Loader::createEmptyVbo(unsigned int floatCount)
+	{
+		unsigned int vbo;
+		glCreateBuffers(1, &vbo);
+		m_Vbos.push_back(vbo);
+		//glNamedBufferStorage(vbo, floatCount * 4, nullptr, GL_DYNAMIC_STORAGE_BIT);
+		glNamedBufferData(vbo, floatCount * sizeof(float), nullptr, GL_STREAM_DRAW);
+		return vbo;
+	}
+
+	void Loader::addIntancedAttribute(unsigned int vao, unsigned int vbo, unsigned int attribute, unsigned int dataSize, unsigned int instancedDataLength, unsigned int offset)
+	{
+		glVertexArrayVertexBuffer(vao, attribute, vbo, 0, instancedDataLength * 4);
+		glVertexArrayAttribFormat(vao, attribute, dataSize, GL_FLOAT, GL_FALSE, offset * 4);
+		glVertexAttribDivisor(attribute, 1);
+	}
+
+	void Loader::updateVbo(unsigned int vbo, std::vector<float>& vboData)
+	{
+		glNamedBufferSubData(vbo, 0, vboData.size() * sizeof(float), vboData.data());
+	}
+
 	unsigned int Loader::loadTexture(const std::string & fileName, bool alpha)
 	{
 		int width, height;
@@ -123,6 +145,9 @@ namespace sloth { namespace graphics {
 			glDeleteTextures(1, &m_Textures[i]);
 		}
 		m_Textures.clear();
+
+		glDeleteBuffers(m_Vbos.size(), m_Vbos.data());
+		m_Vbos.clear();
 	}
 
 	VertexArray* Loader::createVAO()

@@ -29,15 +29,9 @@ namespace sloth { namespace graphics {
 
 	public:
 		UniformMatrix4 projection = UniformMatrix4("projection");
-		UniformMatrix4 modelView = UniformMatrix4("modelView");
-		UniformVec2 texOffsetNow = UniformVec2("texOffsetNow");
-		UniformVec2 texOffsetNext = UniformVec2("texOffsetNext");
-		UniformVec2 texCoordInfo = UniformVec2("texCoordInfo");
+		UniformFloat numberOfRows = UniformFloat("numberOfRows");
 		
 		static std::shared_ptr<ParticleShader> inst();
-
-		void loadTextureCoordInfo(const glm::vec2 &offsetNow, const glm::vec2 &offsetNext, float numRows, float blend);
-
 	private:
 		ParticleShader();
 	};
