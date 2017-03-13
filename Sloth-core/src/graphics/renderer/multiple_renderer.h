@@ -20,14 +20,18 @@
 #include "../normalMappingRenderer/normal_mapping_renderer.h"
 #include "../model/textured_model.hpp"
 #include "../texture/cube_map_texture.hpp"
-#include <map>
-#include <vector>
+#include <list>
+#include <unordered_map>
+#include <memory>
 
 namespace sloth { namespace graphics {
 
 	class MultipleRenderer
 	{
 	private:
+		typedef std::unordered_map<TexturedModel, std::list<std::shared_ptr<Entity>>> MapedEntities;
+		typedef std::shared_ptr<Entity> Entity_s;
+		typedef std::shared_ptr<Terrain> Terrain_s;
 		StaticRenderer *m_StaticRenderer;
 
 		TerrainRenderer *m_TerrainRenderer;
@@ -36,9 +40,10 @@ namespace sloth { namespace graphics {
 
 		NormalMappingRenderer *m_NormapMappingRenderer;
 
-		std::map<TexturedModel, std::vector<Entity>> m_NormalMappingEntities;
-		std::map<TexturedModel, std::vector<Entity>> m_Entities;
-		std::vector<Terrain*> m_Terrains;
+		MapedEntities m_NormalMappingEntities;
+		MapedEntities m_Entities;
+
+		std::list<Terrain_s> m_Terrains;
 
 		// 用于存储投影矩阵
 		glm::mat4 m_ProjectionMatrix;
@@ -60,16 +65,16 @@ namespace sloth { namespace graphics {
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月13日18:40:33
 		***********************************************************************/
-		void renderScene(const std::vector<Entity> &entities, 
-			const std::vector<Entity> &normalMappingEntities, 
-			std::vector<Terrain*> &terrains, 
+		void renderScene(const std::vector<Entity_s> &entities,
+			const std::vector<Entity_s> &normalMappingEntities,
+			std::vector<Terrain_s> &terrains, 
 			const std::vector<Light> &lights,
 			const RawCamera &camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane);
 
-		void submitTerrain(Terrain &terrain);
-		void submitEntity(const Entity &entity);
+		void submitTerrain(const Terrain_s &terrain);
+		void submitEntity(const Entity_s &entity);
 
-		void submitNormalMappingEntity(const Entity &normalMappingEntity);
+		void submitNormalMappingEntity(const Entity_s &normalMappingEntity);
 
 		/************************************************************************
 		* @description	: 获得存储的 projection 矩阵

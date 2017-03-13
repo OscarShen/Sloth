@@ -19,17 +19,20 @@
 #include "../../utils/maths.h"
 #include <glm/glm.hpp>
 #include <vector>
+#include <list>
+#include <memory>
 
 namespace sloth { namespace graphics {
 
 	class TerrainRenderer
 	{
+		typedef std::shared_ptr<Terrain> Terrain_s;
 	public:
 		TerrainRenderer() {}
 		TerrainRenderer(glm::mat4 &projection);
 		~TerrainRenderer() {}
 
-		void render(std::vector<Terrain*> &terrain);
+		void render(std::list<Terrain_s> &terrain);
 
 	private:
 		void prepareTerrain(Terrain &terrain);

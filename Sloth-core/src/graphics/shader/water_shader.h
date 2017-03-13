@@ -15,13 +15,15 @@
 
 #include "shader.h"
 #include "../entities/light.hpp"
+#include <memory>
 
 namespace sloth { namespace graphics {
 
 	class WaterShader : public Shader
 	{
+		typedef std::shared_ptr<WaterShader> WaterShader_s;
 	private:
-		static WaterShader *m_Inst;
+		static WaterShader_s m_Inst;
 
 		int m_LocModel;
 		int m_LocView;
@@ -37,8 +39,7 @@ namespace sloth { namespace graphics {
 		int m_LocDepthMap;
 
 	public:
-		static WaterShader *inst();
-		static void deleteShader() { delete m_Inst; }
+		static WaterShader_s inst();
 		virtual ~WaterShader();
 
 		/***********************************************************************

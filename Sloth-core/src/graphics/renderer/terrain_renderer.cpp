@@ -8,7 +8,7 @@ namespace sloth { namespace graphics {
 		ts->connectTextureUnits();
 	}
 
-	void TerrainRenderer::render(std::vector<Terrain*>& terrains)
+	void TerrainRenderer::render(std::list<Terrain_s>& terrains)
 	{
 		TerrainShader::inst()->use();
 		for (auto i:terrains) {

@@ -9,16 +9,19 @@
 #include "../model/textured_model.hpp"
 #include "../entities/entity.h"
 #include "../../utils/maths.h"
+#include <memory>
+#include <unordered_map>
 namespace sloth { namespace graphics {
 
 	class StaticRenderer
 	{
 	public:
+		typedef std::unordered_map<TexturedModel, std::list<std::shared_ptr<Entity>>> MapedEntities;
 		StaticRenderer() {}
 		StaticRenderer(glm::mat4 &projection);
 
 		void render(Entity &entity);
-		void render(std::map<TexturedModel, std::vector<Entity>> &entities);
+		void render(MapedEntities &entities);
 
 	private:
 		void prepareTexturedModel(const TexturedModel &model) const;

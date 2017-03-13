@@ -64,10 +64,10 @@ namespace sloth { namespace graphics {
 		m_NormalMappingEntities.clear();
 	}
 
-	void MultipleRenderer::renderScene(const std::vector<Entity>& entities, const std::vector<Entity> &normalMappingEntities, std::vector<Terrain*>& terrains, const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane)
+	void MultipleRenderer::renderScene(const std::vector<Entity_s>& entities, const std::vector<Entity_s> &normalMappingEntities, std::vector<Terrain_s>& terrains, const std::vector<Light>& lights, const RawCamera & camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane)
 	{
-		for (auto terrain : terrains) {
-			submitTerrain(*terrain);
+		for (auto &terrain : terrains) {
+			submitTerrain(terrain);
 		}
 		for (auto &i : entities) {
 			submitEntity(i);
@@ -78,34 +78,32 @@ namespace sloth { namespace graphics {
 		render(lights, camera, texture, clipPlane);
 	}
 
-	void MultipleRenderer::submitTerrain(Terrain & terrain)
+	void MultipleRenderer::submitTerrain(const Terrain_s & terrain)
 	{
-		m_Terrains.push_back(&terrain);
+		m_Terrains.push_back(terrain);
 	}
 
-	void MultipleRenderer::submitEntity(const Entity & entity)
+	void MultipleRenderer::submitEntity(const Entity_s & entity)
 	{
-		TexturedModel &model = entity.getTexturedModel();
+		TexturedModel &&model = entity->getTexturedModel();
 		auto pos = m_Entities.find(model);
 		if (pos != m_Entities.end()) {
 			pos->second.push_back(entity);
 		}
 		else {
-			m_Entities.insert(std::pair<TexturedModel, std::vector<Entity>>(
-				model, std::vector<Entity>{ entity }));
+			m_Entities[model] = std::list<std::shared_ptr<Entity>>{ entity };
 		}
 	}
 
-	void MultipleRenderer::submitNormalMappingEntity(const Entity & normalMappingEntity)
+	void MultipleRenderer::submitNormalMappingEntity(const Entity_s & normalMappingEntity)
 	{
-		TexturedModel &model = normalMappingEntity.getTexturedModel();
+		TexturedModel &model = normalMappingEntity->getTexturedModel();
 		auto pos = m_NormalMappingEntities.find(model);
 		if (pos != m_NormalMappingEntities.end()) {
 			pos->second.push_back(normalMappingEntity);
 		}
 		else {
-			m_NormalMappingEntities.insert(std::pair<TexturedModel, std::vector<Entity>>(
-				model, std::vector<Entity>{ normalMappingEntity }));
+			m_NormalMappingEntities[model] = std::list<std::shared_ptr<Entity>>{ normalMappingEntity };
 		}
 	}
 

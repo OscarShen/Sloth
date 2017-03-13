@@ -14,8 +14,9 @@
 #define SLOTH_NORMAL_MAPPING_RENDERER_H_
 
 #include <GL/glew.h>
-#include <map>
-#include <vector>
+#include <unordered_map>
+#include <list>
+#include <memory>
 #include "../model/textured_model.hpp"
 #include "../entities/entity.h"
 #include "../../utils/maths.h"
@@ -26,6 +27,8 @@ namespace sloth { namespace graphics {
 		class NormalMappingRenderer
 		{
 		public:
+			typedef std::unordered_map<TexturedModel, std::list<std::shared_ptr<Entity>>> MapedEntities;
+			typedef std::shared_ptr<Entity> Entity_s;
 			NormalMappingRenderer() {}
 			NormalMappingRenderer(glm::mat4 &projection);
 
@@ -34,14 +37,14 @@ namespace sloth { namespace graphics {
 			* @author		: Oscar Shen
 			* @creat		: 2017年2月22日13:42:33
 			***********************************************************************/
-			void render(Entity &entity);
+			void render(Entity_s &entity);
 
 			/***********************************************************************
 			* @description	: 渲染多个实例
 			* @author		: Oscar Shen
 			* @creat		: 2017年2月22日13:42:20
 			***********************************************************************/
-			void render(std::map<TexturedModel, std::vector<Entity>> &entities);
+			void render(MapedEntities &entities);
 
 		private:
 			/***********************************************************************
@@ -56,7 +59,7 @@ namespace sloth { namespace graphics {
 			* @author		: Oscar Shen
 			* @creat		: 2017年2月22日13:40:30
 			***********************************************************************/
-			void prepareInstance(Entity &entity);
+			void prepareInstance(Entity_s &entity);
 
 			/***********************************************************************
 			* @description	: 将渲染设置恢复默认

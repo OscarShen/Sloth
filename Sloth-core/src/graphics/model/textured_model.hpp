@@ -4,6 +4,7 @@
 
 #include "raw_model.hpp"
 #include "../texture/model_texture.hpp"
+#include <unordered_map>
 namespace sloth { namespace graphics {
 
 	class TexturedModel
@@ -20,8 +21,19 @@ namespace sloth { namespace graphics {
 		inline const ModelTexture& getTexture() const { return m_Texture; }
 
 		friend bool operator<(const TexturedModel &left, const TexturedModel &right);
+		friend bool operator==(const TexturedModel &left, const TexturedModel &right);
 	};
 } }
+
+namespace std {
+	template <>
+	struct hash<sloth::graphics::TexturedModel> {
+		std::size_t operator()(const sloth::graphics::TexturedModel& model) const {
+			return model.getRawModel().getVertexCount() * 31 + model.getRawModel().getVaoID() * 131
+				+ model.getTexture().getID() * 97;
+		}
+	};
+}
 
 
 #endif // !SLOTH_TEXTURED_MODEL_H_

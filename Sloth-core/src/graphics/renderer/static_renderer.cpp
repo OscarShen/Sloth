@@ -17,14 +17,14 @@ namespace sloth { namespace graphics {
 		unbindTexturedModel();
 	}
 
-	void StaticRenderer::render(std::map<TexturedModel, std::vector<Entity>> &entities)
+	void StaticRenderer::render(MapedEntities &entities)
 	{
 		StaticShader::inst()->enable();
 		for (auto it = entities.begin(); it != entities.end(); ++it) {
 			prepareTexturedModel(it->first);
-			std::vector<Entity> &batch = entities[it->first];
+			auto &batch = entities[it->first];
 			for (auto it2 = batch.begin(); it2 != batch.end(); ++it2) {
-				prepareInstance(*it2);
+				prepareInstance(**it2);
 				glDrawElements(GL_TRIANGLES, it->first.getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
 			}
 			glBindTexture(GL_TEXTURE_2D, 0);

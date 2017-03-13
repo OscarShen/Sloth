@@ -40,30 +40,34 @@ void main()
 	auto gTexture = loader.loadTexture("res/textures/grassFlowers.png");
 	auto bTexture = loader.loadTexture("res/textures/path.png");
 	auto blendmap = loader.loadTexture("res/textures/blendMap.png");
-	Terrain *terrain = new Terrain(0, 0, TerrainTexturePack(background, rTexture, gTexture, bTexture, blendmap), loader, "res/textures/heightmaps/heightmap.png");
-	std::vector<Terrain*> terrains;
+	std::vector<std::shared_ptr<Terrain>> terrains;
+	std::shared_ptr<Terrain> terrain = 
+		std::shared_ptr<Terrain>(new Terrain(0, 0, TerrainTexturePack(background, rTexture, gTexture, bTexture, blendmap), loader, "res/textures/heightmaps/heightmap.png"));
 	terrains.push_back(terrain);
 
 	// 模型
 	ModelTexture pine_texture = loader.loadTexture("res/textures/pine.png", true);
 	pine_texture.setTransparency(true);
 	TexturedModel tree(ModelLoader::loadModel("res/models/pine.obj", loader), pine_texture);
-	std::vector<Entity> entities;
-	entities.push_back(Entity(tree, glm::vec3(13.0f, terrain->getHeightOfTerrain(13.0f, 6.0f), 6.0f), 0, 0, 0, 0.3f));
-	entities.push_back(Entity(tree, glm::vec3(30.0f, terrain->getHeightOfTerrain(30.0f, 4.0f), 4.0f), 0, 0, 0, 0.3f));
-	entities.push_back(Entity(tree, glm::vec3(26.0f, terrain->getHeightOfTerrain(26.0f, 31.0f), 31.0f), 0, 0, 0, 0.3f));
+	std::vector<std::shared_ptr<Entity>> entities;
+	entities.push_back(
+		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(13.0f, terrain->getHeightOfTerrain(13.0f, 6.0f), 6.0f), 0, 0, 0, 0.3f)));
+	entities.push_back(
+		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(30.0f, terrain->getHeightOfTerrain(30.0f, 4.0f), 4.0f), 0, 0, 0, 0.3f)));
+	entities.push_back(
+		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(26.0f, terrain->getHeightOfTerrain(26.0f, 31.0f), 31.0f), 0, 0, 0, 0.3f)));
 
 	// 法线贴图模型
-	std::vector<Entity> normalMappingEntities;
+	std::vector<std::shared_ptr<Entity>> normalMappingEntities;
 	ModelTexture barrel_t(loader.loadTexture("res/textures/normalMapping/barrel.png"));
 	RawModel barrel_raw = ModelLoader::loadModelNM("res/models/normalMapping/barrel.obj",loader);
 	barrel_t.setNormalMap(loader.loadTexture("res/textures/normalMapping/barrelNormal.png"));
 
-	normalMappingEntities.push_back(
+	normalMappingEntities.push_back(std::shared_ptr<Entity>(new
 		Entity(
 			TexturedModel(
 				barrel_raw, barrel_t
-			), glm::vec3(40.0f, 20.0f, 40.0f), 0, 0, 0, 1.0f));
+			), glm::vec3(40.0f, 20.0f, 40.0f), 0, 0, 0, 1.0f)));
 
 	// 天空盒
 	std::vector<std::string> cubeMapPath = { 
@@ -156,8 +160,5 @@ void main()
 		if (Timer::frameCounter % 60 == 0)
 			printf("%d fps\n", Timer::FPS);
 	}
-	delete terrain;
-	WaterShader::deleteShader();
-	FontShader::cleanUp();
 	glfwTerminate();
 }

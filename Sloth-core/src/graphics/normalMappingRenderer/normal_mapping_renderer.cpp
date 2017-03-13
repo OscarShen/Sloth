@@ -8,22 +8,22 @@ namespace sloth { namespace graphics {
 		NormalMappingShader::inst()->connectTextureUnit();
 	}
 
-	void NormalMappingRenderer::render(Entity & entity)
+	void NormalMappingRenderer::render(Entity_s & entity)
 	{
 		NormalMappingShader::inst()->use();
-		prepareTexturedModel(entity.getTexturedModel());
+		prepareTexturedModel(entity->getTexturedModel());
 		prepareInstance(entity);
-		glDrawElements(GL_TRIANGLES, entity.getTexturedModel().getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, entity->getTexturedModel().getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		unbindTexturedModel();
 	}
 
-	void NormalMappingRenderer::render(std::map<TexturedModel, std::vector<Entity>> &entities)
+	void NormalMappingRenderer::render(MapedEntities &entities)
 	{
 		NormalMappingShader::inst()->enable();
 		for (auto it = entities.begin(); it != entities.end(); ++it) {
 			prepareTexturedModel(it->first);
-			std::vector<Entity> &batch = entities[it->first];
+			auto &batch = entities[it->first];
 			for (auto it2 = batch.begin(); it2 != batch.end(); ++it2) {
 				prepareInstance(*it2);
 				glDrawElements(GL_TRIANGLES, it->first.getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
@@ -55,14 +55,14 @@ namespace sloth { namespace graphics {
 		glEnableVertexAttribArray(3);
 	}
 
-	void NormalMappingRenderer::prepareInstance(Entity & entity)
+	void NormalMappingRenderer::prepareInstance(Entity_s & entity)
 	{
-		auto texture = entity.getTexturedModel().getTexture();
+		auto &&texture = entity->getTexturedModel().getTexture();
 		auto shader = NormalMappingShader::inst();
-		shader->loadModelMatrix(util::Maths::createModelMatrix(entity.getPosition(),
-			entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale()));
+		shader->loadModelMatrix(util::Maths::createModelMatrix(entity->getPosition(),
+			entity->getRotX(), entity->getRotY(), entity->getRotZ(), entity->getScale()));
 		shader->loadShineVariable(texture.getShininess(), texture.getReflectivity());
-		shader->loadOffset(entity.getTextureXOffset(), entity.getTextureYOffset());
+		shader->loadOffset(entity->getTextureXOffset(), entity->getTextureYOffset());
 	}
 
 	void NormalMappingRenderer::unbindTexturedModel()

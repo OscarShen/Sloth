@@ -2,12 +2,12 @@
 
 namespace sloth { namespace graphics {
 
-	WaterShader *WaterShader::m_Inst(nullptr);
+	std::shared_ptr<WaterShader> WaterShader::m_Inst(nullptr);
 
-	WaterShader * WaterShader::inst()
+	std::shared_ptr<WaterShader> WaterShader::inst()
 	{
 		if (m_Inst == nullptr)
-			m_Inst = new WaterShader();
+			m_Inst = WaterShader_s(new WaterShader());
 		return m_Inst;
 	}
 

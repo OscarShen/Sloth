@@ -1,7 +1,7 @@
 #include "font_shader.h"
 
 namespace sloth { namespace graphics {
-	FontShader * FontShader::m_Inst(nullptr);
+	std::shared_ptr<FontShader> FontShader::m_Inst(nullptr);
 
 	FontShader::FontShader()
 		: Shader(FONT_SHADER_VERTEX_FILE, FONT_SHADER_FRAGMENT_FILE)
@@ -9,16 +9,11 @@ namespace sloth { namespace graphics {
 		getAllUniformLocation();
 	}
 
-	FontShader * FontShader::inst()
+	std::shared_ptr<FontShader> FontShader::inst()
 	{
 		if (m_Inst == nullptr)
-			m_Inst = new FontShader();
+			m_Inst = FontShader_s(new FontShader());
 		return m_Inst;
-	}
-
-	void FontShader::cleanUp()
-	{
-		delete m_Inst;
 	}
 
 	void sloth::graphics::FontShader::loadColor(const glm::vec3 & color)

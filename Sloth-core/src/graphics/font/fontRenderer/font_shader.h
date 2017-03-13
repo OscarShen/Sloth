@@ -13,6 +13,7 @@
 #ifndef SLOTH_FONT_SHADER_H_
 #define SLOTH_FONT_SHADER_H_
 #include "../../shader/shader.h"
+#include <memory>
 namespace sloth { namespace graphics {
 
 #define FONT_SHADER_VERTEX_FILE "src/graphics/font/fontRenderer/font.vert"
@@ -20,6 +21,7 @@ namespace sloth { namespace graphics {
 
 	class FontShader : public Shader
 	{
+		typedef std::shared_ptr<FontShader> FontShader_s;
 	private:
 		int m_LocColor; // 字体颜色
 		int m_LocModel; // 字体的起始位置
@@ -29,12 +31,10 @@ namespace sloth { namespace graphics {
 		int m_LocBorderEdge; // 字体外轮廓的渐变宽度
 		int m_LocOffset; // 字体的偏移值，可以产生字体的阴影
 		int m_LocOutlineColor; // 字体外轮廓的颜色
-		static FontShader *m_Inst;
+		static FontShader_s m_Inst;
 
 	public:
-		static FontShader* inst();
-
-		static void cleanUp();
+		static FontShader_s inst();
 
 		/***********************************************************************
 		* @description	: 加载字体颜色
