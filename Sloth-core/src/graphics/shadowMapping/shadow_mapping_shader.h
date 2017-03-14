@@ -27,8 +27,7 @@ namespace sloth { namespace graphics {
 	public:
 		static std::shared_ptr<ShadowMappingShader> inst();
 		UniformMatrix4 m_Model = UniformMatrix4("model");
-		UniformMatrix4 m_View = UniformMatrix4("view");
-		UniformMatrix4 m_Projection = UniformMatrix4("projection");
+		UniformMatrix4 m_LightSpace = UniformMatrix4("lightSpace");
 
 		ShadowMappingShader();
 	};

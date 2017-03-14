@@ -41,6 +41,8 @@ namespace sloth { namespace graphics {
 		int m_LocBlendMapTexture;
 
 		int m_LocClipPlane;			// 裁剪平面
+		int m_LocShadowMap;			// 阴影贴图
+		int m_LocLightSpace;		// 光照空间
 
 
 	public:
@@ -63,6 +65,7 @@ namespace sloth { namespace graphics {
 		void loadSkyColor(const float r, const float g, const float b);
 		void connectTextureUnits();
 		void loadClipPlane(const glm::vec4 &clipPlane);
+		void loadLightSpace(const glm::mat4 &lightSpace);
 
 	private:
 		TerrainShader();

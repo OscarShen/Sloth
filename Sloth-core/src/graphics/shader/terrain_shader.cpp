@@ -86,11 +86,17 @@ namespace sloth { namespace graphics {
 		glProgramUniform1i(m_ID, m_LocGTexture, 2);
 		glProgramUniform1i(m_ID, m_LocBTexture, 3);
 		glProgramUniform1i(m_ID, m_LocBlendMapTexture, 4);
+		glProgramUniform1i(m_ID, m_LocShadowMap, 5);
 	}
 
 	void TerrainShader::loadClipPlane(const glm::vec4 & clipPlane)
 	{
 		glProgramUniform4f(m_ID, m_LocClipPlane, clipPlane.x, clipPlane.y, clipPlane.z, clipPlane.w);
+	}
+
+	void TerrainShader::loadLightSpace(const glm::mat4 & lightSpace)
+	{
+		glProgramUniformMatrix4fv(m_ID, m_LocLightSpace, 1, GL_FALSE, glm::value_ptr(lightSpace));
 	}
 
 	void TerrainShader::getAllUniformLocation()
@@ -117,6 +123,8 @@ namespace sloth { namespace graphics {
 		m_LocBTexture = glGetUniformLocation(m_ID, "bTexture");
 		m_LocBlendMapTexture = glGetUniformLocation(m_ID, "blendMap");
 		m_LocClipPlane = glGetUniformLocation(m_ID, "clipPlane");
+		m_LocLightSpace = glGetUniformLocation(m_ID, "lightSpace");
+		m_LocShadowMap = glGetUniformLocation(m_ID, "shadowMap");
 	}
 
 

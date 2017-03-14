@@ -13,7 +13,7 @@ namespace sloth { namespace graphics {
 	ShadowMappingShader::ShadowMappingShader()
 		: Shader(SHADOW_MAPPING_VERTEX_FILE, SHADOW_MAPPING_FRAGMENT_FILE)
 	{
-		storeAllUniformLocation(std::vector<Uniform*>{&m_Model, &m_View, &m_Projection});
+		storeAllUniformLocation(std::vector<Uniform*>{&m_Model, &m_LightSpace});
 	}
 
 } }

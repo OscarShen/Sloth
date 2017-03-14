@@ -10,6 +10,7 @@ namespace sloth { namespace graphics {
 		m_TerrainRenderer = new TerrainRenderer(m_ProjectionMatrix);
 		m_SkyboxRenderer = new SkyboxRenderer(loader, m_ProjectionMatrix);
 		m_NormapMappingRenderer = new NormalMappingRenderer(m_ProjectionMatrix);
+		m_ShadowMappingRenderer = new ShadowMappingMasterRenderer();
 	}
 
 	MultipleRenderer::~MultipleRenderer()
@@ -22,6 +23,8 @@ namespace sloth { namespace graphics {
 			delete m_SkyboxRenderer;
 		if (m_NormapMappingRenderer != nullptr)
 			delete m_NormapMappingRenderer;
+		if (m_ShadowMappingRenderer != nullptr)
+			delete m_ShadowMappingRenderer;
 		StaticShader::deleteShader();
 		TerrainShader::deleteShader();
 		SkyboxShader::deleteShader();
@@ -53,7 +56,8 @@ namespace sloth { namespace graphics {
 		terrainShader->loadLights(lights);
 		terrainShader->loadViewMatrix(camera);
 		terrainShader->loadSkyColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
-		m_TerrainRenderer->render(m_Terrains);
+		terrainShader->loadLightSpace(m_ShadowMappingRenderer->getLightSpaceMatrix());
+		m_TerrainRenderer->render(m_Terrains, getShadowMap());
 		//// äÖÈ¾Ìì¿ÕºÐ
 		auto skyboxShader = SkyboxShader::inst();
 		skyboxShader->loadFogColor(FOG_COLOR_RED, FOG_COLOR_GREEN, FOG_COLOR_BLUE);
@@ -76,6 +80,14 @@ namespace sloth { namespace graphics {
 			submitNormalMappingEntity(i);
 		}
 		render(lights, camera, texture, clipPlane);
+	}
+
+	void MultipleRenderer::renderShadow(const std::vector<Entity_s>& entities, const Light & sun, const RawCamera & camera)
+	{
+		for (auto &i : entities)
+			submitEntity(i);
+		m_ShadowMappingRenderer->render(m_Entities, sun, camera);
+		m_Entities.clear();
 	}
 
 	void MultipleRenderer::submitTerrain(const Terrain_s & terrain)

@@ -20,6 +20,9 @@ uniform sampler2D gTexture;
 uniform sampler2D bTexture;
 uniform sampler2D blendMap;
 
+// 阴影
+uniform sampler2D shadowMap;
+
 out vec4 frag_out;
 
 in DATA {
@@ -31,6 +34,23 @@ in DATA {
 in vec3 worldPosition;
 in vec3 toCameraVector;
 in float visibility;
+in vec4 LightSpacePos;
+
+bool inShadow(vec4 lightSpacePos)
+{
+	// 透视除法
+	vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
+	// 变换到 [0,1]
+	projCoords = projCoords * 0.5f + 0.5f;
+	// 最近深度
+	float closestDepth = texture(shadowMap, projCoords.xy).r;
+	// 光源视角下的深度
+	float currentDepth = projCoords.z;
+	// 检查是否在阴影中
+	if(currentDepth > closestDepth)
+		return true;
+	return false;
+}
 
 void main()
 {
@@ -52,6 +72,9 @@ void main()
 
 	// Ambient
 	float ambient = 0.2f;
+
+	// 阴影指数
+	float shadowIndex = 1.0f;
 	for(int i=0; i < MAX_LIGHT; ++i){
 		// 从片元世界坐标指向光源世界坐标
 		toLightVector = lightPosition[i] - worldPosition;
@@ -75,7 +98,11 @@ void main()
 		vec3 n_HalfWay = normalize(n_ToLightVector + n_ToCameraVector);
 		float spec = pow(max(dot(n_Normal, n_HalfWay), 0.0f), shininess);
 		totalSpecular += spec * lightColor[i] * reflectivity * oneDivideAttFactor;
+
+		// 阴影
+		if(inShadow(LightSpacePos))
+			shadowIndex = 0.6f;
 	}
-	frag_out = (vec4(totalDiffuse, 1.0f)  + ambient) * totalColor + vec4(totalSpecular, 1.0f);
+	frag_out = (vec4(totalDiffuse, 1.0f) * shadowIndex  + ambient) * totalColor + vec4(totalSpecular, 1.0f);
 	frag_out = mix(vec4(skyColor, 1.0f), frag_out, visibility);
 }

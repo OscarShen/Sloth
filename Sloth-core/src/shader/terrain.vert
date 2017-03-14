@@ -16,6 +16,9 @@ uniform mat4 view = mat4(1.0f);
 uniform mat4 model = mat4(1.0f);
 uniform vec4 clipPlane;		// 裁剪平面
 
+// 阴影光照空间
+uniform mat4 lightSpace;
+
 out DATA {
 	vec3 pos;
 	vec2 texCoord;
@@ -25,6 +28,9 @@ out DATA {
 out vec3 worldPosition;
 out vec3 toCameraVector;
 out float visibility;
+
+// 光照空间的片元位置
+out vec4 LightSpacePos;
 
 void main()
 {
@@ -43,6 +49,9 @@ void main()
 	float distance = length(positionInViewSpace.xyz);
 	visibility = exp(-pow((distance * FOG_DENSITY), FOG_GRADIENT));
 	visibility = clamp(visibility, 0.0f, 1.0f);
+
+	// 阴影
+	LightSpacePos = lightSpace * worldPosition4;
 }
 
 #endif

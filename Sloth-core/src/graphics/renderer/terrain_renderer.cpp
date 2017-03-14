@@ -8,10 +8,11 @@ namespace sloth { namespace graphics {
 		ts->connectTextureUnits();
 	}
 
-	void TerrainRenderer::render(std::list<Terrain_s>& terrains)
+	void TerrainRenderer::render(std::list<Terrain_s>& terrains, unsigned int shadowMap)
 	{
 		TerrainShader::inst()->use();
-		for (auto i:terrains) {
+		glBindTextureUnit(5, shadowMap);
+		for (auto &i:terrains) {
 			prepareTerrain(*i);
 			loadModelMatrix(*i);
 			glDrawElements(GL_TRIANGLES, i->getModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);

@@ -33,7 +33,6 @@ void main()
 	TextMaster textMaster(loader);
 	Camera camera;
 	ParticleMaster particleMaster(loader,renderer.getProjectionMatrix());
-	ShadowMappingMasterRenderer shadowMaster;
 
 
 	// 地形
@@ -100,7 +99,7 @@ void main()
 	//guis.push_back(GuiTexture(wfb.getRefractionTexture(), glm::vec2(0.5f, 0.5f), glm::vec2(0.3f)));
 
 	// 阴影贴图
-	guis.push_back(GuiTexture(shadowMaster.getShadowMap(), glm::vec2(0.5f, 0.5f), glm::vec2(0.4f)));
+	guis.push_back(GuiTexture(renderer.getShadowMap(), glm::vec2(0.5f, 0.5f), glm::vec2(0.4f)));
 
 	// 字体
 	std::shared_ptr<FontType> font = std::shared_ptr<FontType>(new FontType(loader.loadTexture("res/consolas.png", true), "res/consolas.fnt"));
@@ -132,7 +131,7 @@ void main()
 		mousePicker.update();
 		particleMaster.update(camera);
 
-		shadowMaster.renderScene(entities, lights[0], camera);
+		renderer.renderShadow(entities, lights[0], camera);
 
 		glEnable(GL_CLIP_DISTANCE0);
 

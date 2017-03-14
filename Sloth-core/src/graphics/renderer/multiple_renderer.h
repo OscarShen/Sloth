@@ -20,6 +20,7 @@
 #include "../normalMappingRenderer/normal_mapping_renderer.h"
 #include "../model/textured_model.hpp"
 #include "../texture/cube_map_texture.hpp"
+#include "../shadowMapping/shadow_mapping_master_renderer.h"
 #include <list>
 #include <unordered_map>
 #include <memory>
@@ -39,6 +40,8 @@ namespace sloth { namespace graphics {
 		SkyboxRenderer *m_SkyboxRenderer;
 
 		NormalMappingRenderer *m_NormapMappingRenderer;
+
+		ShadowMappingMasterRenderer *m_ShadowMappingRenderer;
 
 		MapedEntities m_NormalMappingEntities;
 		MapedEntities m_Entities;
@@ -71,6 +74,8 @@ namespace sloth { namespace graphics {
 			const std::vector<Light> &lights,
 			const RawCamera &camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane);
 
+		void renderShadow(const std::vector<Entity_s>& entities, const Light &sun, const RawCamera &camera);
+
 		void submitTerrain(const Terrain_s &terrain);
 		void submitEntity(const Entity_s &entity);
 
@@ -82,6 +87,7 @@ namespace sloth { namespace graphics {
 		* @creat		: 2017Äê2ÔÂ12ÈÕ19:12:21
 		***********************************************************************/
 		inline glm::mat4 getProjectionMatrix() const { return m_ProjectionMatrix; }
+		inline unsigned int getShadowMap() const { return m_ShadowMappingRenderer->getShadowMap(); }
 	};
 
 } }

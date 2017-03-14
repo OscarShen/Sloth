@@ -28,19 +28,15 @@ namespace sloth { namespace graphics {
 		ShadowFrameBuffer m_ShadowFbo;
 		ShadowMapEntityRenderer m_Renderer;
 
-		MapedEntities m_Entities;
+		glm::mat4 m_LightSpace;
 
 	public:
 		ShadowMappingMasterRenderer() : m_ShadowFbo(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE) {}
 
-		void render(const Light &light, const RawCamera &camera);
-
-		void renderScene(const std::vector<std::shared_ptr<Entity>> &entities, const Light &light, const RawCamera &camera);
+		void render(const MapedEntities &entities, const Light &light, const RawCamera &camera);
 
 		inline unsigned int getShadowMap() const { return m_ShadowFbo.getDepthTexture(); }
-
-	private:
-		void submitEntity(const Entity_s &entity);
+		inline glm::mat4 getLightSpaceMatrix() const { return m_LightSpace; }
 	};
 
 } }

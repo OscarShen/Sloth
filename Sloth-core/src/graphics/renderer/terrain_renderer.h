@@ -32,7 +32,7 @@ namespace sloth { namespace graphics {
 		TerrainRenderer(glm::mat4 &projection);
 		~TerrainRenderer() {}
 
-		void render(std::list<Terrain_s> &terrain);
+		void render(std::list<Terrain_s> &terrain, unsigned int shadowMap);
 
 	private:
 		void prepareTerrain(Terrain &terrain);
