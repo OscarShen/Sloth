@@ -36,6 +36,8 @@ namespace sloth { namespace graphics {
 
 		virtual glm::mat4 getViewMatrix() const override;
 
+		virtual glm::vec3 getFront() const override { return m_Front; }
+
 		void invertPitch();
 
 	private:

@@ -4,7 +4,6 @@ namespace sloth { namespace graphics {
 	FrameBuffer::FrameBuffer()
 	{
 		glCreateFramebuffers(1, &m_ID);
-		glNamedFramebufferDrawBuffer(m_ID, GL_COLOR_ATTACHMENT0);
 	}
 
 	FrameBuffer::~FrameBuffer()

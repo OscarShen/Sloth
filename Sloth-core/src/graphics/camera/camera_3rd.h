@@ -27,6 +27,7 @@ namespace sloth { namespace graphics {
 
 		virtual void process(SlothWindow * window) override;
 		virtual glm::mat4 getViewMatrix() const override;
+		virtual glm::vec3 getFront() const override { return m_Player.getPosition() - m_Position; }
 
 	private:
 		void calculateZoom(double yOffset);

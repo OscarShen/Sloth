@@ -30,6 +30,9 @@ namespace sloth { namespace graphics {
 			glBindTexture(GL_TEXTURE_2D, 0);
 			unbindTexturedModel();
 		}
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
 		StaticShader::inst()->disable();
 	}
 
@@ -38,6 +41,9 @@ namespace sloth { namespace graphics {
 		auto &rawModel = model.getRawModel();
 		auto &texture = model.getTexture();
 		glBindVertexArray(rawModel.getVaoID());
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
 		auto shader = StaticShader::inst();
 		shader->loadNumberOfRows(texture.getNumberOfRows());
 		if (texture.hasTransparency()) {

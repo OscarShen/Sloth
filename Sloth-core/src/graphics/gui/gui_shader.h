@@ -13,19 +13,20 @@
 #ifndef SLOTH_GUI_SHADER_H_
 #define SLOTH_GUI_SHADER_H_
 #include "../shader/shader.h"
+#include <memory>
 namespace sloth { namespace graphics {
 
 	class GuiShader:public Shader
 	{
 	private:
-		static GuiShader *m_Inst;
+		static std::shared_ptr<GuiShader> m_Inst;
 
 		int m_LocTransformationMatrix;
 
 	public:
-		~GuiShader(){ delete m_Inst; }
+		~GuiShader(){}
 		// µ¥ÀýÄ£Ê½
-		static GuiShader *inst();
+		static std::shared_ptr<GuiShader> inst();
 
 		void loadTransformation(glm::mat4 &matrix);
 

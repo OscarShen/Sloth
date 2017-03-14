@@ -21,7 +21,7 @@ namespace sloth { namespace graphics {
 
 	class FrameBuffer
 	{
-	private:
+	protected:
 		unsigned int m_ID;
 
 		std::vector<unsigned int> m_ColorAttachment;

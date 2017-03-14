@@ -17,6 +17,7 @@
 #include "src/utils/mouse_picker.h"
 #include "src/graphics/particle/particle_master.h"
 #include "src/graphics/particle/particle_system.h"
+#include "src/graphics/shadowMapping/shadow_mapping_master_renderer.h"
 
 
 using namespace sloth;
@@ -32,6 +33,7 @@ void main()
 	TextMaster textMaster(loader);
 	Camera camera;
 	ParticleMaster particleMaster(loader,renderer.getProjectionMatrix());
+	ShadowMappingMasterRenderer shadowMaster;
 
 
 	// 地形
@@ -94,8 +96,11 @@ void main()
 
 	// GUI
 	std::vector<GuiTexture> guis;
-	guis.push_back(GuiTexture(wfb.getReflectionTexture(), glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f)));
-	guis.push_back(GuiTexture(wfb.getRefractionTexture(), glm::vec2(0.5f, 0.5f), glm::vec2(0.3f)));
+	//guis.push_back(GuiTexture(wfb.getReflectionTexture(), glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f)));
+	//guis.push_back(GuiTexture(wfb.getRefractionTexture(), glm::vec2(0.5f, 0.5f), glm::vec2(0.3f)));
+
+	// 阴影贴图
+	guis.push_back(GuiTexture(shadowMaster.getShadowMap(), glm::vec2(0.5f, 0.5f), glm::vec2(0.4f)));
 
 	// 字体
 	std::shared_ptr<FontType> font = std::shared_ptr<FontType>(new FontType(loader.loadTexture("res/consolas.png", true), "res/consolas.fnt"));
@@ -127,6 +132,8 @@ void main()
 		mousePicker.update();
 		particleMaster.update(camera);
 
+		shadowMaster.renderScene(entities, lights[0], camera);
+
 		glEnable(GL_CLIP_DISTANCE0);
 
 		wfb.bindReflectionFrameBuffer();
@@ -151,7 +158,8 @@ void main()
 
 		particleMaster.renderParticles(camera);
 
-		textMaster.render();
+		guiRenderer.render(guis);
+		//textMaster.render();
 		glCheckError();
 #pragma endregion
 		Timer::calculateFPS();

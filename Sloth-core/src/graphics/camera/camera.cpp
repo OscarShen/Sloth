@@ -1,4 +1,5 @@
 #include "camera.h"
+#include <iostream>
 
 namespace sloth { namespace graphics {
 

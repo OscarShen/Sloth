@@ -1,11 +1,11 @@
 #include "gui_shader.h"
 
 namespace sloth { namespace graphics {
-	GuiShader *GuiShader::m_Inst(nullptr);
-	GuiShader * GuiShader::inst()
+	std::shared_ptr<GuiShader> GuiShader::m_Inst(nullptr);
+	std::shared_ptr<GuiShader> GuiShader::inst()
 	{
 		if (m_Inst == nullptr)
-			m_Inst = new GuiShader();
+			m_Inst = std::shared_ptr<GuiShader>(new GuiShader());
 		return m_Inst;
 	}
 
