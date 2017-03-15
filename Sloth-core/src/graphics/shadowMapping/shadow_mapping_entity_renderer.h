@@ -20,6 +20,7 @@
 #include <memory>
 #include "../entities/entity.h"
 #include "../model/textured_model.hpp"
+#include "../terrain/terrain.h"
 
 namespace sloth { namespace graphics {
 
@@ -31,10 +32,12 @@ namespace sloth { namespace graphics {
 	public:
 		ShadowMapEntityRenderer() {}
 
-		void render(const MapedEntities &entities);
+		void render(const MapedEntities &entities, const MapedEntities & normalMappingEntities, const std::list<std::shared_ptr<Terrain>> &m_Terrains);
 
 	private:
 		void prepareInstance(const Entity &entity);
+
+		void prepareTerrain(const Terrain &terrain);
 	};
 
 } }

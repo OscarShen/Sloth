@@ -74,7 +74,7 @@ namespace sloth { namespace graphics {
 			const std::vector<Light> &lights,
 			const RawCamera &camera, const CubeMapTexture &texture, const glm::vec4 &clipPlane);
 
-		void renderShadow(const std::vector<Entity_s>& entities, const Light &sun, const RawCamera &camera);
+		void renderShadow(const std::vector<Entity_s>& entities, const std::vector<Entity_s> &normalMappingEntities, const std::vector<Terrain_s> &terrains, const Light &sun, const RawCamera &camera);
 
 		void submitTerrain(const Terrain_s &terrain);
 		void submitEntity(const Entity_s &entity);

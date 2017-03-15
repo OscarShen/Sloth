@@ -82,12 +82,23 @@ namespace sloth { namespace graphics {
 		render(lights, camera, texture, clipPlane);
 	}
 
-	void MultipleRenderer::renderShadow(const std::vector<Entity_s>& entities, const Light & sun, const RawCamera & camera)
+	void MultipleRenderer::renderShadow(const std::vector<Entity_s>& entities, const std::vector<Entity_s> &normalMappingEntities, const std::vector<Terrain_s> &terrains, const Light & sun, const RawCamera & camera)
 	{
 		for (auto &i : entities)
 			submitEntity(i);
-		m_ShadowMappingRenderer->render(m_Entities, sun, camera);
+		for (auto &i : normalMappingEntities) {
+			submitNormalMappingEntity(i);
+		}
+		for (auto &i : normalMappingEntities) {
+			submitNormalMappingEntity(i);
+		}
+		for (auto &terrain : terrains) {
+			submitTerrain(terrain);
+		}
+		m_ShadowMappingRenderer->render(m_Entities, m_NormalMappingEntities, m_Terrains, sun, camera);
 		m_Entities.clear();
+		m_NormalMappingEntities.clear();
+		m_Terrains.clear();
 	}
 
 	void MultipleRenderer::submitTerrain(const Terrain_s & terrain)

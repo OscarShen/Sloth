@@ -131,7 +131,7 @@ void main()
 		mousePicker.update();
 		particleMaster.update(camera);
 
-		renderer.renderShadow(entities, lights[0], camera);
+		renderer.renderShadow(entities, normalMappingEntities, terrains, lights[0], camera);
 
 		glEnable(GL_CLIP_DISTANCE0);
 

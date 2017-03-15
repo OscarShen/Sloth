@@ -16,6 +16,7 @@
 #include "shadow_mapping_entity_renderer.h"
 #include "../camera/raw_camera.h"
 #include "../entities/light.hpp"
+#include "../terrain/terrain.h"
 namespace sloth { namespace graphics {
 
 	class ShadowMappingMasterRenderer
@@ -33,7 +34,7 @@ namespace sloth { namespace graphics {
 	public:
 		ShadowMappingMasterRenderer() : m_ShadowFbo(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE) {}
 
-		void render(const MapedEntities &entities, const Light &light, const RawCamera &camera);
+		void render(const MapedEntities &entities, const MapedEntities &normalMappingEntities, const std::list<std::shared_ptr<Terrain>> &m_Terrains, const Light &light, const RawCamera &camera);
 
 		inline unsigned int getShadowMap() const { return m_ShadowFbo.getDepthTexture(); }
 		inline glm::mat4 getLightSpaceMatrix() const { return m_LightSpace; }

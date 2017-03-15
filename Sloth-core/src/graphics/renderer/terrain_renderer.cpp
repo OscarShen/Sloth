@@ -18,6 +18,9 @@ namespace sloth { namespace graphics {
 			glDrawElements(GL_TRIANGLES, i->getModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
 			glBindVertexArray(0);
 		}
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
 	}
 
 	void TerrainRenderer::prepareTerrain(Terrain & terrain)
@@ -27,6 +30,9 @@ namespace sloth { namespace graphics {
 		RawModel rawModel = terrain.getModel();
 		glBindVertexArray(rawModel.getVaoID());
 		bindMultiTerrain(terrain);
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
 	}
 
 	void TerrainRenderer::loadModelMatrix(Terrain & terrain)
