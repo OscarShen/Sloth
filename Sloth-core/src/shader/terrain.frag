@@ -36,20 +36,38 @@ in vec3 toCameraVector;
 in float visibility;
 in vec4 LightSpacePos;
 
-bool inShadow(vec4 lightSpacePos)
+const int pcfCount = 1;
+const float totalTexels = (pcfCount * 2.0f + 1.0f) * (pcfCount * 2.0f + 1.0f);
+
+float inShadow(vec4 lightSpacePos, vec3 toLightDir)
 {
+	vec2 texelSize = 1.0f / textureSize(shadowMap, 0);
+	float total = 0.0f;
+
 	// 透视除法
 	vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
 	// 变换到 [0,1]
 	projCoords = projCoords * 0.5f + 0.5f;
-	// 最近深度
-	float closestDepth = texture(shadowMap, projCoords.xy).r;
+	// 所有超出灯光平行投影的点都视为无阴影
+	if(projCoords.z > 1.0f || lightSpacePos.x < -1.0f || lightSpacePos.x > 1.0f || 
+		lightSpacePos.y < -1.0f || lightSpacePos.y > 1.0f)
+			return 0.0f;
+
+	// 增加阴影偏移，防止阴影失真
+	float shadow_bias = max(0.01f * (1.0f - dot(fs_in.normal, toLightDir)), 0.005f);
 	// 光源视角下的深度
 	float currentDepth = projCoords.z;
-	// 检查是否在阴影中
-	if(currentDepth > closestDepth)
-		return true;
-	return false;
+
+	for(int x = -pcfCount; x<=pcfCount; ++x){
+		for(int y = -pcfCount; y<=pcfCount; ++y){
+			// 最近深度
+			float closestDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+			// 检查是否在阴影中
+			if(currentDepth - shadow_bias > closestDepth)
+				total += 1.0f;
+		}
+	}
+	return total / totalTexels;
 }
 
 void main()
@@ -74,7 +92,8 @@ void main()
 	float ambient = 0.2f;
 
 	// 阴影指数
-	float shadowIndex = 1.0f;
+	float shadowIndex = 1.0f - inShadow(LightSpacePos, n_ToLightVector) * 0.6f;
+
 	for(int i=0; i < MAX_LIGHT; ++i){
 		// 从片元世界坐标指向光源世界坐标
 		toLightVector = lightPosition[i] - worldPosition;
@@ -98,10 +117,6 @@ void main()
 		vec3 n_HalfWay = normalize(n_ToLightVector + n_ToCameraVector);
 		float spec = pow(max(dot(n_Normal, n_HalfWay), 0.0f), shininess);
 		totalSpecular += spec * lightColor[i] * reflectivity * oneDivideAttFactor;
-
-		// 阴影
-		if(inShadow(LightSpacePos))
-			shadowIndex = 0.6f;
 	}
 	frag_out = (vec4(totalDiffuse, 1.0f) * shadowIndex  + ambient) * totalColor + vec4(totalSpecular, 1.0f);
 	frag_out = mix(vec4(skyColor, 1.0f), frag_out, visibility);

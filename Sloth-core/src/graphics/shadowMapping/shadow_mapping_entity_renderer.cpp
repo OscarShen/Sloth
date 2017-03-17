@@ -10,7 +10,7 @@ namespace sloth { namespace graphics {
 
 		for (auto it = entities.begin(); it != entities.end(); ++it) {
 			glBindVertexArray(it->first.getRawModel().getVaoID());
-			glEnableVertexAttribArray(0);
+			glBindTexture(GL_TEXTURE_2D, it->first.getTexture().getID());
 			for (auto &entity : it->second) {
 				prepareInstance(*entity);
 				glDrawElements(GL_TRIANGLES, it->first.getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
@@ -19,7 +19,7 @@ namespace sloth { namespace graphics {
 
 		for (auto it = normalMappingEntities.begin(); it != normalMappingEntities.end(); ++it) {
 			glBindVertexArray(it->first.getRawModel().getVaoID());
-			glEnableVertexAttribArray(0);
+			glBindTexture(GL_TEXTURE_2D, it->first.getTexture().getID());
 			for (auto &entity : it->second) {
 				prepareInstance(*entity);
 				glDrawElements(GL_TRIANGLES, it->first.getRawModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
@@ -28,18 +28,20 @@ namespace sloth { namespace graphics {
 
 		for (auto it = terrains.begin(); it != terrains.end(); ++it) {
 			glBindVertexArray((*it)->getModel().getVaoID());
-			glEnableVertexAttribArray(0);
 			prepareTerrain(**it);
 			glDrawElements(GL_TRIANGLES, (*it)->getModel().getVertexCount(), GL_UNSIGNED_INT, nullptr);
 		}
 
 		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
 		glBindVertexArray(0);
 		ShadowMappingShader::inst()->disable();
 	}
 
 	void ShadowMapEntityRenderer::prepareInstance(const Entity & entity)
 	{
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
 		glm::mat4 model = util::Maths::createModelMatrix(
 			entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale()
 		);
@@ -48,6 +50,7 @@ namespace sloth { namespace graphics {
 
 	void ShadowMapEntityRenderer::prepareTerrain(const Terrain & terrain)
 	{
+		glEnableVertexAttribArray(0);
 		glm::mat4 model = util::Maths::createModelMatrix(glm::vec3(terrain.getX(), 0, terrain.getZ()), 0.0f, 0.0f, 0.0f, 1.0f);
 		ShadowMappingShader::inst()->m_Model.loadMatrix4(model);
 	}
