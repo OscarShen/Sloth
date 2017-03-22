@@ -1,4 +1,6 @@
 #include "loader.h"
+#include <iostream>
+#include <algorithm>
 
 namespace sloth { namespace graphics {
 
@@ -173,6 +175,15 @@ namespace sloth { namespace graphics {
 		glTextureParameteri(id, GL_TEXTURE_WRAP_T, DEFAULT_TEXTURE_WRAP_T);
 		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, DEFAULT_TEXTURE_MIN_FILTER);
 		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, DEFAULT_TEXTURE_MAG_FILTER);
+		if (glewIsSupported("GL_EXT_texture_filter_anisotropic")) {
+			float max_anis;
+			glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_anis);
+			float amount = std::min(4.f, max_anis);
+			glTextureParameterf(id, GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
+		}
+		else {
+			std::cout << "Not supported" << std::endl;
+		}
 		glGenerateTextureMipmap(id);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		return id;
