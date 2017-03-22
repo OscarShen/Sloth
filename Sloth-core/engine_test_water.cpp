@@ -43,7 +43,7 @@ void main()
 	auto blendmap = loader.loadTexture("res/textures/blendMap.png");
 	std::vector<std::shared_ptr<Terrain>> terrains;
 	std::shared_ptr<Terrain> terrain = 
-		std::shared_ptr<Terrain>(new Terrain(0, 0, TerrainTexturePack(background, rTexture, gTexture, bTexture, blendmap), loader, "res/textures/heightmaps/heightmap.png"));
+		std::shared_ptr<Terrain>(new Terrain(0, 0, TerrainTexturePack(background, rTexture, gTexture, bTexture, blendmap), loader, "res/heightmap2.jpg"));
 	terrains.push_back(terrain);
 
 	// 模型
@@ -81,7 +81,7 @@ void main()
 	CubeMapTexture cubemap(loader.loadCubeMap(cubeMapPath));
 	// 水面
 	std::vector<WaterTile> waters;
-	WaterTile water(100.0f, 100.0f, 0.0f);
+	WaterTile water(200.0f, 200.0f, 0.0f);
 	waters.push_back(water);
 
 	// 灯光
@@ -99,7 +99,7 @@ void main()
 	//guis.push_back(GuiTexture(wfb.getRefractionTexture(), glm::vec2(0.5f, 0.5f), glm::vec2(0.3f)));
 
 	// 阴影贴图
-	guis.push_back(GuiTexture(renderer.getShadowMap(), glm::vec2(0.5f, 0.5f), glm::vec2(0.4f)));
+	//guis.push_back(GuiTexture(renderer.getShadowMap(), glm::vec2(0.5f, 0.5f), glm::vec2(0.4f)));
 
 	// 字体
 	std::shared_ptr<FontType> font = std::shared_ptr<FontType>(new FontType(loader.loadTexture("res/consolas.png", true), "res/consolas.fnt"));
@@ -109,7 +109,7 @@ void main()
 
 	// 粒子
 	ParticleTexture particleTexture(loader.loadTexture("res/particleAtlas.png", true), 4);
-	ParticleSystem particleSystem(particleTexture, 200.0f, 35.0f, 0.3f, 4.0f, 2.0f);
+	ParticleSystem particleSystem(particleTexture, 300.0f, 35.0f, 0.3f, 4.0f, 2.0f);
 	particleSystem.randomizeRotation();
 	particleSystem.setDirection(glm::vec3(0.0f, 1.0f, 0.0f), 90.0f);
 	particleSystem.setLifeError(0.6f);
@@ -126,7 +126,7 @@ void main()
 		window.clear();
 #pragma region USER
 
-		particleSystem.generateParticles(glm::vec3(100.0f, 30.0f, 100.0f), particleMaster);
+		particleSystem.generateParticles(glm::vec3(200.0f, 50.0f, 200.0f), particleMaster);
 
 		mousePicker.update();
 		particleMaster.update(camera);
@@ -157,7 +157,7 @@ void main()
 
 		particleMaster.renderParticles(camera);
 
-		guiRenderer.render(guis);
+		//guiRenderer.render(guis);
 		//textMaster.render();
 		glCheckError();
 #pragma endregion
