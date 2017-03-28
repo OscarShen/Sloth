@@ -18,6 +18,8 @@
 #include "src/graphics/particle/particle_master.h"
 #include "src/graphics/particle/particle_system.h"
 #include "src/graphics/shadowMapping/shadow_mapping_master_renderer.h"
+#include "src/graphics/postProcessing/post_processing.h"
+#include "src/graphics/postProcessing/constrast.h"
 
 
 using namespace sloth;
@@ -93,11 +95,6 @@ void main()
 	WaterFrameBuffer wfb;
 	WaterRenderer waterRenderer(loader, renderer.getProjectionMatrix(), wfb);
 
-	// GUI
-	std::vector<GuiTexture> guis;
-	//guis.push_back(GuiTexture(wfb.getReflectionTexture(), glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f)));
-	//guis.push_back(GuiTexture(wfb.getRefractionTexture(), glm::vec2(0.5f, 0.5f), glm::vec2(0.3f)));
-
 	// “ı”∞Ã˘Õº
 	//guis.push_back(GuiTexture(renderer.getShadowMap(), glm::vec2(0.5f, 0.5f), glm::vec2(0.4f)));
 
@@ -117,6 +114,18 @@ void main()
 	particleSystem.setScaleError(0.8f);
 
 	MousePicker mousePicker(camera, renderer.getProjectionMatrix(), *terrain);
+
+
+	FrameBuffer fbo;
+	fbo.addColorAttachment(0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	fbo.addDepthRenderBufferAttachment(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	Constrast constrast(loader);
+
+	// GUI
+	std::vector<GuiTexture> guis;
+	guis.push_back(GuiTexture(fbo.getColorTexture(0), glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f)));
+	//guis.push_back(GuiTexture(wfb.getRefractionTexture(), glm::vec2(0.5f, 0.5f), glm::vec2(0.3f)));
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -152,10 +161,15 @@ void main()
 
 		glDisable(GL_CLIP_DISTANCE0);
 
+		fbo.bind(SCREEN_WIDTH, SCREEN_HEIGHT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		renderer.renderScene(entities, normalMappingEntities, terrains, lights, camera, cubemap, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
 		waterRenderer.render(waters, camera, sun);
 
 		particleMaster.renderParticles(camera);
+		fbo.unbind();
+
+		constrast.doPostProcessing(fbo.getColorTexture(0));
 
 		//guiRenderer.render(guis);
 		//textMaster.render();
