@@ -9,9 +9,9 @@
 #ifndef SLOTH_CONSTRAST_H_
 #define SLOTH_CONSTRAST_H_
 #include "post_processing.h"
-#include "../shader/shader.h"
-#include "../buffers/frame_buffer.h"
-#include "../shader/uniform_float.h"
+#include <shader/shader.h>
+#include <buffers/frame_buffer.h>
+#include <shader/uniform.h>
 #include <memory>
 namespace sloth { namespace graphics {
 

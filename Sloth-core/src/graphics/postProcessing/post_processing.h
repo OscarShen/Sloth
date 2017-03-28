@@ -8,10 +8,9 @@
 #pragma once
 #ifndef SLOTH_POST_PROCESSING_H_
 #define SLOTH_POST_PROCESSING_H_
-#include "../engine/loader.h"
-#include "../model/raw_model.hpp"
+#include <engine/loader.h>
+#include <model/raw_model.hpp>
 #include <map>
-#include <functional>
 #include <iostream>
 namespace sloth { namespace graphics {
 
