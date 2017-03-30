@@ -13,10 +13,8 @@
 #ifndef SLOTH_PARTICLE_SHADER_H_
 #define SLOTH_PARTICLE_SHADER_H_
 #include <memory>
-#include "../shader/shader.h"
-#include "../shader/uniform_matrix4.h"
-#include "../shader/uniform_float.h"
-#include "../shader/uniform_vec2.h"
+#include <shader/shader.h>
+#include <shader/uniform.h>
 namespace sloth { namespace graphics {
 
 #define PARTICLE_VERTEX_SHADER "src/graphics/particle/particle.vert"

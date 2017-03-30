@@ -13,8 +13,8 @@
 #ifndef SLOTH_SHADOW_MAPPING_SHADER_H_
 #define SLOTH_SHADOW_MAPPING_SHADER_H_
 #include <memory>
-#include "../shader/shader.h"
-#include "../shader/uniform_matrix4.h"
+#include <shader/shader.h>
+#include <shader/uniform.h>
 namespace sloth { namespace graphics {
 
 #define SHADOW_MAPPING_VERTEX_FILE "src/graphics/shadowMapping/shadowMapping.vert"
