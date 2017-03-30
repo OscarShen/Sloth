@@ -20,6 +20,7 @@
 #include "src/graphics/shadowMapping/shadow_mapping_master_renderer.h"
 #include "src/graphics/postProcessing/post_processing.h"
 #include "src/graphics/postProcessing/constrast.h"
+#include "src/graphics/postProcessing/gaussian_blur.h"
 
 
 using namespace sloth;
@@ -115,16 +116,23 @@ void main()
 
 	MousePicker mousePicker(camera, renderer.getProjectionMatrix(), *terrain);
 
-
-	FrameBuffer fbo;
-	fbo.addColorAttachment(0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	fbo.addDepthRenderBufferAttachment(SCREEN_WIDTH, SCREEN_HEIGHT);
+	FrameBuffer screen; // 用于替代默认 framebuffer
+	screen.addColorAttachment(0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	screen.addDepthRenderBufferAttachment(SCREEN_WIDTH, SCREEN_HEIGHT);
+	FrameBuffer postProcess;	// 用于后处理
+	postProcess.addColorAttachment(0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	postProcess.addDepthRenderBufferAttachment(SCREEN_WIDTH, SCREEN_HEIGHT);
+	FrameBuffer postProcess2;	// 用于后处理
+	postProcess2.addColorAttachment(0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	postProcess2.addDepthRenderBufferAttachment(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	Constrast constrast(loader);
+	HorizontalBlur hb(loader);
+	VerticalBlur vb(loader);
 
 	// GUI
 	std::vector<GuiTexture> guis;
-	guis.push_back(GuiTexture(fbo.getColorTexture(0), glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f)));
+	//guis.push_back(GuiTexture(fbo.getColorTexture(0), glm::vec2(-0.5f, 0.5f), glm::vec2(0.3f)));
 	//guis.push_back(GuiTexture(wfb.getRefractionTexture(), glm::vec2(0.5f, 0.5f), glm::vec2(0.3f)));
 
 	glEnable(GL_DEPTH_TEST);
@@ -161,15 +169,22 @@ void main()
 
 		glDisable(GL_CLIP_DISTANCE0);
 
-		fbo.bind(SCREEN_WIDTH, SCREEN_HEIGHT);
+		screen.bind(SCREEN_WIDTH, SCREEN_HEIGHT);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		renderer.renderScene(entities, normalMappingEntities, terrains, lights, camera, cubemap, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
 		waterRenderer.render(waters, camera, sun);
 
 		particleMaster.renderParticles(camera);
-		fbo.unbind();
+		screen.unbind();
 
-		constrast.doPostProcessing(fbo.getColorTexture(0));
+		// 后处理
+		postProcess.bind(SCREEN_WIDTH, SCREEN_HEIGHT);
+		hb.doPostProcessing(screen.getColorTexture(0));
+		postProcess.unbind();
+		postProcess2.bind(SCREEN_WIDTH, SCREEN_HEIGHT);
+		vb.doPostProcessing(postProcess.getColorTexture(0));
+		postProcess2.unbind();
+		constrast.doPostProcessing(postProcess2.getColorTexture(0));
 
 		//guiRenderer.render(guis);
 		//textMaster.render();

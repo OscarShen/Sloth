@@ -5,12 +5,23 @@
 namespace sloth { namespace graphics {
 	Shader::Shader(const char * vertexPath, const char * fragmentPath, const char * geometryPath)
 	{
+		std::cout << "vertexPath : " << vertexPath << std::endl;
+		std::cout << "fragmentPath : " << fragmentPath << std::endl;
+		if (geometryPath != nullptr)
+			std::cout << "geometryPath : " << geometryPath << std::endl;
 		compile(util::loadStringFromFile(vertexPath).c_str(),
 			util::loadStringFromFile(fragmentPath).c_str(),
 			geometryPath == nullptr ? nullptr : util::loadStringFromFile(geometryPath).c_str());
 	}
 	void Shader::compile(const char * vertexSource, const char * fragmentSource, const char * geometrySource)
 	{
+		if (vertexSource == nullptr)
+			std::cout << "vertex load fail!" << std::endl;
+		if (fragmentSource == nullptr)
+			std::cout << "fragment load fail!" << std::endl;
+		if (geometrySource == nullptr)
+			std::cout << "geometry load fail!" << std::endl;
+
 		GLuint sVertex, sFragment, gShader;
 		// Vertex Shader
 		sVertex = glCreateShader(GL_VERTEX_SHADER);
