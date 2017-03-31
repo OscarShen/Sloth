@@ -59,6 +59,7 @@ namespace sloth { namespace graphics {
 		glfwSwapInterval(0);
 		glewExperimental = GL_TRUE;
 		glewInit();
+		glEnable(GL_MULTISAMPLE);
 		return true;
 	}
 

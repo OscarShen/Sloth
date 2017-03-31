@@ -4,6 +4,7 @@ namespace sloth { namespace graphics {
 	void Constrast::doPostProcessing(unsigned int colorTexture)
 	{
 		start();
+		glClear(GL_COLOR_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, colorTexture);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, quad.getVertexCount());

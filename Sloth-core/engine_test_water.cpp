@@ -116,15 +116,16 @@ void main()
 
 	MousePicker mousePicker(camera, renderer.getProjectionMatrix(), *terrain);
 
-	FrameBuffer screen; // 用于替代默认 framebuffer
-	screen.addColorAttachment(0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	screen.addDepthRenderBufferAttachment(SCREEN_WIDTH, SCREEN_HEIGHT);
-	FrameBuffer postProcess;	// 用于后处理
-	postProcess.addColorAttachment(0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	postProcess.addDepthRenderBufferAttachment(SCREEN_WIDTH, SCREEN_HEIGHT);
-	FrameBuffer postProcess2;	// 用于后处理
-	postProcess2.addColorAttachment(0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	postProcess2.addDepthRenderBufferAttachment(SCREEN_WIDTH, SCREEN_HEIGHT);
+	FrameBuffer screen(Input::windowWidth, Input::windowHeight); // 用于替代默认 framebuffer
+	screen.addColorRenderBufferAttachment(0);
+	screen.addDepthRenderBufferAttachment();
+	FrameBuffer postProcess(Input::windowWidth, Input::windowHeight);	// 用于后处理
+	postProcess.addColorTextureAttachment(0); // horizontal blur
+	postProcess.addColorTextureAttachment(1); // vertical blur
+	postProcess.addDepthRenderBufferAttachment();
+	//FrameBuffer postProcess2(Input::windowWidth, Input::windowHeight);	// 用于后处理
+	//postProcess2.addColorTextureAttachment(0);
+	//postProcess2.addDepthRenderBufferAttachment();
 
 	Constrast constrast(loader);
 	HorizontalBlur hb(loader);
@@ -166,10 +167,11 @@ void main()
 		wfb.bindRefractionFrameBuffer();
 		renderer.renderScene(entities, normalMappingEntities, terrains, lights, camera, cubemap, glm::vec4(0.0f, -1.0f, 0.0f, water.getHeight()));
 		wfb.unbind();
+		glCheckError();
 
 		glDisable(GL_CLIP_DISTANCE0);
 
-		screen.bind(SCREEN_WIDTH, SCREEN_HEIGHT);
+		screen.bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		renderer.renderScene(entities, normalMappingEntities, terrains, lights, camera, cubemap, glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
 		waterRenderer.render(waters, camera, sun);
@@ -178,13 +180,18 @@ void main()
 		screen.unbind();
 
 		// 后处理
-		postProcess.bind(SCREEN_WIDTH, SCREEN_HEIGHT);
-		hb.doPostProcessing(screen.getColorTexture(0));
+
+		postProcess.bind();
+		postProcess.setDrawBuffer(0);
+		screen.resolveToFrameBuffer(postProcess);
+		postProcess.setDrawBuffer(1);
+		hb.doPostProcessing(postProcess.getColorTexture(0));
+		postProcess.setDrawBuffer(0);
+		vb.doPostProcessing(postProcess.getColorTexture(1));
+		postProcess.setDrawBuffer(1);
+		constrast.doPostProcessing(postProcess.getColorTexture(0));
 		postProcess.unbind();
-		postProcess2.bind(SCREEN_WIDTH, SCREEN_HEIGHT);
-		vb.doPostProcessing(postProcess.getColorTexture(0));
-		postProcess2.unbind();
-		constrast.doPostProcessing(postProcess2.getColorTexture(0));
+		postProcess.resolveToScreen();
 
 		//guiRenderer.render(guis);
 		//textMaster.render();

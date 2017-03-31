@@ -23,15 +23,20 @@ namespace sloth { namespace graphics {
 	{
 	protected:
 		unsigned int m_ID;
+		int m_Width, m_Height;
 
-		std::vector<unsigned int> m_ColorAttachment;
+		std::vector<unsigned int> m_ColorTextureAttachment;
+		std::vector<unsigned int> m_ColorRenderBufferAttachment;
 
 		unsigned int m_DepthTextureAttachment = 0;
 
 		unsigned int m_DepthRenderBufferAttachment = 0;
 
+		bool m_MultiSample = false;
+
 	public:
-		FrameBuffer();
+		FrameBuffer(int width, int height);
+		FrameBuffer(int width, int height, bool multiSample);
 
 		~FrameBuffer();
 
@@ -40,28 +45,35 @@ namespace sloth { namespace graphics {
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月16日10:42:32
 		***********************************************************************/
-		void addColorAttachment(unsigned int index, unsigned int width, unsigned int height);
+		void addColorTextureAttachment(unsigned int index);
+
+		/************************************************************************
+		* @description	: 添加一个颜色渲染缓冲附件，若开启多重采样，采样数为 4
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月31日11:05:13
+		***********************************************************************/
+		void addColorRenderBufferAttachment(unsigned int index);
 
 		/************************************************************************
 		* @description	:添加一个深度纹理附件
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月16日10:42:50
 		***********************************************************************/
-		void addDepthTextureAttachment(unsigned int width, unsigned int height);
+		void addDepthTextureAttachment();
 
 		/************************************************************************
 		* @description	: 添加一个渲染缓冲附件
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月16日10:43:07
 		***********************************************************************/
-		void addDepthRenderBufferAttachment(unsigned int width, unsigned int height);
+		void addDepthRenderBufferAttachment();
 
 		/************************************************************************
-		* @description	: 绑定 frame buffer，需要输入 width 和 height
+		* @description	: 绑定 frame buffer
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月16日10:43:29
 		***********************************************************************/
-		void bind(unsigned int width, unsigned int height);
+		void bind();
 
 		/************************************************************************
 		* @description	: 恢复默认 frame buffer
@@ -78,13 +90,36 @@ namespace sloth { namespace graphics {
 		void setDrawBuffer(unsigned int index);
 
 		/************************************************************************
+		* @description	: 将本 frame buffer 内容转换到另一个 frame buffer
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月31日14:44:31
+		***********************************************************************/
+		void resolveToFrameBuffer(FrameBuffer &outputFrameBuffer);
+
+		/************************************************************************
+		* @description	: 将本 frame buffer 内容转换到另一个 frame buffer
+		* @author		: Oscar Shen
+		* @creat		: 2017年3月31日14:44:31
+		***********************************************************************/
+		void resolveToScreen();
+
+		/************************************************************************
 		* @description	: 清空当前 frame buffer 所有已经加载的资源
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月16日10:44:57
 		***********************************************************************/
 		void cleanUp();
+		unsigned int getColorTexture(unsigned int index) const {
+			if (m_ColorTextureAttachment[index] == 0)
+				std::cout << "color texture not exit in GL_COLOR_ATTACHMENT" << index << std::endl;
+			return m_ColorTextureAttachment[index]; 
+		}
 
-		inline unsigned int getColorTexture(unsigned int index) const { return m_ColorAttachment[index]; }
+		unsigned int getColorRenderBuffer(unsigned int index) const {
+			if (m_ColorTextureAttachment[index] == 0)
+				std::cout << "color render buffer not exit in GL_COLOR_ATTACHMENT" << index << std::endl;
+			return m_ColorTextureAttachment[index];
+		}
 
 		inline unsigned int getDepthTexture() const { return m_DepthTextureAttachment; }
 

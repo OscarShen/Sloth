@@ -19,10 +19,6 @@ namespace sloth { namespace graphics {
 
 	class ShadowFrameBuffer : public FrameBuffer
 	{
-	private:
-		int m_Width;
-		int m_Height;
-
 	public:
 		ShadowFrameBuffer(int width, int height);
 

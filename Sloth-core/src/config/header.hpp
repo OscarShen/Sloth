@@ -18,6 +18,12 @@
 #include <map>
 #include <iostream>
 
+#define CHECK_INFO(x, str) if(!(x)) { std::cout << (str) << "\n file: "<< __FILE__<<",line: " << __LINE__<<std::endl; }
+#define CHECK(x) CHECK_INFO(x, "check equal failed!")
+#define CHECK_EQ(x, y) if((x)==(y)) { std::cout << "check equal failed!" << "\n file: "<< __FILE__<<",line: " << __LINE__<<std::endl; }
+#define CHECK_NE(x, y) if((x)!=(y)) { std::cout << "check not equal failed!" << "\n file: "<< __FILE__<<",line: " << __LINE__<<std::endl }
+
+
 #define WATER
 
 #ifdef WATER
@@ -103,8 +109,8 @@
 // 位置：src/water/water_tile
 #define WATER_TILE_SIZE 200.0f
 // 位置：src/water/water_frame_buffer
-#define WATER_REFLECTION_WIDTH 320	// 水面反射纹理宽度
-#define WATER_REFLECTION_HEIGHT 180 // 水面反射纹理高度
+#define WATER_REFLECTION_WIDTH 1280	// 水面反射纹理宽度
+#define WATER_REFLECTION_HEIGHT 720 // 水面反射纹理高度
 #define WATER_REFRACTION_WIDTH 1280	// 水面折射纹理高度
 #define WATER_REFRACTION_HEIGHT 720	// 水面折射纹理宽度
 

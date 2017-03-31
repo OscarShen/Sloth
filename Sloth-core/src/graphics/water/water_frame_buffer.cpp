@@ -5,13 +5,13 @@ namespace sloth { namespace graphics {
 	WaterFrameBuffer::WaterFrameBuffer()
 	{
 		// initialize reflection
-		m_Reflection = new FrameBuffer();
-		m_Reflection->addColorAttachment(0, WATER_REFLECTION_WIDTH, WATER_REFLECTION_HEIGHT);
-		m_Reflection->addDepthRenderBufferAttachment(WATER_REFLECTION_WIDTH, WATER_REFLECTION_HEIGHT);
+		m_Reflection = new FrameBuffer(WATER_REFLECTION_WIDTH, WATER_REFLECTION_HEIGHT);
+		m_Reflection->addColorTextureAttachment(0);
+		m_Reflection->addDepthRenderBufferAttachment();
 		// initialize refraction
-		m_Refraction = new FrameBuffer();
-		m_Refraction->addColorAttachment(0, WATER_REFRACTION_WIDTH, WATER_REFRACTION_HEIGHT);
-		m_Refraction->addDepthTextureAttachment(WATER_REFRACTION_WIDTH, WATER_REFRACTION_HEIGHT);
+		m_Refraction = new FrameBuffer(WATER_REFLECTION_WIDTH, WATER_REFLECTION_HEIGHT);
+		m_Refraction->addColorTextureAttachment(0);
+		m_Refraction->addDepthTextureAttachment();
 		// m_Refraction->addDepthRenderBufferAttachment(WATER_REFRACTION_WIDTH, WATER_REFRACTION_HEIGHT);
 	}
 
@@ -23,14 +23,14 @@ namespace sloth { namespace graphics {
 
 	void WaterFrameBuffer::bindReflectionFrameBuffer()
 	{
-		m_Reflection->bind(WATER_REFLECTION_WIDTH, WATER_REFLECTION_HEIGHT);
+		m_Reflection->bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		m_Reflection->setDrawBuffer(0);
 	}
 
 	void WaterFrameBuffer::bindRefractionFrameBuffer()
 	{
-		m_Refraction->bind(WATER_REFRACTION_WIDTH, WATER_REFRACTION_HEIGHT);
+		m_Refraction->bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		m_Reflection->setDrawBuffer(0);
 	}
