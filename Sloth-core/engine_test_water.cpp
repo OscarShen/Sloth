@@ -1,7 +1,7 @@
-#ifdef _DEBUG
-#include <vld.h>
-#include <vld_def.h>
-#endif // _DEBUG
+//#ifdef _DEBUG
+//#include <vld.h>
+//#include <vld_def.h>
+//#endif // _DEBUG
 
 #include "src/graphics/window.h"
 #include "src/graphics/engine/loader.h"
@@ -53,6 +53,7 @@ void main()
 	ModelTexture pine_texture = loader.loadTexture("res/textures/pine.png", true);
 	pine_texture.setTransparency(true);
 	TexturedModel tree(ModelLoader::loadModel("res/models/pine.obj", loader), pine_texture);
+	//TexturedModel box(ModelLoader::loadModel("res/box.obj", loader), loader.loadTexture("res/white.png"));
 	std::vector<std::shared_ptr<Entity>> entities;
 	entities.push_back(
 		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(13.0f, terrain->getHeightOfTerrain(13.0f, 6.0f), 6.0f), 0, 0, 0, 0.3f)));
@@ -60,6 +61,8 @@ void main()
 		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(30.0f, terrain->getHeightOfTerrain(30.0f, 4.0f), 4.0f), 0, 0, 0, 0.3f)));
 	entities.push_back(
 		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(26.0f, terrain->getHeightOfTerrain(26.0f, 31.0f), 31.0f), 0, 0, 0, 0.3f)));
+	//entities.push_back(
+	//	std::shared_ptr<Entity>(new Entity(box, glm::vec3(0.0f, 0.0f, 0.0f), 0, 0, 0, 30.f)));
 
 	// 法线贴图模型
 	std::vector<std::shared_ptr<Entity>> normalMappingEntities;
@@ -106,7 +109,7 @@ void main()
 	textMaster.loadText(text);
 
 	// 粒子
-	ParticleTexture particleTexture(loader.loadTexture("res/particleAtlas.png", true), 4);
+	ParticleTexture particleTexture(loader.loadTexture("res/particleAtlas.png", true), 4); // true 表示抗锯齿
 	ParticleSystem particleSystem(particleTexture, 300.0f, 35.0f, 0.3f, 4.0f, 2.0f);
 	particleSystem.randomizeRotation();
 	particleSystem.setDirection(glm::vec3(0.0f, 1.0f, 0.0f), 90.0f);
@@ -116,7 +119,7 @@ void main()
 
 	MousePicker mousePicker(camera, renderer.getProjectionMatrix(), *terrain);
 
-	FrameBuffer screen(Input::windowWidth, Input::windowHeight); // 用于替代默认 framebuffer
+	FrameBuffer screen(Input::windowWidth, Input::windowHeight, true); // 用于替代默认 framebuffer
 	screen.addColorRenderBufferAttachment(0);
 	screen.addDepthRenderBufferAttachment();
 	FrameBuffer postProcess(Input::windowWidth, Input::windowHeight);	// 用于后处理
@@ -178,20 +181,20 @@ void main()
 
 		particleMaster.renderParticles(camera);
 		screen.unbind();
-
+		screen.resolveToScreen();
 		// 后处理
 
-		postProcess.bind();
-		postProcess.setDrawBuffer(0);
-		screen.resolveToFrameBuffer(postProcess);
-		postProcess.setDrawBuffer(1);
-		hb.doPostProcessing(postProcess.getColorTexture(0));
-		postProcess.setDrawBuffer(0);
-		vb.doPostProcessing(postProcess.getColorTexture(1));
-		postProcess.setDrawBuffer(1);
-		constrast.doPostProcessing(postProcess.getColorTexture(0));
-		postProcess.unbind();
-		postProcess.resolveToScreen();
+		//postProcess.bind();
+		//postProcess.setDrawBuffer(0);
+		//screen.resolveToFrameBuffer(postProcess);
+		//postProcess.setDrawBuffer(1);
+		//hb.doPostProcessing(postProcess.getColorTexture(0));
+		//postProcess.setDrawBuffer(0);
+		//vb.doPostProcessing(postProcess.getColorTexture(1));
+		//postProcess.setDrawBuffer(1);
+		//constrast.doPostProcessing(postProcess.getColorTexture(0));
+		//postProcess.unbind();
+		//postProcess.resolveToScreen();
 
 		//guiRenderer.render(guis);
 		//textMaster.render();

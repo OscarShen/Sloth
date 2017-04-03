@@ -76,6 +76,9 @@ namespace sloth { namespace graphics {
 				// use models where a vertex can have multiple texture coordinates so we always take the first set (0).
 				modeldata->texCoords.push_back(glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
 			}
+			else {
+				modeldata->texCoords.push_back(glm::vec2(0.0f, 0.0f));
+			}
 		}
 
 		// Now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
@@ -122,6 +125,9 @@ namespace sloth { namespace graphics {
 				// A vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't 
 				// use models where a vertex can have multiple texture coordinates so we always take the first set (0).
 				modeldata->texCoords.push_back(glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
+			}
+			else {
+				modeldata->texCoords.push_back(glm::vec2(0.0f, 0.0f));
 			}
 			modeldata->tangents.push_back(glm::vec3(mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z));
 		}

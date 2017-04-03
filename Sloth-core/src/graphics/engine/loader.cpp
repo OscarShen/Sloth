@@ -14,17 +14,17 @@ namespace sloth { namespace graphics {
 		std::vector<unsigned int>& indices)
 	{
 		VertexArray *va = createVAO();
-		va->addBuffer(new Buffer(&positions[0].x, positions.size() * 3, 3), 0);
-		va->addBuffer(new Buffer(&texCoords[0].x, texCoords.size() * 2, 2), 1);
-		va->addBuffer(new Buffer(&normals[0].x, normals.size() * 3, 3), 2);
-		va->addElementBuffer(new IndexBuffer(&indices[0], indices.size()));
+		va->addBuffer(new Buffer((float*)(positions.data()), positions.size() * 3, 3), 0);
+		va->addBuffer(new Buffer((float*)(texCoords.data()), texCoords.size() * 2, 2), 1);
+		va->addBuffer(new Buffer((float*)(normals.data()), normals.size() * 3, 3), 2);
+		va->addElementBuffer(new IndexBuffer(indices.data(), indices.size()));
 		return RawModel(va->getVaoID(), indices.size());
 	}
 
 	RawModel Loader::loadToVAO(std::vector<glm::vec3> &positions, std::vector<glm::vec2> &texCoords) {
 		VertexArray *va = createVAO();
-		va->addBuffer(new Buffer(&positions[0].x, positions.size() * 3, 3), 0);
-		va->addBuffer(new Buffer(&texCoords[0].x, texCoords.size() * 2, 2), 1);
+		va->addBuffer(new Buffer((float*)positions.data(), positions.size() * 3, 3), 0);
+		va->addBuffer(new Buffer((float*)texCoords.data(), texCoords.size() * 2, 2), 1);
 		return RawModel(va->getVaoID(), positions.size());
 	}
 
@@ -39,26 +39,26 @@ namespace sloth { namespace graphics {
 	RawModel Loader::loadToVAO(std::vector<glm::vec3>& positions, std::vector<glm::vec2>& texCoords, std::vector<glm::vec3>& normals, std::vector<glm::vec3>& tangents, std::vector<unsigned int>& indices)
 	{
 		VertexArray *va = createVAO();
-		va->addBuffer(new Buffer(&positions[0].x, positions.size() * 3, 3), 0);
-		va->addBuffer(new Buffer(&texCoords[0].x, texCoords.size() * 2, 2), 1);
-		va->addBuffer(new Buffer(&normals[0].x, normals.size() * 3, 3), 2);
-		va->addBuffer(new Buffer(&tangents[0].x, tangents.size() * 3, 3), 3);
-		va->addElementBuffer(new IndexBuffer(&indices[0], indices.size()));
+		va->addBuffer(new Buffer((float*)positions.data(), positions.size() * 3, 3), 0);
+		va->addBuffer(new Buffer((float*)texCoords.data(), texCoords.size() * 2, 2), 1);
+		va->addBuffer(new Buffer((float*)normals.data(), normals.size() * 3, 3), 2);
+		va->addBuffer(new Buffer((float*)tangents.data(), tangents.size() * 3, 3), 3);
+		va->addElementBuffer(new IndexBuffer(indices.data(), indices.size()));
 		return RawModel(va->getVaoID(), indices.size());
 	}
 
 	RawModel Loader::loadToVAO(std::vector<glm::vec2>& positions, std::vector<glm::vec2>& texCoords)
 	{
 		VertexArray *va = createVAO();
-		va->addBuffer(new Buffer(&positions[0].x, positions.size() * 2, 2), 0);
-		va->addBuffer(new Buffer(&texCoords[0].x, texCoords.size() * 2, 2), 1);
+		va->addBuffer(new Buffer((float*)positions.data(), positions.size() * 2, 2), 0);
+		va->addBuffer(new Buffer((float*)texCoords.data(), texCoords.size() * 2, 2), 1);
 		return RawModel(va->getVaoID(), positions.size());
 	}
 
 	RawModel Loader::loadToVAO(std::vector<glm::vec3>& positions)
 	{
 		VertexArray *va = createVAO();
-		va->addBuffer(new Buffer(&positions[0].x, positions.size() * 3, 3), 0);
+		va->addBuffer(new Buffer((float*)positions.data(), positions.size() * 3, 3), 0);
 		return RawModel(va->getVaoID(), positions.size());
 	}
 
