@@ -17,8 +17,9 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
-#include "../entities/light.hpp"
-#include "../camera/camera.h"
+#include <shader/uniform.h>
+#include <entities/light.hpp>
+#include <camera/camera.h>
 #include "../../config/header.hpp"
 
 namespace sloth { namespace graphics {
@@ -26,7 +27,7 @@ namespace sloth { namespace graphics {
 	class StaticShader : public Shader
 	{
 	private:
-		static StaticShader *m_Inst;
+		int m_LocDiffuseMap;
 
 		int m_LocModel;
 		int m_LocView;
@@ -45,9 +46,14 @@ namespace sloth { namespace graphics {
 
 		int m_LocClipPlane;			// 裁剪平面方程
 
+		int m_LocSpeculateMap;		// 高亮贴图
+		int m_LocUseSpecularMap;
+
 	public:
-		static StaticShader *inst();
-		static void deleteShader() { delete m_Inst; }
+		static std::shared_ptr<StaticShader> inst() {
+			static std::shared_ptr<StaticShader> shader(new StaticShader());
+			return shader;
+		}
 		virtual ~StaticShader();
 		void loadModelMatrix(const glm::mat4 &model);
 		void loadViewMatrix(const RawCamera &camera);
@@ -67,10 +73,12 @@ namespace sloth { namespace graphics {
 		void loadNumberOfRows(int numberOfRaws);
 		void loadOffset(float x, float y);
 		void loadClipPlane(const glm::vec4 &clipPlane);
-
+		void loadUseSpecularMap(bool useSpeMap);
 
 	private:
 		StaticShader();
+
+		void connectTextureUnit();
 
 	protected:
 		/***********************************************************************

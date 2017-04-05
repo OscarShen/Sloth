@@ -48,6 +48,11 @@ namespace sloth { namespace graphics {
 		glBindTexture(GL_TEXTURE_2D, texture.getID());
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture.getNormalMap());
+		if (texture.hasSpecularMap()) {
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, texture.getSpecularMap());
+		}
+		shader->loadUseSpecularMap(texture.hasSpecularMap());
 
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);

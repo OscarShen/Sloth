@@ -10,6 +10,8 @@ in vec3 worldPosition_Tangent;
 in vec3 toCameraVector_Tangent;
 uniform sampler2D diffuseMap;
 uniform sampler2D normalMap;
+uniform sampler2D specularMap;
+uniform float useSpecularMap;
 
 // 灯光属性
 //uniform vec3 lightPosition[MAX_LIGHT];	// 位置
@@ -64,6 +66,13 @@ void main()
 		float spec = pow(max(dot(n_Normal, n_HalfWay), 0.0f), shininess);
 		totalSpecular += spec * lightColor[i] * reflectivity * oneDivideAttFactor;
 	}
+
+	// 高亮贴图
+	if(useSpecularMap > 0.5f) {
+		vec4 mapInfo = texture(specularMap, TexCoord);
+		totalSpecular *= mapInfo.r + 0.3f;
+	}
+
 	frag_out = (vec4(totalDiffuse, 1.0f) + ambient) * texture_color  + vec4(totalSpecular, 1.0f);
 	frag_out = mix(vec4(skyColor, 1.0f), frag_out, visibility);
 }

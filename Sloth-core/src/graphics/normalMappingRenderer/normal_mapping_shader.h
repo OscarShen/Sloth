@@ -48,6 +48,8 @@ namespace sloth { namespace graphics {
 
 		int m_LocNormalMap;
 		int m_LocDiffuseMap;
+		int m_LocSpecularMap;
+		int m_LocUseSpecularMap;
 
 	public:
 		static NormalMappingShader *inst();
@@ -63,6 +65,7 @@ namespace sloth { namespace graphics {
 		void loadNumberOfRows(int numberOfRaws);
 		void loadOffset(float x, float y);
 		void loadClipPlane(const glm::vec4 &clipPlane);
+		void loadUseSpecularMap(bool useSpecMap);
 
 		void connectTextureUnit();
 	private:

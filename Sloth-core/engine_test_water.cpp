@@ -53,7 +53,12 @@ void main()
 	ModelTexture pine_texture = loader.loadTexture("res/textures/pine.png", true);
 	pine_texture.setTransparency(true);
 	TexturedModel tree(ModelLoader::loadModel("res/models/pine.obj", loader), pine_texture);
-	//TexturedModel box(ModelLoader::loadModel("res/box.obj", loader), loader.loadTexture("res/white.png"));
+
+	ModelTexture cherry_texture = loader.loadTexture("res/cherry.png", true);
+	cherry_texture.setTransparency(true);
+	cherry_texture.setSpecularMap(loader.loadTexture("res/cherryS.png"));
+	TexturedModel cherry(ModelLoader::loadModel("res/cherry.obj",loader), cherry_texture);
+
 	std::vector<std::shared_ptr<Entity>> entities;
 	entities.push_back(
 		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(13.0f, terrain->getHeightOfTerrain(13.0f, 6.0f), 6.0f), 0, 0, 0, 0.3f)));
@@ -61,14 +66,15 @@ void main()
 		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(30.0f, terrain->getHeightOfTerrain(30.0f, 4.0f), 4.0f), 0, 0, 0, 0.3f)));
 	entities.push_back(
 		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(26.0f, terrain->getHeightOfTerrain(26.0f, 31.0f), 31.0f), 0, 0, 0, 0.3f)));
-	//entities.push_back(
-	//	std::shared_ptr<Entity>(new Entity(box, glm::vec3(0.0f, 0.0f, 0.0f), 0, 0, 0, 30.f)));
+	entities.push_back(
+		std::shared_ptr<Entity>(new Entity(cherry, glm::vec3(100.0f, terrain->getHeightOfTerrain(100.0f, 100.0f), 100.0f), 0.0f, 0.0f, 0.0f, 1.0f)));
 
 	// 法线贴图模型
 	std::vector<std::shared_ptr<Entity>> normalMappingEntities;
 	ModelTexture barrel_t(loader.loadTexture("res/textures/normalMapping/barrel.png"));
 	RawModel barrel_raw = ModelLoader::loadModelNM("res/models/normalMapping/barrel.obj",loader);
 	barrel_t.setNormalMap(loader.loadTexture("res/textures/normalMapping/barrelNormal.png"));
+	barrel_t.setSpecularMap(loader.loadTexture("res/textures/normalMapping/barrelS.png"));
 
 	normalMappingEntities.push_back(std::shared_ptr<Entity>(new
 		Entity(

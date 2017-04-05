@@ -9,6 +9,8 @@ in vec2 TexCoord;
 in vec3 Normal;
 
 uniform sampler2D diffuseMap;
+uniform sampler2D specularMap;
+uniform float useSpecularMap;
 
 // µÆ¹âÊôÐÔ
 uniform vec3 lightPosition[MAX_LIGHT];	// Î»ÖÃ
@@ -62,6 +64,12 @@ void main()
 		float spec = pow(max(dot(n_Normal, n_HalfWay), 0.0f), shininess);
 		totalSpecular += spec * lightColor[i] * reflectivity * oneDivideAttFactor;
 	}
+
+	if(useSpecularMap > 0.5f) {
+		vec4 mapInfo = texture(specularMap, TexCoord);
+		totalSpecular *= mapInfo.r + 0.3f;
+	}
+
 	frag_out = (vec4(totalDiffuse, 1.0f) + ambient) * texture_color  + vec4(totalSpecular, 1.0f);
 	frag_out = mix(vec4(skyColor, 1.0f), frag_out, visibility);
 }

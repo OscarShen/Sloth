@@ -2,12 +2,17 @@
 
 namespace sloth { namespace graphics {
 
-	StaticShader* StaticShader::m_Inst(nullptr);
-
 	StaticShader::StaticShader()
 		:Shader(STATIC_VERTEX_FILE, STATIC_FRAGMENT_FILE)
 	{
 		getAllUniformLocation();
+		connectTextureUnit();
+	}
+
+	void StaticShader::connectTextureUnit()
+	{
+		glProgramUniform1i(m_ID, m_LocDiffuseMap, 0);
+		glProgramUniform1i(m_ID, m_LocSpeculateMap, 2);
 	}
 
 	StaticShader::~StaticShader()
@@ -15,14 +20,6 @@ namespace sloth { namespace graphics {
 		delete[] m_LocLightPos;
 		delete[] m_LocLightColor;
 		delete[] m_LocAttenuation;
-		m_Inst = nullptr;
-	}
-
-	StaticShader * StaticShader::inst()
-	{
-		if (!m_Inst)
-			m_Inst = new StaticShader();
-		return m_Inst;
 	}
 
 	void StaticShader::loadModelMatrix(const glm::mat4 & model)
@@ -102,8 +99,17 @@ namespace sloth { namespace graphics {
 		glProgramUniform4f(m_ID, m_LocClipPlane, clipPlane.x, clipPlane.y, clipPlane.z, clipPlane.w);
 	}
 
+	void StaticShader::loadUseSpecularMap(bool useSpeMap)
+	{
+		if (useSpeMap)
+			glProgramUniform1f(m_ID, m_LocUseSpecularMap, 1.0f);
+		else
+			glProgramUniform1f(m_ID, m_LocUseSpecularMap, 0.0f);
+	}
+
 	void StaticShader::getAllUniformLocation()
 	{
+		m_LocDiffuseMap = glGetUniformLocation(m_ID, "diffuseMap");
 		m_LocModel = glGetUniformLocation(m_ID, "model");
 		m_LocView = glGetUniformLocation(m_ID, "view");
 		m_LocProjection = glGetUniformLocation(m_ID, "projection");
@@ -125,5 +131,7 @@ namespace sloth { namespace graphics {
 		m_LocNumberOfRows = glGetUniformLocation(m_ID, "numberOfRows");
 		m_LocOffset = glGetUniformLocation(m_ID, "offset");
 		m_LocClipPlane = glGetUniformLocation(m_ID, "clipPlane");
+		m_LocSpeculateMap = glGetUniformLocation(m_ID, "specularMap");
+		m_LocUseSpecularMap = glGetUniformLocation(m_ID, "useSpecularMap");
 	}
 } }

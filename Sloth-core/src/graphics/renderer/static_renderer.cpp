@@ -52,6 +52,13 @@ namespace sloth { namespace graphics {
 		shader->loadUseFakeLighting(texture.isUseFakeLighting());
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture.getID());
+		if (texture.hasSpecularMap()) {
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, texture.getSpecularMap());
+		}
+		shader->loadUseSpecularMap(texture.hasSpecularMap());
+		//shader->loadUseSpecularMap(false);
+
 	}
 
 	void StaticRenderer::prepareInstance(Entity & entity)

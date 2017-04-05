@@ -94,6 +94,15 @@ namespace sloth { namespace graphics {
 		glProgramUniform4f(m_ID, m_LocClipPlane, clipPlane.x, clipPlane.y, clipPlane.z, clipPlane.w);
 	}
 
+	void NormalMappingShader::loadUseSpecularMap(bool useSpecMap)
+	{
+		if (useSpecMap) {
+			glProgramUniform1f(m_ID, m_LocUseSpecularMap, 1.0f);
+			return;
+		}
+		glProgramUniform1f(m_ID, m_LocUseSpecularMap, 0.0f);
+	}
+
 	void NormalMappingShader::getAllUniformLocation()
 	{
 		m_LocModel = glGetUniformLocation(m_ID, "model");
@@ -118,10 +127,13 @@ namespace sloth { namespace graphics {
 		m_LocClipPlane = glGetUniformLocation(m_ID, "clipPlane");
 		m_LocNormalMap = glGetUniformLocation(m_ID, "normalMap");
 		m_LocDiffuseMap = glGetUniformLocation(m_ID, "diffuseMap");
+		m_LocSpecularMap = glGetUniformLocation(m_ID, "specularMap");
+		m_LocUseSpecularMap = glGetUniformLocation(m_ID, "useSpecularMap");
 	}
 	void NormalMappingShader::connectTextureUnit()
 	{
 		glProgramUniform1i(m_ID, m_LocDiffuseMap, 0);
 		glProgramUniform1i(m_ID, m_LocNormalMap, 1);
+		glProgramUniform1i(m_ID, m_LocSpecularMap, 2);
 	}
 } }

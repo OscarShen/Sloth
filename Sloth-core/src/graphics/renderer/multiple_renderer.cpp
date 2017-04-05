@@ -25,7 +25,6 @@ namespace sloth { namespace graphics {
 			delete m_NormapMappingRenderer;
 		if (m_ShadowMappingRenderer != nullptr)
 			delete m_ShadowMappingRenderer;
-		StaticShader::deleteShader();
 		TerrainShader::deleteShader();
 		SkyboxShader::deleteShader();
 		NormalMappingShader::deleteShader();
