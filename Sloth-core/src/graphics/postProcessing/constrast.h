@@ -8,27 +8,24 @@
 #pragma once
 #ifndef SLOTH_CONSTRAST_H_
 #define SLOTH_CONSTRAST_H_
-#include "post_processing.h"
+#include "image_renderer.h"
 #include <shader/shader.h>
 #include <buffers/frame_buffer.h>
 #include <shader/uniform.h>
 #include <memory>
+#include <info/info.h>
 namespace sloth { namespace graphics {
 
 	class ConstrastShader;
-	class Constrast : public PostProcessing
+	class Constrast : public ImageRenderer
 	{
 	public:
-		Constrast(Loader &loader) :PostProcessing(loader) {}
+		Constrast(int width = Input::windowWidth, int height = Input::windowHeight) : ImageRenderer(width, height) {}
 
-		virtual void doPostProcessing(unsigned int colorTexture) override;
-
-		virtual void start() override;
-
-		virtual void end() override;
+		void process(unsigned int colorTexture);
 	};
 
-#define CONSTRAST_VERTEX_FILE "src/graphics/postProcessing/contrast.vert"
+#define CONSTRAST_VERTEX_FILE "src/graphics/postProcessing/common.vert"
 #define CONSTRAST_FRAGMENT_FILE "src/graphics/postProcessing/constrast.frag"
 	class ConstrastShader : public Shader
 	{

@@ -126,6 +126,11 @@ namespace sloth { namespace graphics {
 		glNamedFramebufferDrawBuffer(m_ID, GL_COLOR_ATTACHMENT0 + index);
 	}
 
+	void FrameBuffer::setReadBuffer(unsigned int index)
+	{
+		glNamedFramebufferReadBuffer(m_ID, GL_COLOR_ATTACHMENT0 + index);
+	}
+
 	void FrameBuffer::resolveToFrameBuffer(FrameBuffer & outputFrameBuffer)
 	{
 		glBlitNamedFramebuffer(m_ID, outputFrameBuffer.m_ID, 0, 0, m_Width, m_Height, 0, 0, outputFrameBuffer.m_Width, outputFrameBuffer.m_Height,

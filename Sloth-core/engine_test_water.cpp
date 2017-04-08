@@ -21,6 +21,7 @@
 #include "src/graphics/postProcessing/post_processing.h"
 #include "src/graphics/postProcessing/constrast.h"
 #include "src/graphics/postProcessing/gaussian_blur.h"
+#include "src/graphics/postProcessing/luminance_filter.h"
 
 
 using namespace sloth;
@@ -59,6 +60,11 @@ void main()
 	cherry_texture.setSpecularMap(loader.loadTexture("res/cherryS.png"));
 	TexturedModel cherry(ModelLoader::loadModel("res/cherry.obj",loader), cherry_texture);
 
+	ModelTexture lantern_texture = loader.loadTexture("res/textures/normalMapping/lantern.png");
+	lantern_texture.setTransparency(true);
+	lantern_texture.setSpecularMap(loader.loadTexture("res/textures/normalMapping/lanternS.png"));
+	TexturedModel lantern(ModelLoader::loadModel("res/textures/normalMapping/lantern.obj", loader), lantern_texture);
+
 	std::vector<std::shared_ptr<Entity>> entities;
 	entities.push_back(
 		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(13.0f, terrain->getHeightOfTerrain(13.0f, 6.0f), 6.0f), 0, 0, 0, 0.3f)));
@@ -68,6 +74,8 @@ void main()
 		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(26.0f, terrain->getHeightOfTerrain(26.0f, 31.0f), 31.0f), 0, 0, 0, 0.3f)));
 	entities.push_back(
 		std::shared_ptr<Entity>(new Entity(cherry, glm::vec3(100.0f, terrain->getHeightOfTerrain(100.0f, 100.0f), 100.0f), 0.0f, 0.0f, 0.0f, 1.0f)));
+	entities.push_back(
+		std::shared_ptr<Entity>(new Entity(lantern, glm::vec3(130.0f, terrain->getHeightOfTerrain(130.0f, 100.0f), 100.0f), 0.0f, 0.0f, 0.0f, 1.0f)));
 
 	// 法线贴图模型
 	std::vector<std::shared_ptr<Entity>> normalMappingEntities;
@@ -125,20 +133,12 @@ void main()
 
 	MousePicker mousePicker(camera, renderer.getProjectionMatrix(), *terrain);
 
-	FrameBuffer screen(Input::windowWidth, Input::windowHeight, true); // 用于替代默认 framebuffer
-	screen.addColorRenderBufferAttachment(0);
+	FrameBuffer screen(Input::windowWidth, Input::windowHeight); // 用于替代默认 framebuffer
+	//screen.addColorRenderBufferAttachment(0);
+	screen.addColorTextureAttachment(0);
 	screen.addDepthRenderBufferAttachment();
-	FrameBuffer postProcess(Input::windowWidth, Input::windowHeight);	// 用于后处理
-	postProcess.addColorTextureAttachment(0); // horizontal blur
-	postProcess.addColorTextureAttachment(1); // vertical blur
-	postProcess.addDepthRenderBufferAttachment();
-	//FrameBuffer postProcess2(Input::windowWidth, Input::windowHeight);	// 用于后处理
-	//postProcess2.addColorTextureAttachment(0);
-	//postProcess2.addDepthRenderBufferAttachment();
 
-	Constrast constrast(loader);
-	HorizontalBlur hb(loader);
-	VerticalBlur vb(loader);
+	Constrast constrast;
 
 	// GUI
 	std::vector<GuiTexture> guis;
@@ -187,20 +187,11 @@ void main()
 
 		particleMaster.renderParticles(camera);
 		screen.unbind();
-		screen.resolveToScreen();
+		
 		// 后处理
-
-		//postProcess.bind();
-		//postProcess.setDrawBuffer(0);
-		//screen.resolveToFrameBuffer(postProcess);
-		//postProcess.setDrawBuffer(1);
-		//hb.doPostProcessing(postProcess.getColorTexture(0));
-		//postProcess.setDrawBuffer(0);
-		//vb.doPostProcessing(postProcess.getColorTexture(1));
-		//postProcess.setDrawBuffer(1);
-		//constrast.doPostProcessing(postProcess.getColorTexture(0));
-		//postProcess.unbind();
-		//postProcess.resolveToScreen();
+		//screen.resolveToFrameBuffer(constrast);
+		constrast.process(screen.getColorTexture(0));
+		constrast.resolveToScreen();
 
 		//guiRenderer.render(guis);
 		//textMaster.render();

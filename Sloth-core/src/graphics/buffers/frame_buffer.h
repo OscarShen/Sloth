@@ -90,6 +90,13 @@ namespace sloth { namespace graphics {
 		void setDrawBuffer(unsigned int index);
 
 		/************************************************************************
+		* @description	: 设置当前需要读取的缓冲纹理
+		* @author		: Oscar Shen
+		* @creat		: 2017年4月8日23:14:16
+		***********************************************************************/
+		void setReadBuffer(unsigned int index);
+
+		/************************************************************************
 		* @description	: 将本 frame buffer 内容转换到另一个 frame buffer
 		* @author		: Oscar Shen
 		* @creat		: 2017年3月31日14:44:31
