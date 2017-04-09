@@ -18,9 +18,7 @@
 #include "src/graphics/particle/particle_master.h"
 #include "src/graphics/particle/particle_system.h"
 #include "src/graphics/shadowMapping/shadow_mapping_master_renderer.h"
-#include "src/graphics/postProcessing/post_processing.h"
-#include "src/graphics/postProcessing/constrast.h"
-#include "src/graphics/postProcessing/gaussian_blur.h"
+#include "src/graphics/postProcessing/post_process.h"
 #include "src/graphics/postProcessing/luminance_filter.h"
 
 
@@ -139,6 +137,8 @@ void main()
 	screen.addDepthRenderBufferAttachment();
 
 	Constrast constrast;
+	VerticalBlur verBlur;
+	HorizontalBlur horBlur;
 
 	// GUI
 	std::vector<GuiTexture> guis;
@@ -191,7 +191,9 @@ void main()
 		// ∫Û¥¶¿Ì
 		//screen.resolveToFrameBuffer(constrast);
 		constrast.process(screen.getColorTexture(0));
-		constrast.resolveToScreen();
+		horBlur.process(verBlur.getColorTexture(0), Input::windowWidth / 2);
+		verBlur.process(constrast.getColorTexture(0), Input::windowHeight / 2);
+		horBlur.resolveToScreen();
 
 		//guiRenderer.render(guis);
 		//textMaster.render();

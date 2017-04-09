@@ -68,6 +68,8 @@ void main()
 	if(useSpecularMap > 0.5f) {
 		vec4 mapInfo = texture(specularMap, TexCoord);
 		totalSpecular *= mapInfo.r + 0.3f;
+		if(mapInfo.g > 0.5f)
+			totalDiffuse = vec3(1.0f);
 	}
 
 	frag_out = (vec4(totalDiffuse, 1.0f) + ambient) * texture_color  + vec4(totalSpecular, 1.0f);

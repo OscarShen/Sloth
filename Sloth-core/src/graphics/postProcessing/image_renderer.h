@@ -19,6 +19,7 @@ namespace sloth { namespace graphics {
 		static RawModel quad;
 
 	public:
+		ImageRenderer() : ImageRenderer(Input::windowWidth, Input::windowHeight) {}
 		ImageRenderer(int width, int height) : FrameBuffer(width, height) {
 			this->addColorTextureAttachment(0);
 			static bool firstInit = true;
