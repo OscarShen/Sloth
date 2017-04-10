@@ -43,7 +43,34 @@ namespace sloth { namespace graphics {
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, colorTexture);
 		renderQuad();
-		HorizontalBlurShader::inst()->disable();
+		VerticalBlurShader::inst()->disable();
 		unbind();
 	}
+	void LuminanceFilter::process(unsigned int colorTexture, float thresHold)
+	{
+		// 因为 fbo 和纹理绑定有关，必须在激活纹理单元之前绑定
+		bind();
+		LuminanceFilterShader::inst()->enable();
+		LuminanceFilterShader::inst()->thresHold.loadFloat(thresHold);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, colorTexture);
+		renderQuad();
+		LuminanceFilterShader::inst()->disable();
+		unbind();
+	}
+	void graphics::CombineFilter::process(unsigned int colorTexture, unsigned int highlightTexture, float scale)
+	{
+		// 因为 fbo 和纹理绑定有关，必须在激活纹理单元之前绑定
+		bind();
+		CombineFilterShader::inst()->enable();
+		CombineFilterShader::inst()->scale.loadFloat(scale);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, colorTexture);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, highlightTexture);
+		renderQuad();
+		CombineFilterShader::inst()->disable();
+		unbind();
+	}
+
 } }

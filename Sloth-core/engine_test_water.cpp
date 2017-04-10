@@ -19,7 +19,6 @@
 #include "src/graphics/particle/particle_system.h"
 #include "src/graphics/shadowMapping/shadow_mapping_master_renderer.h"
 #include "src/graphics/postProcessing/post_process.h"
-#include "src/graphics/postProcessing/luminance_filter.h"
 
 
 using namespace sloth;
@@ -131,6 +130,7 @@ void main()
 
 	MousePicker mousePicker(camera, renderer.getProjectionMatrix(), *terrain);
 
+	// 后处理
 	FrameBuffer screen(Input::windowWidth, Input::windowHeight); // 用于替代默认 framebuffer
 	//screen.addColorRenderBufferAttachment(0);
 	screen.addColorTextureAttachment(0);
@@ -139,6 +139,8 @@ void main()
 	Constrast constrast;
 	VerticalBlur verBlur;
 	HorizontalBlur horBlur;
+	LuminanceFilter lf;
+	CombineFilter cf;
 
 	// GUI
 	std::vector<GuiTexture> guis;
@@ -190,10 +192,12 @@ void main()
 		
 		// 后处理
 		//screen.resolveToFrameBuffer(constrast);
-		constrast.process(screen.getColorTexture(0));
-		horBlur.process(verBlur.getColorTexture(0), Input::windowWidth / 2);
-		verBlur.process(constrast.getColorTexture(0), Input::windowHeight / 2);
-		horBlur.resolveToScreen();
+		lf.process(screen.getColorTexture(0), 0.70f);
+		horBlur.process(lf.getOutputTexture(), (float)Input::windowWidth / 4);
+		verBlur.process(horBlur.getOutputTexture(), (float)Input::windowHeight / 4);
+		cf.process(screen.getColorTexture(0), verBlur.getOutputTexture(), 1.0f);
+		constrast.process(cf.getOutputTexture());
+		constrast.resolveToScreen();
 
 		//guiRenderer.render(guis);
 		//textMaster.render();

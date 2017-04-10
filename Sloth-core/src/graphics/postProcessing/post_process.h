@@ -102,6 +102,76 @@ namespace sloth { namespace graphics {
 
 		void process(unsigned int colorTexture, float targetHeight);
 	};
+
+	// 亮度滤波器
+#define LUMINANCE_FILTER_VERTEX_FILE "src/graphics/postProcessing/common.vert"
+#define LUMINANCE_FILTER_FRAGMENT_FILE "src/graphics/postProcessing/luminance_filter.frag"
+	class LuminanceFilterShader : public Shader
+	{
+	public:
+		UniformFloat thresHold = UniformFloat("thresHold");
+
+		static std::shared_ptr<LuminanceFilterShader> inst() {
+			static std::shared_ptr<LuminanceFilterShader> shader = nullptr;
+			if (shader == nullptr) {
+				shader = std::shared_ptr<LuminanceFilterShader>(new LuminanceFilterShader());
+			}
+			return shader;
+		}
+
+	private:
+		LuminanceFilterShader() : Shader(LUMINANCE_FILTER_VERTEX_FILE, LUMINANCE_FILTER_FRAGMENT_FILE) {
+			storeAllUniformLocation(std::vector<Uniform*>{&thresHold});
+		}
+	};
+	class LuminanceFilter : public ImageRenderer
+	{
+	public:
+		LuminanceFilter() {}
+		LuminanceFilter(int width,int height) :ImageRenderer(width, height) {}
+
+		void process(unsigned int colorTexture, float thresHold);
+	};
+
+	// 将高亮纹理的RGB颜色乘上一个系数加到原始纹理中
+#define COMBINE_FILTER_VERTEX_FILE "src/graphics/postProcessing/common.vert"
+#define COMBINE_FILTER_FRAGMENT_FILE "src/graphics/postProcessing/combine_filter.frag"
+	class CombineFilterShader : public Shader
+	{
+	public:
+		UniformFloat scale = UniformFloat("scale");
+
+	private:
+		UniformSampler colorTexture = UniformSampler("colorTexture");
+		UniformSampler highlightTexture = UniformSampler("highlightTexture");
+
+	public:
+		static std::shared_ptr<CombineFilterShader> inst() {
+			static std::shared_ptr<CombineFilterShader> shader = nullptr;
+			if (shader == nullptr)
+				shader = std::shared_ptr<CombineFilterShader>(new CombineFilterShader());
+			return shader;
+		}
+
+	private:
+		CombineFilterShader() : Shader(COMBINE_FILTER_VERTEX_FILE, COMBINE_FILTER_FRAGMENT_FILE) {
+			storeAllUniformLocation(std::vector<Uniform *>{ &scale, &colorTexture, &highlightTexture });
+			connectTextureUnits();
+		}
+
+		void connectTextureUnits() {
+			colorTexture.loadTexUnit(0);
+			highlightTexture.loadTexUnit(1);
+		}
+	};
+	class CombineFilter : public ImageRenderer
+	{
+	public:
+		CombineFilter() {}
+		CombineFilter(int width, int height) :ImageRenderer(width, height) {}
+
+		void process(unsigned int colorTexture, unsigned int highlightTexture, float scale);
+	};
 } }
 
 #endif // !SLOTH_CONSTRAST_H_
