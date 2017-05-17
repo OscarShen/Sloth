@@ -2,10 +2,10 @@
 #ifndef SLOTH_TIMER_H_
 #define SLOTH_TIMER_H_
 
+#include <sloth.h>
 #include <Windows.h>
-#include <GLFW/glfw3.h>
 
-namespace sloth { namespace util {
+namespace sloth {
 
 	class Timer
 	{
@@ -22,7 +22,6 @@ namespace sloth { namespace util {
 		static void calculateFPS();
 	};
 
-} }
-
+} 
 
 #endif // !SLOTH_TIMER_H_

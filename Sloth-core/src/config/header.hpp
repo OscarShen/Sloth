@@ -18,12 +18,6 @@
 #include <map>
 #include <iostream>
 
-#define CHECK_INFO(x, str) if(!(x)) { std::cout << (str) << "\n file: "<< __FILE__<<",line: " << __LINE__<<std::endl; }
-#define CHECK(x) CHECK_INFO(x, "check equal failed!")
-#define CHECK_EQ(x, y) if((x)==(y)) { std::cout << "check equal failed!" << "\n file: "<< __FILE__<<",line: " << __LINE__<<std::endl; }
-#define CHECK_NE(x, y) if((x)!=(y)) { std::cout << "check not equal failed!" << "\n file: "<< __FILE__<<",line: " << __LINE__<<std::endl }
-
-
 #define WATER
 
 #ifdef WATER

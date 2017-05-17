@@ -1,7 +1,7 @@
 #include "mouse_picker.h"
 
-namespace sloth { namespace util {
-	MousePicker::MousePicker(const graphics::RawCamera & camera, const glm::mat4 & projection, const graphics::Terrain &terrain)
+namespace sloth {
+	MousePicker::MousePicker(const RawCamera & camera, const glm::mat4 & projection, const Terrain &terrain)
 		:m_Projection(projection), m_Camera(camera), m_Terrain(terrain)
 	{
 		m_View = camera.getViewMatrix();
@@ -20,8 +20,8 @@ namespace sloth { namespace util {
 	glm::vec3 MousePicker::calculateMouseRay()
 	{
 		// 获取鼠标位置
-		float mouseX = (float) graphics::Input::cursorPosX;
-		float mouseY = (float) graphics::Input::cursorPosY;
+		float mouseX = (float) Input::cursorPosX;
+		float mouseY = (float) Input::cursorPosY;
 		// 将鼠标位置转换为OpenGL内NDC坐标
 		auto normalizedCoord = glm::vec2((2.0f * mouseX) / SCREEN_WIDTH - 1.0f, 1.0f - (2.0f * mouseY) / SCREEN_HEIGHT);
 		// 将NDC坐标转换为投影后坐标，由于不需要深度，不需要完全
@@ -66,4 +66,4 @@ namespace sloth { namespace util {
 			isUnderGround(getPointOnRay(ray, finish)) ? true : false;
 	}
 
-} }
+} 

@@ -1,6 +1,6 @@
 #include "timer.h"
 
-namespace sloth { namespace util {
+namespace sloth { 
 
 	double Timer::start = static_cast<float>(glfwGetTime());
 	double Timer::lastFrameTime = start;
@@ -28,4 +28,4 @@ namespace sloth { namespace util {
 		FPS = static_cast<int>(1.0 / deltaFrameTime);
 	}
 
-} }
+} 

@@ -1,5 +1,5 @@
 ﻿#include "maths.h"
-namespace sloth { namespace util {
+namespace sloth { 
 	glm::mat4 Maths::createModelMatrix(const glm::vec3 & position, float rotX, float rotY, float rotZ, float scale)
 	{
 		glm::mat4 model = glm::translate(glm::mat4(), position);
@@ -52,5 +52,5 @@ namespace sloth { namespace util {
 		return ray_origin + ray_dir*t;
 	}
 
-} }
+} 
 

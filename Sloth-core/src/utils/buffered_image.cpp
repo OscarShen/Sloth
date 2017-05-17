@@ -1,6 +1,6 @@
 #include "buffered_image.h"
 
-namespace sloth { namespace util {
+namespace sloth {
 	BufferedImage::BufferedImage(std::string imagePath)
 	{
 		m_ImageData = SOIL_load_image(imagePath.c_str(), &m_Width, &m_Height, &m_Channel, SOIL_LOAD_AUTO);
@@ -16,5 +16,5 @@ namespace sloth { namespace util {
 		SOIL_free_image_data(m_ImageData);
 	}
 
-} }
+} 
 

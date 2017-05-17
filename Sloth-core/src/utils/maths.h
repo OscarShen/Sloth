@@ -12,10 +12,9 @@
 #pragma once
 #ifndef SLOTH_MATHS_H_
 #define SLOTH_MATHS_H_
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <sloth.h>
 
-namespace sloth { namespace util {
+namespace sloth {
 
 	class Maths
 	{
@@ -39,7 +38,7 @@ namespace sloth { namespace util {
 	};
 
 
-} }
+} 
 
 
 #endif // !SLOTH_MATHS_H_

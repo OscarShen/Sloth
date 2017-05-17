@@ -3,27 +3,30 @@
 //#include <vld_def.h>
 //#endif // _DEBUG
 
-#include "src/graphics/window.h"
-#include "src/graphics/engine/loader.h"
-#include "src/graphics/engine/model_loader.h"
-#include "src/graphics/renderer/water_renderer.h"
-#include "src/graphics/renderer/multiple_renderer.h"
-#include "src/graphics/gui/gui_renderer.h"
-#include "src/graphics/water/water_frame_buffer.h"
-#include "src/graphics/font/fontRenderer/font_renderer.h"
+#include <sloth.h>
+#include <camera/camera.h>
+#include "src/window.h"
+#include "src/engine/loader.h"
+#include "src/engine/model_loader.h"
+#include "src/renderer/water_renderer.h"
+#include "src/renderer/multiple_renderer.h"
+#include "src/gui/gui_renderer.h"
+#include "src/water/water_frame_buffer.h"
+#include "src/font/fontRenderer/font_renderer.h"
 #include "src/utils/timer.h"
 #include "src/utils/mouse_picker.h"
 #include "src/utils/error_check.h"
 #include "src/utils/mouse_picker.h"
-#include "src/graphics/particle/particle_master.h"
-#include "src/graphics/particle/particle_system.h"
-#include "src/graphics/shadowMapping/shadow_mapping_master_renderer.h"
-#include "src/graphics/postProcessing/post_process.h"
+#include "src/particle/particle_master.h"
+#include "src/particle/particle_system.h"
+#include "src/shadowMapping/shadow_mapping_master_renderer.h"
+#include "src/postProcessing/post_process.h"
+#include <font/fontRenderer/text_master.h>
+#include <font/meshCreator/font_type.h>
+#include <font/meshCreator/gui_text.h>
 
 
 using namespace sloth;
-using namespace graphics;
-using namespace util;
 
 void main()
 {
@@ -34,7 +37,6 @@ void main()
 	TextMaster textMaster(loader);
 	Camera camera;
 	ParticleMaster particleMaster(loader,renderer.getProjectionMatrix());
-
 
 	// µØÐÎ
 	auto background = loader.loadTexture("res/textures/grass.png");
@@ -61,8 +63,8 @@ void main()
 	lantern_texture.setTransparency(true);
 	lantern_texture.setSpecularMap(loader.loadTexture("res/textures/normalMapping/lanternS.png"));
 	TexturedModel lantern(ModelLoader::loadModel("res/textures/normalMapping/lantern.obj", loader), lantern_texture);
-
 	std::vector<std::shared_ptr<Entity>> entities;
+
 	entities.push_back(
 		std::shared_ptr<Entity>(new Entity(tree, glm::vec3(13.0f, terrain->getHeightOfTerrain(13.0f, 6.0f), 6.0f), 0, 0, 0, 0.3f)));
 	entities.push_back(

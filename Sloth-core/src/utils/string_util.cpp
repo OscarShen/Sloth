@@ -1,6 +1,6 @@
 #include "string_util.h"
 
-namespace sloth { namespace util {
+namespace sloth {
 
 	std::string loadStringFromFile(const char * filepath)
 	{
@@ -39,4 +39,4 @@ namespace sloth { namespace util {
 			ret->push_back(s.substr(last, index - last));
 		}
 	}
-} }
+} 

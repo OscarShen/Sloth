@@ -2,10 +2,9 @@
 #ifndef SLOTH_BUFFERED_IMAGE_H_
 #define SLOTH_BUFFERED_IMAGE_H_
 
-#include <string>
-#include <SOIL/SOIL.h>
+#include <sloth.h>
 
-namespace sloth { namespace util {
+namespace sloth {
 
 	// 数据从左上至右下，RGB 图片依次为 R,G,B，每个元素占一个字节
 	class BufferedImage
@@ -50,6 +49,6 @@ namespace sloth { namespace util {
 		inline int getChannel() { return m_Channel; }
 	};
 
-} }
+}
 
 #endif // !SLOTH_BUFFERED_IMAGE_H_

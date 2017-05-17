@@ -1,6 +1,5 @@
 #include "error_check.h"
 namespace sloth {
-	namespace util {
 
 		GLenum slothCheckError(const char *file, int line) {
 			GLenum errorCode;
@@ -37,4 +36,3 @@ namespace sloth {
 			return errorCode;
 		}
 	}
-}

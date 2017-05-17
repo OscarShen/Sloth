@@ -13,12 +13,12 @@
 #ifndef SLOTH_MOUSE_PICKER_H_
 #define SLOTH_MOUSE_PICKER_H_
 
-#include <glm/glm.hpp>
-#include "../graphics/camera/raw_camera.h"
-#include "../graphics/info/info.h"
-#include "../config/header.hpp"
-#include "../graphics/terrain/terrain.h"
-namespace sloth { namespace util {
+#include <sloth.h>
+#include "camera/raw_camera.h"
+#include "info/info.h"
+#include "config/header.hpp"
+#include "terrain/terrain.h"
+namespace sloth {
 
 	class MousePicker
 	{
@@ -29,10 +29,9 @@ namespace sloth { namespace util {
 		
 		glm::mat4 m_View;
 
-		// 保留 camera 的引用，要保证 camera 的生存期比 mousepicker 要长
-		const graphics::RawCamera &m_Camera;
+		const RawCamera &m_Camera;
 
-		const graphics::Terrain &m_Terrain;
+		const Terrain &m_Terrain;
 
 		glm::vec3 m_TerrainPosition;
 
@@ -42,7 +41,7 @@ namespace sloth { namespace util {
 		* @author		: Oscar Shen
 		* @creat		: 2017年2月13日15:22:50
 		***********************************************************************/
-		MousePicker(const graphics::RawCamera &camera, const glm::mat4 &projection, const graphics::Terrain &terrain);
+		MousePicker(const RawCamera &camera, const glm::mat4 &projection, const Terrain &terrain);
 
 		/************************************************************************
 		* @description	: 每一帧更新鼠标对应的光线方向以及地形位置
@@ -111,7 +110,7 @@ namespace sloth { namespace util {
 		}
 	};
 
-} }
+} 
 
 
 #endif // !SLOTH_MOUSE_PICKER_H_
